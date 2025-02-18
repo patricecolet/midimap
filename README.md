@@ -7,8 +7,8 @@ with support for MIDI over USB, which can be
 useful for any MIDI-related project.
 
 > Table of contents  
-> <span class="mono">¶</span>&emsp;[Overview](#overview)
-> <span class="mono">¶</span>&emsp;[Supported boards](#supported-boards)  
+> <span class="mono">¶</span>&emsp;[Overview](#overview)  
+> <span class="mono">¶</span>&emsp;[Supported boards](#supported-boards)    
 
 <a name="overview"></a>
 
