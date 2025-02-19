@@ -12,4 +12,6 @@
 
 #include <MIDIUSB.h>
 
-#include <MIDI_outputs/CCpotentiometer.hpp>
+#include <MIDI_outputs/CCPotentiometer.hpp>
+
+#include <MIDI_outputs/NoteButton.hpp>
