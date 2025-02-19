@@ -1,4 +1,4 @@
-#include "CCPotentiometer.h"
+#include "CCPotentiometer.hpp"
 
 // Constructor
 CCPotentiometer::CCPotentiometer(uint8_t pin, uint8_t ccNumber, uint8_t channel, int threshold) 

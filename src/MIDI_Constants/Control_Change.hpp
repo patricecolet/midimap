@@ -1,9 +1,9 @@
 #pragma once
 
-#include <stdint.h>
-#include <Settings/NamespaceSettings.hpp>
+//#include <stdint.h>
+//#include <Settings/NamespaceSettings.hpp>
 
-BEGIN_CS_NAMESPACE
+//EGIN_CS_NAMESPACE
 
 /// @addtogroup    MIDIConstants
 /// @{
@@ -114,4 +114,4 @@ constexpr uint8_t Poly_Mode_On                      = 0x7F;
 
 /// @}
 
-END_CS_NAMESPACE
+//END_CS_NAMESPACE
