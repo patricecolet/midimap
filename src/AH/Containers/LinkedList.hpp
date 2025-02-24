@@ -10,7 +10,7 @@ AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 #include <AH/Math/MinMaxFix.hpp>
 #include <stdlib.h>
 
-#include <AH/STL/iterator>
+#include <iterator> // STL
 
 /// @addtogroup AH_Containers
 /// @{

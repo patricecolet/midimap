@@ -1,7 +1,7 @@
 #pragma once
 
 #include <AH/Math/MinMaxFix.hpp>
-#include <AH/STL/type_traits>
+#include <type_traits> // STL
 
 AH_DIAGNOSTIC_EXTERNAL_HEADER()
 #include <Arduino.h> // min max

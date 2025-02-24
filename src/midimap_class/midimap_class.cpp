@@ -4,7 +4,7 @@
 #include <AH/Hardware/FilteredAnalog.hpp>
 #include <MIDI_Constants/Control_Change.hpp>
 #include <MIDI_Inputs/MIDIInputElement.hpp>
-//#include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
+#include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
 #include <MIDI_Outputs/Abstract/MIDIOutputElement.hpp>
 #include <Selectors/Selector.hpp>
 
@@ -14,12 +14,12 @@ BEGIN_CS_NAMESPACE
 
 using AH::ExtendedIOElement;
 
-Control_Surface_ &Control_Surface_::getInstance() {
-    static Control_Surface_ instance;
+midimap_ &midimap_::getInstance() {
+    static midimap_ instance;
     return instance;
 }
 
-void Control_Surface_::begin() {
+void midimap_::begin() {
 #if defined(ARDUINO) && defined(DEBUG_OUT)
     DEBUG_OUT.begin(AH::defaultBaudRate);
     delay(250);
@@ -31,7 +31,7 @@ void Control_Surface_::begin() {
     ExtendedIOElement::beginAll();
     Updatable<MIDI_Interface>::beginAll();
     MIDIOutputOnly::beginAll();
-    beginDisplays();
+//    beginDisplays();
     MIDIInputElementNote::beginAll();
     MIDIInputElementKP::beginAll();
     MIDIInputElementCC::beginAll();
@@ -40,11 +40,11 @@ void Control_Surface_::begin() {
     MIDIInputElementPB::beginAll();
     MIDIInputElementSysEx::beginAll();
     Updatable<>::beginAll();
-    Updatable<Display>::beginAll();
-    displayTimer.begin();
+//    Updatable<Display>::beginAll();
+//    displayTimer.begin();
 }
 
-bool Control_Surface_::connectDefaultMIDI_Interface() {
+bool midimap_::connectDefaultMIDI_Interface() {
     if (hasSinkPipe() || hasSourcePipe())
         return false;
     auto def = MIDI_Interface::getDefault();
@@ -57,39 +57,39 @@ bool Control_Surface_::connectDefaultMIDI_Interface() {
     return true;
 }
 
-void Control_Surface_::disconnectMIDI_Interfaces() {
+void midimap_::disconnectMIDI_Interfaces() {
     disconnectSinkPipes();
     disconnectSourcePipes();
 }
 
-void Control_Surface_::loop() {
+void midimap_::loop() {
     ExtendedIOElement::updateAllBufferedInputs();
     Updatable<>::updateAll();
     updateMidiInput();
     updateInputs();
-    if (displayTimer)
-        updateDisplays();
+//    if (displayTimer)
+//        updateDisplays();
     ExtendedIOElement::updateAllBufferedOutputs();
 }
 
-void Control_Surface_::updateMidiInput() {
+void midimap_::updateMidiInput() {
     Updatable<MIDI_Interface>::updateAll();
 }
 
-void Control_Surface_::sendChannelMessageImpl(ChannelMessage msg) {
+void midimap_::sendChannelMessageImpl(ChannelMessage msg) {
     this->sourceMIDItoPipe(msg);
 }
-void Control_Surface_::sendSysExImpl(SysExMessage msg) {
+void midimap_::sendSysExImpl(SysExMessage msg) {
     this->sourceMIDItoPipe(msg);
 }
-void Control_Surface_::sendSysCommonImpl(SysCommonMessage msg) {
+void midimap_::sendSysCommonImpl(SysCommonMessage msg) {
     this->sourceMIDItoPipe(msg);
 }
-void Control_Surface_::sendRealTimeImpl(RealTimeMessage msg) {
+void midimap_::sendRealTimeImpl(RealTimeMessage msg) {
     this->sourceMIDItoPipe(msg);
 }
 
-void Control_Surface_::sinkMIDIfromPipe(ChannelMessage midimsg) {
+void midimap_::sinkMIDIfromPipe(ChannelMessage midimsg) {
 #ifdef DEBUG_MIDI_PACKETS
     if (midimsg.hasTwoDataBytes())
         DEBUG(">>> " << hex << midimsg.header << ' ' << midimsg.data1 << ' '
@@ -176,7 +176,7 @@ void Control_Surface_::sinkMIDIfromPipe(ChannelMessage midimsg) {
     }
 }
 
-void Control_Surface_::sinkMIDIfromPipe(SysExMessage msg) {
+void midimap_::sinkMIDIfromPipe(SysExMessage msg) {
 #ifdef DEBUG_MIDI_PACKETS
     const uint8_t *data = msg.data;
     size_t len = msg.length;
@@ -192,7 +192,7 @@ void Control_Surface_::sinkMIDIfromPipe(SysExMessage msg) {
     MIDIInputElementSysEx::updateAllWith(msg);
 }
 
-void Control_Surface_::sinkMIDIfromPipe(SysCommonMessage msg) {
+void midimap_::sinkMIDIfromPipe(SysCommonMessage msg) {
 #ifdef DEBUG_MIDI_PACKETS
     DEBUG_OUT << ">>> " << hex << msg.getMessageType() << ' ' << msg.getData1()
               << ' ' << msg.getData2() << " (" << msg.cable << ')' << dec
@@ -204,7 +204,7 @@ void Control_Surface_::sinkMIDIfromPipe(SysCommonMessage msg) {
         return;
 }
 
-void Control_Surface_::sinkMIDIfromPipe(RealTimeMessage rtMessage) {
+void midimap_::sinkMIDIfromPipe(RealTimeMessage rtMessage) {
 #ifdef DEBUG_MIDI_PACKETS
     DEBUG(">>> " << hex << rtMessage.message << " ("
                  << rtMessage.cable.getOneBased() << ')' << dec);
@@ -216,7 +216,7 @@ void Control_Surface_::sinkMIDIfromPipe(RealTimeMessage rtMessage) {
         return;
 }
 
-void Control_Surface_::updateInputs() {
+void midimap_::updateInputs() {
     MIDIInputElementNote::updateAll();
     MIDIInputElementKP::updateAll();
     MIDIInputElementCC::updateAll();
@@ -225,8 +225,8 @@ void Control_Surface_::updateInputs() {
     MIDIInputElementPB::updateAll();
     MIDIInputElementSysEx::updateAll();
 }
-
-void Control_Surface_::beginDisplays() {
+/*
+void midimap_::beginDisplays() {
     auto &allElements = DisplayElement::getAll();
     auto it = allElements.begin();
     auto end = allElements.end();
@@ -247,7 +247,7 @@ void Control_Surface_::beginDisplays() {
     }
 }
 
-void Control_Surface_::updateDisplays() {
+void midimap_::updateDisplays() {
     auto &allElements = DisplayElement::getAll();
     auto it = allElements.begin();
     auto end = allElements.end();
@@ -281,9 +281,9 @@ void Control_Surface_::updateDisplays() {
         }
     }
 }
-
-#if CS_TRUE_CONTROL_SURFACE_INSTANCE || defined(DOXYGEN)
-Control_Surface_ &Control_Surface = Control_Surface_::getInstance();
+*/
+#if CS_TRUE_MIDIMAP_INSTANCE || defined(DOXYGEN)
+midimap_ &midimap = midimap_::getInstance();
 #endif
 
 END_CS_NAMESPACE

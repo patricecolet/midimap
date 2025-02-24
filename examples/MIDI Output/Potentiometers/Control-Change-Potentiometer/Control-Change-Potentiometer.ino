@@ -31,12 +31,9 @@
  * 
  * Written by PieterP, 2019-08-13  
  * https://github.com/tttapa/Control-Surface
- *
- * modified by Patrice Colet, 2025-02-23
- * https://github.com/patricecolet/midimap
  */
 
-#include <midimap.h> // Include the midimap library
+#include <Control_Surface.h> // Include the Control Surface library
 
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
@@ -48,9 +45,9 @@ CCPotentiometer potentiometer {
 };
 
 void setup() {
-  midimap.begin(); // Initialize midimap
+  Control_Surface.begin(); // Initialize Control Surface
 }
 
 void loop() {
-  midimap.loop(); // Update the midimap
+  Control_Surface.loop(); // Update the Control Surface
 }

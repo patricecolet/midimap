@@ -3,7 +3,7 @@
 #include <AH/Settings/Warnings.hpp>
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
-#include <AH/STL/type_traits> // enable_if
+#include <type_traits> // STL enable_if
 #include <limits.h>           // CHAR_BIT
 #include <stddef.h>           // size_t
 

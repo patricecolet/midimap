@@ -5,7 +5,7 @@
 #include <AH/Settings/Warnings.hpp>
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
-//#include <AH/Containers/Array.hpp>
+#include <AH/Containers/Array.hpp>
 #include <AH/Settings/NamespaceSettings.hpp>
 #include <stdint.h> // uint8_t
 
@@ -24,8 +24,8 @@ using pin_t = uint16_t;
 constexpr pin_t NO_PIN = 1 << (8 * sizeof(pin_t) - 1);
 
 /// An easy alias for arrays of pins.
-//template <size_t N>
-//using PinList = Array<pin_t, N>;
+template <size_t N>
+using PinList = Array<pin_t, N>;
 
 END_AH_NAMESPACE
 

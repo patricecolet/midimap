@@ -6,7 +6,7 @@
 #include "Channel.hpp"
 #include <AH/Containers/Array.hpp>
 #include <AH/Hardware/Hardware-Types.hpp>
-#include <AH/STL/limits>
+#include <limits>   // STL
 #include <Settings/NamespaceSettings.hpp>
 #include <stddef.h> // size_t
 #include <stdint.h> // uint8_t

@@ -3,7 +3,7 @@
 #pragma once
 
 #include <AH/Hardware/Arduino-Hardware-Types.hpp>
-#include <AH/STL/climits>
+#include <climits> // STL
 #include <AH/Settings/NamespaceSettings.hpp>
 #include <AH/Settings/Warnings.hpp>
 

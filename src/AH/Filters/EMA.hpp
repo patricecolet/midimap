@@ -6,8 +6,8 @@
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
 #include <stdint.h>
-#include <AH/STL/limits>
-#include <AH/STL/type_traits>
+#include <limits> // STL
+#include <type_traits> // STL
 
 /**
  * @brief   Exponential moving average filter.
