@@ -1,23 +1,48 @@
-#ifndef NoteButton_h
-#define NoteButton_h
+#pragma once
 
-#include <Arduino.h>
-#include <MIDIUSB.h>  // Include the MIDIUSB library for sending MIDI messages
+#include <MIDI_Outputs/Abstract/MIDIButton.hpp>
+#include <MIDI_Senders/DigitalNoteSender.hpp>
 
-class NoteButton {
+BEGIN_CS_NAMESPACE
+
+/**
+ * @brief   A class of MIDIOutputElement%s that read the input of a **momentary
+ *          push button or switch**, and send out MIDI **Note** events.
+ * 
+ * A Note On event is sent when the button is pressed, and a Note Off
+ * event is sent when the button is released.  
+ * The button is debounced in software.  
+ * This version cannot be banked.  
+ *
+ * @ingroup MIDIOutputElements
+ */
+class NoteButton : public MIDIButton<DigitalNoteSender> {
   public:
-    NoteButton(int pin, byte note, byte channel = 1);  // Constructor with pin, note, and optional channel
-    void begin();                                       // Initialize the button
-    void update();                                      // Update the button state
-    void setNote(byte note);                            // Change the MIDI note
-    void setChannel(byte channel);                      // Change the MIDI channel
+    /**
+     * @brief   Create a new NoteButton object with the given pin, note number
+     *          and channel.
+     * 
+     * @param   pin
+     *          The digital input pin to read from.  
+     *          The internal pull-up resistor will be enabled.
+     * @param   address
+     *          The MIDI address containing the note number [0, 127], 
+     *          channel [Channel_1, Channel_16], and optional cable number 
+     *          [Cable_1, Cable_16].
+     * @param   velocity
+     *          The velocity of the MIDI Note events.
+     */
+    NoteButton(pin_t pin, MIDIAddress address, uint8_t velocity = 0x7F)
+        : MIDIButton {
+              pin,
+              address,
+              {velocity},
+          } {}
 
-  private:
-    int _pin;              // Pin number for the button
-    byte _note;            // MIDI note to send when button is pressed
-    byte _channel;         // MIDI channel to send the note on
-    bool _lastButtonState; // Last button state
-    bool _currentButtonState; // Current button state
+    /// Set the velocity of the MIDI Note events.
+    void setVelocity(uint8_t velocity) { this->sender.setVelocity(velocity); }
+    /// Get the velocity of the MIDI Note events.
+    uint8_t getVelocity() const { return this->sender.getVelocity(); }
 };
 
-#endif
+END_CS_NAMESPACE

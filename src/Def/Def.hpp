@@ -5,14 +5,16 @@
 #include "Cable.hpp"
 #include "Channel.hpp"
 #include <AH/Containers/Array.hpp>
+#include <AH/Hardware/Arduino-Hardware-Types.hpp>
 #include <AH/Hardware/Hardware-Types.hpp>
-#include <limits>   // STL
+#include <AH/STL/limits>
 #include <Settings/NamespaceSettings.hpp>
 #include <stddef.h> // size_t
 #include <stdint.h> // uint8_t
 
 BEGIN_CS_NAMESPACE
 
+using ::ArduinoPin_t;
 using AH::analog_t;
 using AH::NO_PIN;
 using AH::pin_t;
@@ -50,7 +52,7 @@ struct EncoderPinList {
 /// The type used for Selector%s.
 using setting_t = uint8_t;
 /// A special setting that indicates an unused or invalid setting.
-constexpr setting_t NO_SETTING =
+constexpr setting_t NoSetting =
     (std::numeric_limits<setting_t>::max() >> 1) + 1;
 
 // Updatable types:

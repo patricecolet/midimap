@@ -5,13 +5,8 @@
 #ifndef PrintStream_h
 #define PrintStream_h
 
-#include <AH/Settings/NamespaceSettings.hpp>
-#include <AH/Settings/Warnings.hpp>
-AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
-
-AH_DIAGNOSTIC_EXTERNAL_HEADER()
 #include <AH/Arduino-Wrapper.h> // Print
-AH_DIAGNOSTIC_POP()
+#include <AH/Settings/NamespaceSettings.hpp>
 
 BEGIN_AH_NAMESPACE
 
@@ -84,10 +79,14 @@ Print &operator<<(Print &p, HexDump h);
 
 /// @}
 
+END_AH_NAMESPACE
+
 #ifndef ARDUINO
 
 #include <iomanip>
 #include <iostream>
+
+BEGIN_AH_NAMESPACE
 
 // TODO: check conflicts between Arduino version and C++ STL version
 using std::endl;
@@ -116,11 +115,9 @@ inline std::ostream &operator<<(std::ostream &os,
 
 std::ostream &operator<<(std::ostream &p, HexDump h);
 
-#endif
-
 END_AH_NAMESPACE
 
-AH_DIAGNOSTIC_POP()
+#endif
 
 #include <Settings/NamespaceSettings.hpp>
 
