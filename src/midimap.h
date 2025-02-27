@@ -9,16 +9,16 @@
 
 #pragma once
 #include <Arduino.h>
-
+#include <AH/Arduino-Wrapper.h>
 #include <MIDIUSB.h>
 
 // ------------------------------- Main Logic ------------------------------- //
-#include <midimap_class/midimap_class.hpp>
+#include <midimap/midimap_class.hpp>
 
 // ------------------------------ MIDI Outputs ------------------------------ //
-#include <MIDI_outputs/CCPotentiometer.hpp>
+#include <MIDI_Outputs/CCPotentiometer.hpp>
 
-#include <MIDI_outputs/NoteButton.hpp>
+#include <MIDI_Outputs/NoteButton.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
@@ -30,6 +30,7 @@
 // ----------------------------- MIDI Constants ----------------------------- //
 
 #include <MIDI_Constants/Control_Change.hpp>
+#include <MIDI_Constants/Notes.hpp>
 
 BEGIN_CS_NAMESPACE
 #ifndef NO_USING_NAMESPACE_AH

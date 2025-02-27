@@ -1,7 +1,7 @@
 #pragma once
 
 #include <AH/Math/IncreaseBitDepth.hpp>
-#include <midimap_class/midimap_class.hpp>
+#include <midimap/midimap_class.hpp>
 
 BEGIN_CS_NAMESPACE
 
