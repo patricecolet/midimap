@@ -32,9 +32,11 @@
  * 
  * Written by PieterP, 2019-08-07  
  * https://github.com/tttapa/Control-Surface
+ * 
+ * Modified by Hazri Haqimi, 2025-03-03
  */
 
-#include <midimap.h> // Include the Control Surface library
+#include <midimap.h> // Include the midimap library
 
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
@@ -46,9 +48,9 @@ NoteButton button {
 };
 
 void setup() {
-  midimap.begin(); // Initialize Control Surface
+  midimap.begin(); // Initialize midimap
 }
 
 void loop() {
-  midimap.loop(); // Update the Control Surface
+  midimap.loop(); // Update the midimap
 }
