@@ -35,7 +35,7 @@ USBMIDI_Interface midi;
 // Instantiate a PolyAftertouch object
 PolyAftertouchSensor photoresistor {
   A0,                                   // Analog pin connected to photoresistor
-   CHANNEL_1, // Channel volume of channel 1
+  {MIDI_Notes::C[4], Channel_1}, // Channel volume of channel 1
 };
 
 void setup() {

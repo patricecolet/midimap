@@ -10,7 +10,7 @@ BEGIN_CS_NAMESPACE
  * @tparam  INPUT_PRECISION_BITS
  *          The resolution of the input values. For example, if
  *          @p INPUT_PRECISION_BITS == 10, the send function expects a @p value
- *          between 0 and 4095.
+ *          between 0 and 1024.
  *
  * @ingroup MIDI_Senders
  */
@@ -20,7 +20,7 @@ class PolyphonicPressureSender
 public:
 static void send(uint16_t value, MIDIAddress address) {
     static_assert(INPUT_PRECISION_BITS <= 10,
-                  "Aftertouch resolution is 7 bits (max input: 12-bit)");
+                  "Aftertouch resolution is 7 bits (max input: 10-bit)");
         // Map value to 7-bit range (0-127)
         value = map(value, 0, (1 << precision()) - 1, 0, 127);
           
