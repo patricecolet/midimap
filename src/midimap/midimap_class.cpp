@@ -8,7 +8,6 @@
 #include <MIDI_Outputs/Abstract/MIDIOutputElement.hpp>
 #include <Selectors/Selector.hpp>
 
-
 #include <AH/Arduino-Wrapper.h>
 
 BEGIN_CS_NAMESPACE
@@ -44,7 +43,6 @@ void midimap_::begin()
     Updatable<>::beginAll();
     //    Updatable<Display>::beginAll();
     //    displayTimer.begin();
-    
 }
 
 bool midimap_::connectDefaultMIDI_Interface()
@@ -77,6 +75,7 @@ void midimap_::loop()
     //    if (displayTimer)
     //        updateDisplays();
     ExtendedIOElement::updateAllBufferedOutputs();
+    
 }
 
 void midimap_::updateMidiInput()

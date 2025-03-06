@@ -37,11 +37,9 @@ AftertouchUltrasonic ultrasonic{7, {MIDI_Notes::C[4], Channel_1}};
 void setup()
 {
   midimap.begin();
-  ultrasonic.begin();
 }
 
 void loop()
 {
   midimap.loop();
-  ultrasonic.update();
 }

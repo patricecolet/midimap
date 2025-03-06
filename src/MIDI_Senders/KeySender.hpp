@@ -5,18 +5,18 @@
 
 BEGIN_CS_NAMESPACE
 
-class KeySender 
+class KeySender
 {
 public:
     KeySender(MIDIAddress address, pin_t pin)
-        : _address(address), _pin(pin) {}
+        : _address(address), _pin(pin){}
 
-    void begin() 
+    void begin()
     {
         pinMode(_pin, OUTPUT); // Set pin mode to input
     }
 
-    void update()  
+    void update()
     {
         digitalWrite(_pin, LOW);
         delayMicroseconds(2);
@@ -24,10 +24,10 @@ public:
         delayMicroseconds(10);
         digitalWrite(_pin, LOW);
 
-        //pinMode(_pin, INPUT);
+        // pinMode(_pin, INPUT);
 
         long duration = pulseIn(_pin, HIGH, 30000); // Measure pulse duration
-         // Debugging line to print the duration
+                                                    // Debugging line to print the duration
 
         if (duration == 0)
         {
@@ -38,11 +38,14 @@ public:
         uint8_t value = map(distance, 0, 100, 0, 127);
         value = constrain(value, 0, 127);
 
-        Serial.print("value: ");
-        Serial.println(value);
+        // Only send the MIDI message if the value has changed
+        static uint8_t last_value = 255; // Initialize with an impossible value
 
-        midimap.sendKeyPressure(_address, value); // Send MIDI message
-        //pinMode(_pin, OUTPUT);                    // Set pin mode to input
+        if (value != last_value)
+        {
+            midimap.sendKeyPressure(_address, value); // Send MIDI message
+            last_value = value;                       // Update the last_value with the current one
+        } // Set pin mode to input
     }
 
 private:

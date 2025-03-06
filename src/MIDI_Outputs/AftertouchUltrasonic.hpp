@@ -16,7 +16,7 @@ BEGIN_CS_NAMESPACE
  * @ingroup MIDIOutputElements
  */
 
-class AftertouchUltrasonic : public KeySender
+class AftertouchUltrasonic : public KeySender, public Updatable<>
 {
 public:
   AftertouchUltrasonic(pin_t pin, MIDIAddress address)
