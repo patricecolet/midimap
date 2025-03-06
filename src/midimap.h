@@ -17,8 +17,8 @@
 
 // ------------------------------ MIDI Outputs ------------------------------ //
 #include <MIDI_Outputs/CCPotentiometer.hpp>
-
 #include <MIDI_Outputs/NoteButton.hpp>
+#include <MIDI_Outputs/AftertouchUltrasonic.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
