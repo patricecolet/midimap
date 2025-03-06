@@ -8,30 +8,32 @@
 #include <MIDI_Outputs/Abstract/MIDIOutputElement.hpp>
 #include <Selectors/Selector.hpp>
 
+
 #include <AH/Arduino-Wrapper.h>
 
 BEGIN_CS_NAMESPACE
 
 using AH::ExtendedIOElement;
 
-midimap_ &midimap_::getInstance() {
+midimap_ &midimap_::getInstance()
+{
     static midimap_ instance;
     return instance;
 }
 
-void midimap_::begin() {
+void midimap_::begin()
+{
 #if defined(ARDUINO) && defined(DEBUG_OUT)
     DEBUG_OUT.begin(AH::defaultBaudRate);
     delay(250);
 #endif
 
     connectDefaultMIDI_Interface();
-
     FilteredAnalog<>::setupADC();
     ExtendedIOElement::beginAll();
     Updatable<MIDI_Interface>::beginAll();
     MIDIOutputOnly::beginAll();
-//    beginDisplays();
+    //    beginDisplays();
     MIDIInputElementNote::beginAll();
     MIDIInputElementKP::beginAll();
     MIDIInputElementCC::beginAll();
@@ -40,15 +42,18 @@ void midimap_::begin() {
     MIDIInputElementPB::beginAll();
     MIDIInputElementSysEx::beginAll();
     Updatable<>::beginAll();
-//    Updatable<Display>::beginAll();
-//    displayTimer.begin();
+    //    Updatable<Display>::beginAll();
+    //    displayTimer.begin();
+    
 }
 
-bool midimap_::connectDefaultMIDI_Interface() {
+bool midimap_::connectDefaultMIDI_Interface()
+{
     if (hasSinkPipe() || hasSourcePipe())
         return false;
     auto def = MIDI_Interface::getDefault();
-    if (def == nullptr) {
+    if (def == nullptr)
+    {
         FATAL_ERROR(F("No default MIDI Interface"), 0xF123);
         return false;
     }
@@ -57,39 +62,47 @@ bool midimap_::connectDefaultMIDI_Interface() {
     return true;
 }
 
-void midimap_::disconnectMIDI_Interfaces() {
+void midimap_::disconnectMIDI_Interfaces()
+{
     disconnectSinkPipes();
     disconnectSourcePipes();
 }
 
-void midimap_::loop() {
+void midimap_::loop()
+{
     ExtendedIOElement::updateAllBufferedInputs();
     Updatable<>::updateAll();
     updateMidiInput();
     updateInputs();
-//    if (displayTimer)
-//        updateDisplays();
+    //    if (displayTimer)
+    //        updateDisplays();
     ExtendedIOElement::updateAllBufferedOutputs();
 }
 
-void midimap_::updateMidiInput() {
+void midimap_::updateMidiInput()
+{
     Updatable<MIDI_Interface>::updateAll();
 }
 
-void midimap_::sendChannelMessageImpl(ChannelMessage msg) {
+void midimap_::sendChannelMessageImpl(ChannelMessage msg)
+{
     this->sourceMIDItoPipe(msg);
 }
-void midimap_::sendSysExImpl(SysExMessage msg) {
+void midimap_::sendSysExImpl(SysExMessage msg)
+{
     this->sourceMIDItoPipe(msg);
 }
-void midimap_::sendSysCommonImpl(SysCommonMessage msg) {
+void midimap_::sendSysCommonImpl(SysCommonMessage msg)
+{
     this->sourceMIDItoPipe(msg);
 }
-void midimap_::sendRealTimeImpl(RealTimeMessage msg) {
+void midimap_::sendRealTimeImpl(RealTimeMessage msg)
+{
     this->sourceMIDItoPipe(msg);
 }
 
-void midimap_::sinkMIDIfromPipe(ChannelMessage midimsg) {
+void midimap_::sinkMIDIfromPipe(ChannelMessage midimsg)
+{
 #ifdef DEBUG_MIDI_PACKETS
     if (midimsg.hasTwoDataBytes())
         DEBUG(">>> " << hex << midimsg.header << ' ' << midimsg.data1 << ' '
@@ -106,77 +119,101 @@ void midimap_::sinkMIDIfromPipe(ChannelMessage midimsg) {
         return;
 
     if (midimsg.getMessageType() == MIDIMessageType::CONTROL_CHANGE &&
-        midimsg.getData1() == MIDI_CC::Reset_All_Controllers) {
+        midimsg.getData1() == MIDI_CC::Reset_All_Controllers)
+    {
         // Reset All Controllers
         DEBUG(F("Reset All Controllers"));
         MIDIInputElementCC::resetAll();
         MIDIInputElementCP::resetAll();
-    } else if (midimsg.getMessageType() == MIDIMessageType::CONTROL_CHANGE &&
-               midimsg.getData1() == MIDI_CC::All_Notes_Off) {
+    }
+    else if (midimsg.getMessageType() == MIDIMessageType::CONTROL_CHANGE &&
+             midimsg.getData1() == MIDI_CC::All_Notes_Off)
+    {
         // All Notes Off
         MIDIInputElementNote::resetAll();
-    } else {
-        switch (midimsg.getMessageType()) {
-            case MIDIMessageType::NONE: break;
-            case MIDIMessageType::NOTE_OFF: // fallthrough
-            case MIDIMessageType::NOTE_ON:
-                DEBUGFN(F("Updating Note elements with new MIDI "
-                          "message."));
-                MIDIInputElementNote::updateAllWith(midimsg);
-                break;
-            case MIDIMessageType::KEY_PRESSURE:
-                DEBUGFN(F("Updating Key Pressure elements with new MIDI "
-                          "message."));
-                MIDIInputElementKP::updateAllWith(midimsg);
-                break;
-            case MIDIMessageType::CONTROL_CHANGE:
-                DEBUGFN(F("Updating CC elements with new MIDI "
-                          "message."));
-                MIDIInputElementCC::updateAllWith(midimsg);
-                break;
-            case MIDIMessageType::PROGRAM_CHANGE:
-                DEBUGFN(F("Updating Program Change elements with new MIDI "
-                          "message."));
-                MIDIInputElementPC::updateAllWith(midimsg);
-                break;
-            case MIDIMessageType::CHANNEL_PRESSURE:
-                DEBUGFN(F("Updating Channel Pressure elements with new MIDI "
-                          "message."));
-                MIDIInputElementCP::updateAllWith(midimsg);
-                break;
-            case MIDIMessageType::PITCH_BEND:
-                // Channel Pressure
-                DEBUGFN(F("Updating Pitch Bend elements with new MIDI "
-                          "message."));
-                MIDIInputElementPB::updateAllWith(midimsg);
-                break;
+    }
+    else
+    {
+        switch (midimsg.getMessageType())
+        {
+        case MIDIMessageType::NONE:
+            break;
+        case MIDIMessageType::NOTE_OFF: // fallthrough
+        case MIDIMessageType::NOTE_ON:
+            DEBUGFN(F("Updating Note elements with new MIDI "
+                      "message."));
+            MIDIInputElementNote::updateAllWith(midimsg);
+            break;
+        case MIDIMessageType::KEY_PRESSURE:
+            DEBUGFN(F("Updating Key Pressure elements with new MIDI "
+                      "message."));
+            MIDIInputElementKP::updateAllWith(midimsg);
+            break;
+        case MIDIMessageType::CONTROL_CHANGE:
+            DEBUGFN(F("Updating CC elements with new MIDI "
+                      "message."));
+            MIDIInputElementCC::updateAllWith(midimsg);
+            break;
+        case MIDIMessageType::PROGRAM_CHANGE:
+            DEBUGFN(F("Updating Program Change elements with new MIDI "
+                      "message."));
+            MIDIInputElementPC::updateAllWith(midimsg);
+            break;
+        case MIDIMessageType::CHANNEL_PRESSURE:
+            DEBUGFN(F("Updating Channel Pressure elements with new MIDI "
+                      "message."));
+            MIDIInputElementCP::updateAllWith(midimsg);
+            break;
+        case MIDIMessageType::PITCH_BEND:
+            // Channel Pressure
+            DEBUGFN(F("Updating Pitch Bend elements with new MIDI "
+                      "message."));
+            MIDIInputElementPB::updateAllWith(midimsg);
+            break;
 
-            // These MIDI types are not channel messages, so aren't handled here
-            // LCOV_EXCL_START
-            case MIDIMessageType::SYSEX_START: break;
-            case MIDIMessageType::MTC_QUARTER_FRAME: break;
-            case MIDIMessageType::SONG_POSITION_POINTER: break;
-            case MIDIMessageType::SONG_SELECT: break;
-            case MIDIMessageType::UNDEFINED_SYSCOMMON_1: break;
-            case MIDIMessageType::UNDEFINED_SYSCOMMON_2: break;
-            case MIDIMessageType::TUNE_REQUEST: break;
-            case MIDIMessageType::SYSEX_END: break;
-            case MIDIMessageType::TIMING_CLOCK: break;
-            case MIDIMessageType::UNDEFINED_REALTIME_1: break;
-            case MIDIMessageType::START: break;
-            case MIDIMessageType::CONTINUE: break;
-            case MIDIMessageType::STOP: break;
-            case MIDIMessageType::UNDEFINED_REALTIME_2: break;
-            case MIDIMessageType::ACTIVE_SENSING: break;
-            case MIDIMessageType::SYSTEM_RESET: break;
-            default:
-                break;
-                // LCOV_EXCL_STOP
+        // These MIDI types are not channel messages, so aren't handled here
+        // LCOV_EXCL_START
+        case MIDIMessageType::SYSEX_START:
+            break;
+        case MIDIMessageType::MTC_QUARTER_FRAME:
+            break;
+        case MIDIMessageType::SONG_POSITION_POINTER:
+            break;
+        case MIDIMessageType::SONG_SELECT:
+            break;
+        case MIDIMessageType::UNDEFINED_SYSCOMMON_1:
+            break;
+        case MIDIMessageType::UNDEFINED_SYSCOMMON_2:
+            break;
+        case MIDIMessageType::TUNE_REQUEST:
+            break;
+        case MIDIMessageType::SYSEX_END:
+            break;
+        case MIDIMessageType::TIMING_CLOCK:
+            break;
+        case MIDIMessageType::UNDEFINED_REALTIME_1:
+            break;
+        case MIDIMessageType::START:
+            break;
+        case MIDIMessageType::CONTINUE:
+            break;
+        case MIDIMessageType::STOP:
+            break;
+        case MIDIMessageType::UNDEFINED_REALTIME_2:
+            break;
+        case MIDIMessageType::ACTIVE_SENSING:
+            break;
+        case MIDIMessageType::SYSTEM_RESET:
+            break;
+        default:
+            break;
+            // LCOV_EXCL_STOP
         }
     }
 }
 
-void midimap_::sinkMIDIfromPipe(SysExMessage msg) {
+void midimap_::sinkMIDIfromPipe(SysExMessage msg)
+{
 #ifdef DEBUG_MIDI_PACKETS
     const uint8_t *data = msg.data;
     size_t len = msg.length;
@@ -192,7 +229,8 @@ void midimap_::sinkMIDIfromPipe(SysExMessage msg) {
     MIDIInputElementSysEx::updateAllWith(msg);
 }
 
-void midimap_::sinkMIDIfromPipe(SysCommonMessage msg) {
+void midimap_::sinkMIDIfromPipe(SysCommonMessage msg)
+{
 #ifdef DEBUG_MIDI_PACKETS
     DEBUG_OUT << ">>> " << hex << msg.getMessageType() << ' ' << msg.getData1()
               << ' ' << msg.getData2() << " (" << msg.cable << ')' << dec
@@ -204,7 +242,8 @@ void midimap_::sinkMIDIfromPipe(SysCommonMessage msg) {
         return;
 }
 
-void midimap_::sinkMIDIfromPipe(RealTimeMessage rtMessage) {
+void midimap_::sinkMIDIfromPipe(RealTimeMessage rtMessage)
+{
 #ifdef DEBUG_MIDI_PACKETS
     DEBUG(">>> " << hex << rtMessage.message << " ("
                  << rtMessage.cable.getOneBased() << ')' << dec);
@@ -216,7 +255,8 @@ void midimap_::sinkMIDIfromPipe(RealTimeMessage rtMessage) {
         return;
 }
 
-void midimap_::updateInputs() {
+void midimap_::updateInputs()
+{
     MIDIInputElementNote::updateAll();
     MIDIInputElementKP::updateAll();
     MIDIInputElementCC::updateAll();
