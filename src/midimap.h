@@ -23,6 +23,7 @@
 #include <MIDI_Outputs/ChannelPressureSensor.hpp>
 #include <MIDI_Outputs/PolyAftertouchSensor.hpp>
 
+#include <MIDI_Outputs/AftertouchUltrasonic.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
