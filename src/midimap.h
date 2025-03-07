@@ -20,6 +20,10 @@
 
 #include <MIDI_Outputs/NoteButton.hpp>
 
+#include <MIDI_Outputs/ChannelPressureSensor.hpp>
+#include <MIDI_Outputs/PolyAftertouchSensor.hpp>
+
+
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
 #include <MIDI_Interfaces/USBMIDI_Interface.hpp>
