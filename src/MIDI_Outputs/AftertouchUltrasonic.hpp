@@ -1,8 +1,6 @@
 #pragma once
 
 #include <MIDI_Senders/KeySender.hpp>
-#include <MIDI_Interfaces/USBMIDI_Interface.hpp>
-#include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
 
 BEGIN_CS_NAMESPACE
 

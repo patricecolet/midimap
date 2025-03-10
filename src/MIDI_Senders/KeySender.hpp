@@ -1,7 +1,6 @@
 #pragma once
 
 #include <midimap/midimap_class.hpp>
-#include <Arduino.h>
 
 BEGIN_CS_NAMESPACE
 
