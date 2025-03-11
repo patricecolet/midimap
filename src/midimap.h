@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include <AH/Arduino-Wrapper.h>
 #include <MIDIUSB.h>
+#include <Wire.h>
 
 // ------------------------------- Main Logic ------------------------------- //
 #include <midimap/midimap_class.hpp>
@@ -24,6 +25,7 @@
 #include <MIDI_Outputs/ChannelPressureSensor.hpp>
 #include <MIDI_Outputs/PolyAftertouchSensor.hpp>
 
+#include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
 
