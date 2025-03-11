@@ -32,14 +32,12 @@
 USBMIDI_Interface midi;
 
 // Ultrasonic sensor on pin 7, sending aftertouch for Note C4 (60) on Channel 1
-AftertouchUltrasonic ultrasonic{7, {MIDI_Notes::C[4], Channel_1}};
+CCUltrasonic ultrasonic{7, {MIDI_Notes::C[4], Channel_1}};
 
-void setup()
-{
-  midimap.begin();
+void setup() {
+  midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
-  midimap.loop();
+void loop() {
+  midimap.loop(); // Update the midimap
 }
