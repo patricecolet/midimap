@@ -18,12 +18,16 @@
 
 // ------------------------------ MIDI Outputs ------------------------------ //
 #include <MIDI_Outputs/CCPotentiometer.hpp>
+#include <MIDI_Outputs/PBPotentiometer.hpp>
 
 #include <MIDI_Outputs/NoteButton.hpp>
 
 #include <MIDI_Outputs/ChannelPressureSensor.hpp>
 #include <MIDI_Outputs/PolyAftertouchSensor.hpp>
+
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
+#include <MIDI_Outputs/CCUltrasonic.hpp>
+#include <MIDI_Outputs/PBUltrasonic.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
