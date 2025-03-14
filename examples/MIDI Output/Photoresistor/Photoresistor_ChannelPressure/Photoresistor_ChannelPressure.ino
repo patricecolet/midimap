@@ -31,21 +31,30 @@
  * Written by Hazri Haqimi, 2025-03-03
  */
 
-#include <midimap.h> // Include the midimap library
+ #include <midimap.h> // Include the midimap library for handling MIDI messages
 
-// Instantiate a MIDI over USB interface.
-USBMIDI_Interface midi;
-
-// Instantiate a ChannelPressureSensor object
-ChannelPressureSensor photoresistor {
-  A0,                                   // Analog pin connected to photoresistor
-   CHANNEL_1, // Channel volume of channel 1
-};
-
-void setup() {
-  midimap.begin(); // Initialize midimap
-}
-
-void loop() {
-  midimap.loop(); // Update the midimap
-}
+ // Instantiate a MIDI over USB interface
+ USBMIDI_Interface midi; 
+ 
+ // Define threshold values for note triggering
+ const uint8_t TriggerValue = 60;        // Value at which aftertouch begins
+ const uint8_t MinNoteThreshold = 10;    // Minimum value required to trigger a note
+ 
+ // Instantiate a VelostatPolyNote object to handle MIDI note and aftertouch behavior
+ VelostatPolyNote Velostat{
+     A0,                            // Analog pin connected to Velostat sensor
+     {MIDI_Notes::C[4], Channel_1}, // MIDI Note C4 on channel 1
+     TriggerValue,                  // Threshold for triggering aftertouch
+     MinNoteThreshold               // Minimum threshold to activate a note
+ };
+ 
+ void setup()
+ {
+   midimap.begin(); // Initialize the midimap library for MIDI communication
+ }
+ 
+ void loop()
+ {
+   midimap.loop(); // Continuously process MIDI events in the main loop
+ }
+ 
