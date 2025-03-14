@@ -28,8 +28,6 @@ class PolyAftertouchSensor : public MIDIFilteredAnalog<PolyphonicPressureSender<
     PolyAftertouchSensor(pin_t analogPin, MIDIAddress address)
         : MIDIFilteredAnalog(analogPin, address, {})  {}
 
-    /// Set the note that the Polyphonic Aftertouch affects.
-
 };
 
 END_CS_NAMESPACE
