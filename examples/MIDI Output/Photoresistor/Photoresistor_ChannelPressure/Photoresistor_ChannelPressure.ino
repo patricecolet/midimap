@@ -31,7 +31,7 @@
  * Written by Hazri Haqimi, 2025-03-03
  */
 
-#include <midimap.h> // Include the midimap library
+ #include <midimap.h> // Include the midimap library for handling MIDI messages
 
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
@@ -49,3 +49,4 @@ void setup() {
 void loop() {
   midimap.loop(); // Update the midimap
 }
+ 
