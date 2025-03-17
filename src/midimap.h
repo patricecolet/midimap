@@ -28,7 +28,7 @@
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
-#include <MIDI_Outputs/VelostatPolyNote.hpp>
+#include <MIDI_Outputs/VelostatNote.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>

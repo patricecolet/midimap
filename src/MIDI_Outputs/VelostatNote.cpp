@@ -1,3 +1,3 @@
 #ifdef TEST_COMPILE_ALL_HEADERS_SEPARATELY
-#include "VelostatPolyNoteSender.hpp"
+#include "VelostatNote.hpp"
 #endif

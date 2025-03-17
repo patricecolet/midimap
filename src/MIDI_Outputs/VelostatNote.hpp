@@ -1,7 +1,7 @@
 #pragma once
 
 #include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
-#include <MIDI_Senders/VelostatPolyNoteSender.hpp>
+#include <MIDI_Senders/VelostatNoteSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -13,7 +13,7 @@ BEGIN_CS_NAMESPACE
  * **Polyphonic Aftertouch** (Poly Pressure) messages, making it ideal 
  * for expressive MIDI controllers.
  */
-class VelostatPolyNote : public MIDIFilteredAnalog<VelostatPolyNoteSender> {
+class VelostatNote : public MIDIFilteredAnalog<VelostatNoteSender> {
   public:
     /** 
      * @brief   Create a new **VelostatPolyNote** object with the given analog pin,
@@ -28,7 +28,7 @@ class VelostatPolyNote : public MIDIFilteredAnalog<VelostatPolyNoteSender> {
      * @param   MinNoteThreshold
      *          The minimum value required for the note to activate.
      */
-    VelostatPolyNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold)
+    VelostatNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold)
         : MIDIFilteredAnalog(analogPin, address, {TriggerValue, MinNoteThreshold}) {}
 
 };

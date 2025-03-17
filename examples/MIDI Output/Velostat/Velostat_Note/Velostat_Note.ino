@@ -51,11 +51,11 @@
 
 USBMIDI_Interface midi; // Instantiate a MIDI over USB interface.
 
-const uint8_t TriggerValue = 60;
+const uint8_t TriggerValue = 60; //range = MinNoteThreshold until 127
 const uint8_t MinNoteThreshold = 10;
 
 // Instantiate a CCPotentiometer object
-VelostatPolyNote Velostat{
+VelostatNote Velostat{
     A0,                            // Analog pin connected to potentiometer
     {MIDI_Notes::C[4], Channel_1}, // Note C4 on channel 1
     TriggerValue,                      // Starting of the aftertouch

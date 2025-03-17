@@ -24,7 +24,7 @@ BEGIN_CS_NAMESPACE
  * 
  * @note This class is designed to provide smooth, continuous control of **Polyphonic Aftertouch**, making it suitable for use in expressive MIDI controllers, such as those with pressure-sensitive sensors.
  */
-class VelostatPolyNoteSender {
+class VelostatNoteSender {
     public:
         /**
          * @brief   Constructor for VelostatPolyNoteSender.
@@ -34,7 +34,7 @@ class VelostatPolyNoteSender {
          * @param   MinNoteThreshold
          *          The minimum threshold for triggering a note.
          */
-        VelostatPolyNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold)
+        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold)
         : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) {}
 
         /**
@@ -55,7 +55,7 @@ class VelostatPolyNoteSender {
         void send(uint8_t value, MIDIAddress address) {
             static bool isNoteOn = false; // Tracks if the note is currently on
 
-            Serial.println(value);  // Print the value for debugging
+            //Serial.println(value);  // Print the value for debugging
         
             if (value < _MinNoteThreshold) {
                 // If the value is below MinNoteThreshold, stop the note (send Note Off)
