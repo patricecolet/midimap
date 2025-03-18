@@ -18,6 +18,7 @@
 
 // ------------------------------ MIDI Outputs ------------------------------ //
 #include <MIDI_Outputs/CCPotentiometer.hpp>
+#include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 
 #include <MIDI_Outputs/NoteButton.hpp>
@@ -29,6 +30,9 @@
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
 #include <MIDI_Outputs/VelostatNote.hpp>
+
+#include <MIDI_Outputs/6-Capteurs.hpp>
+
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
