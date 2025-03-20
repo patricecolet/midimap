@@ -10,14 +10,6 @@
 #pragma once
 #include <Arduino.h>
 #include <AH/Arduino-Wrapper.h>
-
-#ifdef ESP32
-    #include <USB.h>
-    #include <USBMIDI.h>
-#else
-    #include <MIDIUSB.h>
-#endif
-
 #include <Wire.h>
 
 // ------------------------------- Main Logic ------------------------------- //
