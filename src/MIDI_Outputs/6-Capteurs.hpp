@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MIDI_Outputs/Abstract/MIDIButton2.hpp>
+#include <MIDI_Outputs/Abstract/MIDIButtonInverse.hpp>
 #include <MIDI_Senders/DigitalNoteSender.hpp>
 
 BEGIN_CS_NAMESPACE
@@ -16,24 +16,24 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDIOutputElements
  */
-class NoteButton2 : public MIDIButton2<DigitalNoteSender> {
+class NoteButtonInverse : public MIDIButtonInverse<DigitalNoteSender> {
   public:
     /**
-     * @brief   Create a new NoteButton2 object with the given pin, note number
+     * @brief   Create a new NoteButtonInverse object with the given pin, note number
      *          and channel.
      * 
      * @param   pin
      *          The digital input pin to read from.  
      *          The internal pull-up resistor will be enabled.
      * @param   address
-     *          The MIDI address containing the note number [0, 127], 
+     *          The MIDI address containing the note number [0, 1Inverse7], 
      *          channel [Channel_1, Channel_16], and optional cable number 
      *          [Cable_1, Cable_16].
      * @param   velocity
      *          The velocity of the MIDI Note events.
      */
-    NoteButton2(pin_t pin, MIDIAddress address, uint8_t velocity = 0x7F)
-        : MIDIButton2 {
+    NoteButtonInverse(pin_t pin, MIDIAddress address, uint8_t velocity = 0x7F)
+        : MIDIButtonInverse {
               pin,
               address,
               {velocity},

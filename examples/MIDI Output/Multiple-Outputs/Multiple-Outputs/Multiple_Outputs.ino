@@ -3,23 +3,23 @@
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
 
-// Instantiate NoteButton2 objects
-NoteButton2 capa1 {
+// Instantiate NoteButtonInverse objects
+NoteButtonInverse capa1 {
   0,                             // Push button on pin 0
   {MIDI_Notes::C[4], Channel_1}, // Note C4 on MIDI channel 1
 };
 
-NoteButton2 capa2 {
+NoteButtonInverse capa2 {
   1,                             // Push button on pin 1
   {MIDI_Notes::D[4], Channel_1}, // Note D4 on MIDI channel 1
 };
 
-NoteButton2 capa3 {
+NoteButtonInverse capa3 {
   2,                             // Push button on pin 2
   {MIDI_Notes::E[4], Channel_1}, // Note E4 on MIDI channel 1
 };
 
-NoteButton2 capa4 {
+NoteButtonInverse capa4 {
   3,                             // Push button on pin 3
   {MIDI_Notes::F[4], Channel_1}, // Note F4 on MIDI channel 1
 };

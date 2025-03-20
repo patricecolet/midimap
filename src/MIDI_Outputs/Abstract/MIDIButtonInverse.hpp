@@ -14,10 +14,10 @@ BEGIN_CS_NAMESPACE
  * @see     Button
  */
 template <class Sender>
-class MIDIButton2 : public MIDIOutputElement {
+class MIDIButtonInverse : public MIDIOutputElement {
   public:
     /**
-     * @brief   Construct a new MIDIButton2.
+     * @brief   Construct a new MIDIButtonInverse.
      *
      * @param   pin
      *          The digital input pin with the button connected.
@@ -27,7 +27,7 @@ class MIDIButton2 : public MIDIOutputElement {
      * @param   sender
      *          The MIDI sender to use.
      */
-    MIDIButton2(pin_t pin, MIDIAddress address, const Sender &sender)
+    MIDIButtonInverse(pin_t pin, MIDIAddress address, const Sender &sender)
         : button(pin), address(address), sender(sender) {}
 
     void begin() override { button.begin(); }
