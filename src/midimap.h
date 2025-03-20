@@ -30,12 +30,13 @@
 #include <MIDI_Outputs/PBUltrasonic.hpp>
 #include <MIDI_Outputs/VelostatNote.hpp>
 
-#include <MIDI_Outputs/6-Capteurs.hpp>
+#include <MIDI_Outputs/NoteButtonInverse.hpp>
 
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
 #include <MIDI_Interfaces/USBMIDI_Interface.hpp>
+#include <MIDI_Interfaces/BluetoothMIDI_Interface.hpp>
 
 // ------------------------- Extended Input Output -------------------------- //
 #include <AH/Hardware/ExtendedInputOutput/ExtendedInputOutput.hpp>
