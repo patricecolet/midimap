@@ -32,6 +32,11 @@
 
 #include <MIDI_Outputs/6-Capteurs.hpp>
 
+#include <MIDI_Outputs/Bankable/CCSmartPotentiometer.hpp>
+
+// ------------------------------- Selectors -------------------------------- //
+
+#include <Selectors/IncrementDecrementSelector.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
 #include <MIDI_Interfaces/DebugMIDI_Interface.hpp>
