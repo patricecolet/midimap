@@ -58,15 +58,12 @@ public:
 
         // Apply hysteresis filter and send MIDI control change if the value changes
         if (hysteresisX.update(mappedX)) { 
-            Serial.println(hysteresisX.getValue());
             midimap.sendControlChange(_addressX, hysteresisX.getValue() << 3);
         }
         if (hysteresisY.update(mappedY)) { 
-            Serial.println(hysteresisY.getValue());
             midimap.sendControlChange(_addressY, hysteresisY.getValue() << 3);
         }
         if (hysteresisZ.update(mappedZ)) { 
-            Serial.println(hysteresisZ.getValue());
             midimap.sendControlChange(_addressZ, hysteresisZ.getValue() << 3);
         }
     }

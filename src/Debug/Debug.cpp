@@ -14,10 +14,10 @@ END_AH_NAMESPACE
 
 #if defined(ESP32)
 BEGIN_AH_NAMESPACE
-std::mutex debugmutex;
+inline std::mutex debugmutex;
 END_AH_NAMESPACE
 #elif defined(ARDUINO_ARCH_MBED)
 BEGIN_AH_NAMESPACE
-rtos::Mutex debugmutex;
+inline rtos::Mutex debugmutex;
 END_AH_NAMESPACE
 #endif

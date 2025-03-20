@@ -10,7 +10,6 @@
 #pragma once
 #include <Arduino.h>
 #include <AH/Arduino-Wrapper.h>
-#include <MIDIUSB.h>
 #include <Wire.h>
 
 // ------------------------------- Main Logic ------------------------------- //
