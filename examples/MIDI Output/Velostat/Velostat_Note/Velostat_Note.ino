@@ -6,8 +6,7 @@
  * **voltage divider circuit** to generate MIDI **Polyphonic Aftertouch**. 
  * This allows for **independent pressure control per note**, adding expressiveness to your performance. 
  *
- * @boards  AVR, AVR USB, Nano Every, Due, Nano 33 IoT, Nano 33 BLE, UNO R4, Pi Pico, Teensy 3.x, ESP32, ESP8266
- * 
+ * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  * ## Electrical Setup: Voltage Divider (Pont Diviseur de Tension)
  * The circuit uses a **voltage divider** to convert the pressure-sensitive resistance of Velostat 
  * into a readable voltage signal:
