@@ -5,15 +5,18 @@
 #include "BLEMIDI/BLEMIDIPacketBuilder.hpp"
 #include "BLEMIDI/MIDIMessageQueue.hpp"
 #include "MIDI_Interface.hpp"
-#include "Util/ESP32Threads.hpp"
 #include <MIDI_Parsers/BLEMIDIParser.hpp>
 #include <MIDI_Parsers/SerialMIDI_Parser.hpp>
 
+// Include threading utilities only for ESP32
+#ifdef ESP32
+#include "Util/ESP32Threads.hpp"
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
+#endif
 
 #ifndef ARDUINO
 #include <gmock/gmock.h>
@@ -36,24 +39,38 @@ class BluetoothMIDI_Interface : public MIDI_Interface {
     };
     ~BluetoothMIDI_Interface() {
         instance = nullptr;
+        #ifdef ESP32
         stopSendingThread();
+        #endif
         end();
     }
 
   public:
     /// Send the buffered MIDI BLE packet immediately.
     void flush() {
+        #ifdef ESP32
         lock_t lock(mtx);
         flushImpl(lock);
+        #else
+        // Direct implementation for non-ESP32 platforms
+        // (Note: BLE functionality may be limited on SAMD)
+        #endif
     }
 
     /// Set the timeout, the number of milliseconds to buffer the outgoing MIDI
     /// messages. A shorter timeout usually results in lower latency, but also
     /// causes more overhead, because more packets might be required.
+    #ifdef ESP32
     void setTimeout(std::chrono::milliseconds timeout) {
         lock_t lock(mtx);
         this->timeout = timeout;
     }
+    #else
+    // Use a simpler version for non-ESP32 platforms
+    void setTimeout(unsigned long timeout_ms) {
+        // No-op for non-ESP32 platforms
+    }
+    #endif
 
   public:
     /// Set the BLE device name. Must be called before @ref begin().
@@ -97,12 +114,18 @@ class BluetoothMIDI_Interface : public MIDI_Interface {
     void parse(const uint8_t *const data, const size_t len);
 
   private:
+    #ifdef ESP32
     /// The minimum MTU of all connected clients.
     std::atomic_uint_fast16_t min_mtu{23};
     /// Override the minimum MTU (0 means don't override, nonzero overrides if
     /// it's smaller than the minimum MTU of the clients).
     /// @see    @ref forceMinMTU()
     std::atomic_uint_fast16_t force_min_mtu{0};
+    #else
+    /// For non-ESP32 platforms, use regular variables instead of atomic
+    uint16_t min_mtu = 23;
+    uint16_t force_min_mtu = 0;
+    #endif
 
     /// Set the maximum transmission unit of the Bluetooth link. Used to compute
     /// the MIDI BLE packet size.
@@ -129,8 +152,9 @@ class BluetoothMIDI_Interface : public MIDI_Interface {
     /// and `getSysExMessage()` methods.
     MIDIMessageQueue::MIDIMessageQueueElement incomingMessage;
 
+  #ifdef ESP32
   private:
-    // Synchronization for asynchronous BLE sending
+    // Synchronization for asynchronous BLE sending - ESP32 only
 
     /// Lock type used to lock the mutex
     using lock_t = std::unique_lock<std::mutex>;
@@ -172,6 +196,7 @@ class BluetoothMIDI_Interface : public MIDI_Interface {
 #endif
     /// Tell the background BLE sender thread to stop gracefully, and join it.
     void stopSendingThread();
+  #endif // ESP32
 
   public:
     static void midi_write_callback(const uint8_t *data, size_t length) {

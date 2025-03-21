@@ -28,9 +28,12 @@ class VelostatNote : public MIDIFilteredAnalog<VelostatNoteSender> {
      * @param   MinNoteThreshold
      *          The minimum value required for the note to activate.
      */
-    VelostatNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold)
-        : MIDIFilteredAnalog(analogPin, address, {TriggerValue, MinNoteThreshold}) {}
+    VelostatNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold,uint8_t velocity = 0x7F)
+        : MIDIFilteredAnalog(analogPin, address, {TriggerValue, MinNoteThreshold,velocity}) {}
 
+        void setVelocity(uint8_t velocity) { this->sender.setVelocity(velocity); }
+        /// Get the velocity of the MIDI Note events.
+        uint8_t getVelocity() const { return this->sender.getVelocity(); }
 };
 
 END_CS_NAMESPACE
