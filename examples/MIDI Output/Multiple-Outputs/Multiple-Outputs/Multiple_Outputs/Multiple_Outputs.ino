@@ -29,7 +29,7 @@ const uint8_t MinNoteThreshold1 = 20;
 
 // Instantiate Velostat objects
 VelostatNote Velostat1{
-    A7,                            // Analog pin connected to velostat
+    A8,                            // Analog pin connected to velostat
     {MIDI_Notes::G[4], Channel_1}, // Note G4 on channel 1
     TriggerValue1,                      // Starting of the aftertouch
     MinNoteThreshold1,                 // Minimum note threshold
@@ -40,7 +40,7 @@ const uint8_t MinNoteThreshold2 = 20;
 
 // Instantiate Velostat objects
 VelostatNote Velostat2{
-    A8,                            // Analog pin connected to velostat
+    A9,                            // Analog pin connected to velostat
     {MIDI_Notes::A[4], Channel_1}, // Note A4 on channel 1
     TriggerValue2,                      // Starting of the aftertouch
     MinNoteThreshold2,                 // Minimum note threshold
