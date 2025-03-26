@@ -6,7 +6,11 @@
 #include <Banks/Bank.hpp> // Bank<N>, BankSettingChangeCallback
 
 #include <AH/Containers/Updatable.hpp>
-#include <type_traits> // STL
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#else
+#include <type_traits> // STL is_unsigned
+#endif
 
 BEGIN_CS_NAMESPACE
 

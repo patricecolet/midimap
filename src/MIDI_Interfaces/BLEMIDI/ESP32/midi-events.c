@@ -1,4 +1,6 @@
 #ifdef ESP32
+#include <sdkconfig.h>
+#if CONFIG_BT_BLE_ENABLED
 
 /**
  * @file
@@ -11,6 +13,14 @@
 #include "ble2902.h"
 #include "logging.h"
 #include "midi-private.h"
+#include <esp_gap_ble_api.h>
+#include <stdbool.h>
+
+static bool security_initiate_encryption = false;
+
+void set_security_initiate_encryption(bool security_initiate_encryption_) {
+    security_initiate_encryption = security_initiate_encryption_;
+}
 
 void midi_handle_gatts_event(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
                              esp_ble_gatts_cb_param_t *param) {
@@ -23,6 +33,7 @@ void midi_handle_gatts_event(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
 
     switch (event) {
         case ESP_GATTS_REG_EVT:
+            esp_ble_gap_config_local_privacy(true);
             midi_handle_register_app_event(gatts_if, param);
             break;
 
@@ -57,6 +68,9 @@ void midi_handle_gatts_event(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
         case ESP_GATTS_START_EVT: break;
         case ESP_GATTS_STOP_EVT: break;
         case ESP_GATTS_CONNECT_EVT:
+            if (security_initiate_encryption)
+                esp_ble_set_encryption(param->connect.remote_bda,
+                                       ESP_BLE_SEC_ENCRYPT_MITM);
             midi_handle_connect_event(gatts_if, param);
             break;
         case ESP_GATTS_DISCONNECT_EVT:
@@ -84,4 +98,5 @@ void midi_handle_gatts_event(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
     }
 }
 
+#endif
 #endif

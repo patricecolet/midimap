@@ -6,7 +6,7 @@
  * This setup allows for dynamic control of MIDI aftertouch, adding more expressiveness to 
  * your performance or production.
  *
- * @boards  AVR, AVR USB, Nano Every, Due, Nano 33 IoT, Nano 33 BLE, UNO R4, Pi Pico, Teensy 3.x, ESP32, ESP8266
+ * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  * 
  * Cabling Details
  * ---------------

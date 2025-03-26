@@ -1,7 +1,12 @@
 #pragma once
 
 #include <AH/Error/Error.hpp>
-#include <type_traits> // STL
+
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#else
+#include <type_traits> 
+#endif
 #include <Def/Def.hpp>
 #include <stdint.h>
 

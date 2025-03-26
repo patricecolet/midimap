@@ -38,7 +38,7 @@
  * This setup allows you to create more interactive performances or adjust parameters in real-time based on 
  * device orientation.
  * 
- * @boards  AVR, AVR USB, Nano Every, Due, Nano 33 IoT, Nano 33 BLE, UNO R4, Pi Pico, Teensy 3.x, ESP32, ESP8266
+ * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  * 
  * Cabling Details
  * ---------------

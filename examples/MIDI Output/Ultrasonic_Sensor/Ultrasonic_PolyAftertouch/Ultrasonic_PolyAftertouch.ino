@@ -2,7 +2,7 @@
  * This example demonstrates the use of the Ultrasonic Distance Sensor that
  * can be used for changing effect of Aftertouch.
  *
- * @boards  AVR, AVR USB, Nano Every, Due, Nano 33 IoT, Nano 33 BLE, Pi Pico, Teensy 3.x, ESP32, ESP8266
+ * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  *
  * Connections
  * -----------

@@ -34,8 +34,8 @@ class VelostatNoteSender {
          * @param   MinNoteThreshold
          *          The minimum threshold for triggering a note.
          */
-        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold)
-        : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) {}
+        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold , uint8_t velocity = 0x7F)
+        : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) ,_velocity(velocity) {}
 
         /**
          * @brief   Reads the analog input and sends appropriate MIDI Note On, Note Off, and Polyphonic Aftertouch (Channel Pressure) messages.
@@ -67,19 +67,22 @@ class VelostatNoteSender {
             else if (value >= _MinNoteThreshold && value < _TriggerValue) {
                 // If value is between MinNoteThreshold and TriggerValue, play a normal note (Note On)
                 if (!isNoteOn) {
-                    midimap.sendNoteOn(address, 127);  // Note On with max velocity
+                    midimap.sendNoteOn(address, getVelocity());  // Note On with max velocity
                     isNoteOn = true;
                 }
             } 
             else if (value >= _TriggerValue) {
                 // If value exceeds TriggerValue, send Aftertouch along with Note On
                 if (!isNoteOn) {
-                    midimap.sendNoteOn(address, 127);  // Note On with max velocity
+                    midimap.sendNoteOn(address, getVelocity());  // Note On with max velocity
                     isNoteOn = true;
                 }
                 midimap.sendKeyPressure(address, value);  // Send Polyphonic Aftertouch (Channel Pressure)
             }
         }
+
+        void setVelocity(uint8_t velocity) { this->_velocity = velocity; }
+        uint8_t getVelocity() const { return this->_velocity; }
 
         /** 
          * @brief   Returns the precision of the sensor readings, which is fixed to 7 bits for MIDI compatibility.
@@ -88,7 +91,7 @@ class VelostatNoteSender {
         constexpr static uint8_t precision() { return 7; }
 
     private:
-        uint8_t _TriggerValue, _MinNoteThreshold;  ///< Thresholds for triggering Note On and Aftertouch
+        uint8_t _TriggerValue, _MinNoteThreshold, _velocity;  ///< Thresholds for triggering Note On and Aftertouch
 };
 
 END_CS_NAMESPACE

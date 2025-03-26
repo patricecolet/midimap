@@ -7,11 +7,15 @@
 #include <AH/Containers/Array.hpp>
 #include <AH/Hardware/Arduino-Hardware-Types.hpp>
 #include <AH/Hardware/Hardware-Types.hpp>
+
+#ifdef __AVR__
+#include <AH/STL/limits>
+#else
 #include <limits>
+#endif
 #include <Settings/NamespaceSettings.hpp>
 #include <stddef.h> // size_t
 #include <stdint.h> // uint8_t
-
 BEGIN_CS_NAMESPACE
 
 using ::ArduinoPin_t;
