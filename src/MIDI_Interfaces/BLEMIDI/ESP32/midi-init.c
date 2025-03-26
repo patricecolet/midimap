@@ -21,7 +21,7 @@
 
 #include <assert.h>
 
-const char *midi_ble_name = "Control Surface (BLE)";
+const char *midi_ble_name = "midimap (BLE)";
 
 void set_midi_ble_name(const char *name) { midi_ble_name = name; }
 
