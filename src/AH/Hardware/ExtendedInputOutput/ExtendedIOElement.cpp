@@ -3,8 +3,12 @@ AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
 #include "ExtendedIOElement.hpp"
 #include <AH/Error/Error.hpp>
-#include <type_traits> // STL is_unsigned
 
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#else
+#include <type_traits> // STL is_unsigned
+#endif
 BEGIN_AH_NAMESPACE
 
 ExtendedIOElement::ExtendedIOElement(pin_t length)

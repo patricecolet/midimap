@@ -1,14 +1,14 @@
 #pragma once
 
+#include <Settings/SettingsWrapper.hpp>
+#if !DISABLE_PIPES
+
 #include <AH/Containers/BitArray.hpp>
-#include <cstdint>  // STL
-#include <limits> // STL
-#include <utility>  // STL
-#include <AH/Settings/Warnings.hpp>
+#include <AH/STL/cstdint>
+#include <AH/STL/limits>
+#include <AH/STL/utility>
 #include <MIDI_Parsers/MIDI_MessageTypes.hpp>
 #include <Settings/NamespaceSettings.hpp>
-
-AH_DIAGNOSTIC_WERROR()
 
 BEGIN_CS_NAMESPACE
 
@@ -55,8 +55,10 @@ MIDIStaller *const eternal_stall =
  * 
  * If you're interested how the pipes work, see the documentation for 
  * @ref MIDI_Pipe.
- * 
- * @{ 
+ *
+ * @see @ref midi_md-routing (MIDI tutorial)
+ *
+ * @{
  */
 
 class MIDI_Pipe;
@@ -68,6 +70,8 @@ using TrueMIDI_Sink = MIDI_Sink;
 using TrueMIDI_Source = MIDI_Source;
 
 /// Receives MIDI messages from a MIDI pipe.
+/// @see @ref MIDI_Routing
+/// @see @ref midi_md-routing (MIDI tutorial)
 class MIDI_Sink {
   public:
     /// Default constructor.
@@ -117,7 +121,7 @@ class MIDI_Sink {
     bool hasSourcePipe() const { return sourcePipe != nullptr; }
     /// Get a pointer to the pipe this sink is connected to, or `nullptr` if
     /// not connected.
-    MIDI_Pipe *getSourcePipe() { return sourcePipe; }
+    MIDI_Pipe *getSourcePipe() const { return sourcePipe; }
 
     /// @}
 
@@ -151,6 +155,8 @@ class MIDI_Sink {
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: //
 
 /// Class that can send MIDI messages to a MIDI pipe.
+/// @see @ref MIDI_Routing
+/// @see @ref midi_md-routing (MIDI tutorial)
 class MIDI_Source {
   public:
     /// Default constructor.
@@ -322,6 +328,9 @@ class MIDI_Source {
  * 
  * Each connection between a source and a sink has its own pipe, and no two 
  * pipes are connected in series (only through the “through“ inputs/outputs).
+ *
+ * @see @ref MIDI_Routing
+ * @see @ref midi_md-routing (MIDI tutorial)
  */
 class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
   public:
@@ -419,10 +428,10 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
     bool hasSource() const { return source != nullptr; }
     /// Check if this pipe has a “through” output that sends all incoming
     /// messages from the input (source) to another pipe.
-    bool hasThroughOut() const { return throughOut != nullptr; }
+    bool hasThroughOut() const { return getThroughOut() != nullptr; }
     /// Check if this pipe has a “through” input that merges all messages from
     /// another pipe into the output (sink).
-    bool hasThroughIn() const { return throughIn != nullptr; }
+    bool hasThroughIn() const { return getThroughIn() != nullptr; }
 
     /// @}
 
@@ -444,7 +453,7 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
             return true;
         }
         if (hasThroughOut()) {
-            return throughOut->disconnect(sink);
+            return getThroughOut()->disconnect(sink);
         }
         return false;
     }
@@ -458,20 +467,20 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
             return true;
         }
         if (hasThroughIn()) {
-            return throughIn->disconnect(source);
+            return getThroughIn()->disconnect(source);
         }
         return false;
     }
     bool disconnect(MIDI_Pipe &) = delete;
 
     /// Get the immediate source of this pipe.
-    MIDI_Source *getSource() { return source; }
+    MIDI_Source *getSource() const { return source; }
     /// Get the immediate sink of this pipe.
-    MIDI_Sink *getSink() { return sink; }
+    MIDI_Sink *getSink() const { return sink; }
     /// Get the pipe connected to the “through” output of this pipe.
-    MIDI_Pipe *getThroughOut() { return throughOut; }
+    MIDI_Pipe *getThroughOut() const { return MIDI_Source::sinkPipe; }
     /// Get the pipe connected to the “through” input of this pipe.
-    MIDI_Pipe *getThroughIn() { return throughIn; }
+    MIDI_Pipe *getThroughIn() const { return MIDI_Sink::sourcePipe; }
 
     /// Get the sink this pipe eventually sinks to, following the chain
     /// recursively.
@@ -522,7 +531,7 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
     template <class Message>
     void acceptMIDIfromSource(Message msg) {
         if (hasThroughOut())
-            throughOut->acceptMIDIfromSource(msg);
+            getThroughOut()->acceptMIDIfromSource(msg);
         mapForwardMIDI(msg);
     }
 
@@ -571,8 +580,6 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
   private:
     MIDI_Sink *sink = nullptr;
     MIDI_Source *source = nullptr;
-    MIDI_Pipe *&throughOut = MIDI_Source::sinkPipe;
-    MIDI_Pipe *&throughIn = MIDI_Sink::sourcePipe;
     MIDIStaller *sink_staller = nullptr;
     MIDIStaller *through_staller = nullptr;
 
@@ -583,9 +590,13 @@ class MIDI_Pipe : private MIDI_Sink, private MIDI_Source {
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: //
 
 /// A struct that is both a TrueMIDI_Sink and a TrueMIDI_Source.
+/// @see @ref MIDI_Routing
+/// @see @ref midi_md-routing (MIDI tutorial)
 struct TrueMIDI_SinkSource : TrueMIDI_Sink, TrueMIDI_Source {};
 
 /// A bidirectional pipe consists of two unidirectional pipes.
+/// @see @ref MIDI_Routing
+/// @see @ref midi_md-routing (MIDI tutorial)
 using BidirectionalMIDI_Pipe = std::pair<MIDI_Pipe, MIDI_Pipe>;
 
 /// Connect a source to a pipe (`source >> pipe`).
@@ -640,6 +651,9 @@ inline BidirectionalMIDI_Pipe &operator|(TrueMIDI_SinkSource &sinksource,
  *          The maximum number of pipes it can produce.
  * @tparam  Pipe 
  *          The type of pipes to produce.
+ *
+ * @see @ref MIDI_Routing
+ * @see @ref midi_md-routing (MIDI tutorial)
  */
 template <size_t N, class Pipe = MIDI_Pipe>
 struct MIDI_PipeFactory {
@@ -707,4 +721,17 @@ operator|(TrueMIDI_SinkSource &sinksource,
 
 END_CS_NAMESPACE
 
-AH_DIAGNOSTIC_POP()
+#else
+
+BEGIN_CS_NAMESPACE
+
+struct TrueMIDI_Source {
+    template <class... Args>
+    void sourceMIDItoPipe(Args &&...) {}
+};
+struct TrueMIDI_Sink {};
+struct TrueMIDI_SinkSource : TrueMIDI_Source, TrueMIDI_Sink {};
+
+END_CS_NAMESPACE
+
+#endif

@@ -2,9 +2,13 @@
 
 #include <Settings/NamespaceSettings.hpp>
 
+#ifdef __AVR__
+#include <AH/STL/utility>
+#include <AH/STL/type_traits>
+#else
 #include <type_traits>
 #include <utility>
-
+#endif
 BEGIN_CS_NAMESPACE
 
 template <class...>

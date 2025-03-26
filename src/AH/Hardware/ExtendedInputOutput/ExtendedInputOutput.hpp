@@ -3,7 +3,13 @@
 #pragma once
 
 #include <AH/Hardware/Arduino-Hardware-Types.hpp>
-#include <climits> // STL
+#ifdef __AVR__
+#include <AH/STL/cstddef>
+#include <AH/STL/climits>
+#else
+#include <climits>
+#include <cstddef>
+#endif
 #include <AH/Settings/NamespaceSettings.hpp>
 #include <AH/Settings/Warnings.hpp>
 

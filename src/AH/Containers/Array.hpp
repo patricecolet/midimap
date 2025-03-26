@@ -7,8 +7,14 @@
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
 #include <AH/Error/Error.hpp>
+
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#include <AH/STL/iterator>
+#else
 #include <iterator>     // STL
 #include <type_traits> // STL conditional
+#endif
 #include <stddef.h>           // size_t
 
 BEGIN_AH_NAMESPACE

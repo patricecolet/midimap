@@ -2,7 +2,13 @@
 
 #include <AH/Containers/BitArray.hpp>
 #include <AH/Hardware/FilteredAnalog.hpp>
+
+#ifdef __AVR__
+#include <AH/STL/algorithm>
+#else
 #include <algorithm> // std::fill
+#endif
+
 #include <Banks/BankableAddresses.hpp>
 #include <Def/Def.hpp>
 #include <MIDI_Outputs/Abstract/MIDIOutputElement.hpp>

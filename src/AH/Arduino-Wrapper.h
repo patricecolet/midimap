@@ -1,8 +1,11 @@
 #pragma once
 
 #include <AH/Math/MinMaxFix.hpp>
-#include <type_traits> // STL
-
+#ifdef __AVR__
+#include <AH/STL/type_traits> // STL
+#else
+#include <type_traits>
+#endif
 AH_DIAGNOSTIC_EXTERNAL_HEADER()
 #include <Arduino.h> // min max
 AH_DIAGNOSTIC_POP()

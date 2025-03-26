@@ -9,8 +9,13 @@ AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 #include <AH/Hardware/Hardware-Types.hpp>
 #include <AH/Math/IncreaseBitDepth.hpp>
 #include <AH/Math/MinMaxFix.hpp>
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#include <AH/STL/utility>
+#else
 #include <type_traits> // STL std::enable_if, std::is_constructible
 #include <utility> // STL std::forward
+#endif
 #include <AH/Settings/SettingsWrapper.hpp>
 
 BEGIN_AH_NAMESPACE
