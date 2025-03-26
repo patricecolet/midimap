@@ -1,7 +1,7 @@
 #pragma once
 
-#include <utility> // STL std::forward
-#include <vector>  //STL  std::vector
+#include <AH/STL/utility> // std::forward
+#include <AH/STL/vector>  // std::vector
 #include <Settings/NamespaceSettings.hpp>
 #include <ctype.h> // isxdigit, tolower
 
@@ -26,7 +26,7 @@ class HexPuller {
   public:
     HexPuller(CharPuller &&puller) : puller(std::forward<CharPuller>(puller)) {}
 
-    /// Pull out a new byte. Pulls characters from the `CharPuller` until a 
+    /// Pull out a new byte. Pulls characters from the `CharPuller` until a
     /// hexadecimal number was found, decodes it, and returns it.
     ///
     /// @param[out] output

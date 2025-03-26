@@ -2,7 +2,12 @@
 #ifndef CS_USB_MIDI_NOT_SUPPORTED
 
 #include <AH/Containers/Array.hpp>
+
+#ifdef __AVR__
+#include <AH/STL/cstdint>
+#else
 #include <cstdint> // STL
+#endif
 #include <Settings/NamespaceSettings.hpp>
 
 #ifdef ARDUINO_ARCH_ESP32

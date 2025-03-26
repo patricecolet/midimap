@@ -1,10 +1,10 @@
 #pragma once
 
-#include <AH/Settings/Warnings.hpp>
-#include <Settings/NamespaceSettings.hpp>
-#include <utility> // STL std::forward
+#include <Settings/SettingsWrapper.hpp>
+#if !DISABLE_PIPES
 
-AH_DIAGNOSTIC_WERROR()
+#include <AH/STL/utility> // std::forward
+#include <Settings/NamespaceSettings.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -12,7 +12,7 @@ BEGIN_CS_NAMESPACE
 struct MIDIStaller {
     virtual ~MIDIStaller() = default;
     /// Get the staller's name for debugging purposes.
-    virtual const char *getName() const { return "<?>"; };
+    virtual const char *getName() const { return "<?>"; }
     /// Call back that should finish any MIDI messages that are in progress, and
     /// un-stall the pipe or MIDI source as quickly as possible.
     virtual void handleStall() = 0;
@@ -30,7 +30,7 @@ template <class Callback>
 auto makeMIDIStaller(Callback &&callback) -> MIDIStaller * {
 
     struct AutoCleanupMIDIStaller : MIDIStaller {
-        AutoCleanupMIDIStaller(Callback &&callback) 
+        AutoCleanupMIDIStaller(Callback &&callback)
             : callback(std::forward<Callback>(callback)) {}
 
         void handleStall() override {
@@ -45,4 +45,12 @@ auto makeMIDIStaller(Callback &&callback) -> MIDIStaller * {
 
 END_CS_NAMESPACE
 
-AH_DIAGNOSTIC_POP()
+#else
+
+BEGIN_CS_NAMESPACE
+
+struct MIDIStaller {};
+
+END_CS_NAMESPACE
+
+#endif
