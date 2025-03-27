@@ -29,6 +29,7 @@
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
 #include <MIDI_Outputs/VelostatNote.hpp>
+#include <MIDI_Outputs/PiezoNoteSensor.hpp>
 
 #include <MIDI_Outputs/NoteButtonInverse.hpp>
 
