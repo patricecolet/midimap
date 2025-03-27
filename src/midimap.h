@@ -21,16 +21,18 @@
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 
 #include <MIDI_Outputs/NoteButton.hpp>
+#include <MIDI_Outputs/NoteButtonInverse.hpp>
 
 #include <MIDI_Outputs/ChannelPressureSensor.hpp>
 #include <MIDI_Outputs/PolyAftertouchSensor.hpp>
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
+
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
-#include <MIDI_Outputs/VelostatNote.hpp>
 
-#include <MIDI_Outputs/NoteButtonInverse.hpp>
+#include <MIDI_Outputs/VelostatNote.hpp>
+#include <MIDI_Outputs/QTouchNote.hpp>
 
 #include <MIDI_Outputs/Bankable/CCSmartPotentiometer.hpp>
 
