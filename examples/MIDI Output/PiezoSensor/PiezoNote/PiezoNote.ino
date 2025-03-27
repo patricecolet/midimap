@@ -55,10 +55,10 @@ PiezoNoteSensor piezo{
 
 void setup()
 {
-    midimap.begin();
+    midimap.begin(); // Initialize midimap
 }
 
 void loop()
 {
-    midimap.loop();
+    midimap.loop(); // Update the midimap
 }
