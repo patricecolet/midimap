@@ -24,26 +24,30 @@ NoteButtonInverse capa4 {
   {MIDI_Notes::F[4], Channel_1}, // Note F4 on MIDI channel 1
 };
 
-const uint8_t TriggerValue1 = 60; //range = MinNoteThreshold until 127
+const uint8_t TriggerValue1 = 60; //range = MinNoteThreshold until range1
 const uint8_t MinNoteThreshold1 = 20;
 
+uint8_t range1 = 127; // Range of the MIDI Output
 // Instantiate Velostat objects
 VelostatNote Velostat1{
     A8,                            // Analog pin connected to velostat
     {MIDI_Notes::G[4], Channel_1}, // Note G4 on channel 1
     TriggerValue1,                      // Starting of the aftertouch
     MinNoteThreshold1,                 // Minimum note threshold
+    range1,                       // Range of the MIDI Output
 };
 
-const uint8_t TriggerValue2 = 60; //range = MinNoteThreshold until 127
+const uint8_t TriggerValue2 = 60; //range = MinNoteThreshold until range2
 const uint8_t MinNoteThreshold2 = 20;
 
+uint8_t range2 = 127; // Range of the MIDI Output
 // Instantiate Velostat objects
 VelostatNote Velostat2{
     A9,                            // Analog pin connected to velostat
     {MIDI_Notes::A[4], Channel_1}, // Note A4 on channel 1
     TriggerValue2,                      // Starting of the aftertouch
     MinNoteThreshold2,                 // Minimum note threshold
+    range2,                       // Range of the MIDI Output
 };
 
 void setup() {

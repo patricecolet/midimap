@@ -14,8 +14,8 @@ using AH::Ultrasonic;
  */
 class UltrasonicCCSender  {
     public:
-        UltrasonicCCSender (MIDIAddress address, pin_t pin)
-            : _address(address), _ultrasonic(pin) {}
+        UltrasonicCCSender (MIDIAddress address, pin_t pin, uint8_t range)
+            : _address(address), _ultrasonic(pin), _range(range) {}
 
         /// Initializes the sensor.
         void begin() {
@@ -24,8 +24,8 @@ class UltrasonicCCSender  {
 
         void update() {
             uint16_t distance = _ultrasonic.readDistanceMM();
-            uint8_t value = map(distance, 0, 1000, 0, 127); // Convert mm to MIDI range
-            value = constrain(value, 0, 127);
+            uint8_t value = map(distance, 0, 1000, 0, _range); // Convert mm to MIDI range
+            value = constrain(value, 0, _range);
 
             static uint8_t last_value = 255; // Store last sent value
             if (value != last_value) {
@@ -37,6 +37,7 @@ class UltrasonicCCSender  {
     private:
         MIDIAddress _address;   ///< MIDI address for sending key pressure.
         Ultrasonic _ultrasonic; ///< Ultrasonic sensor object.
+        uint8_t _range;
 };
 
 END_CS_NAMESPACE

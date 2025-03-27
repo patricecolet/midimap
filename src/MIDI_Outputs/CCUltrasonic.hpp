@@ -25,8 +25,8 @@ class CCUltrasonic : public UltrasonicCCSender, public Updatable<> {
      *          channel [Channel_1, Channel_16], and optional cable number 
      *          [Cable_1, Cable_16].
      */
-    CCUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicCCSender(address, pin) {}
+    CCUltrasonic(pin_t pin, MIDIAddress address, uint8_t range)
+        : UltrasonicCCSender(address, pin , range) {}
 
     // Initialize pin for sensor
     void begin() { UltrasonicCCSender::begin();}

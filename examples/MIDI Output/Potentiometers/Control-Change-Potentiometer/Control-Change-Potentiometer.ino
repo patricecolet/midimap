@@ -39,10 +39,13 @@
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
 
+uint8_t range=127; // output range of MIDI Output
+
 // Instantiate a CCPotentiometer object
 CCPotentiometer potentiometer {
   A0,                                   // Analog pin connected to potentiometer
   {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
+  range,                                // output range of MIDI Output
 };
 
 void setup() {

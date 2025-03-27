@@ -25,8 +25,8 @@ class PolyAftertouchSensor : public MIDIFilteredAnalog<PolyphonicPressureSender<
      * @param   address
      *          The MIDI address containing the channel [CHANNEL_1, CHANNEL_16].
      */
-    PolyAftertouchSensor(pin_t analogPin, MIDIAddress address)
-        : MIDIFilteredAnalog(analogPin, address, {})  {}
+    PolyAftertouchSensor(pin_t analogPin, MIDIAddress address , uint8_t range)
+        : MIDIFilteredAnalog(analogPin, address, {range})  {}
 
 };
 

@@ -19,17 +19,20 @@ template <uint8_t INPUT_PRECISION_BITS>
 class ChannelPressureSender
 {
 public:
+    ChannelPressureSender(uint8_t range)
+        : _range(range) {}
+
     /// Send a MIDI Channel Pressure message with the given value.
     /// The address.getAddress() is ignored (only channel+cable are used).
     /// Value should be @p INPUT_PRECISION_BITS wide.
-    static void send(uint16_t value, MIDIAddress address)
+    void send(uint16_t value, MIDIAddress address)
     {
         // Ensure the precision is correct for 12-bit input
         static_assert(INPUT_PRECISION_BITS <= 12,
                       "Aftertouch resolution is 7 bits (max input: 12-bit)");
 
-        // Convert the input to 7-bit range (0–127)
-        value = map(value, 0, (1 << precision()) - 1, 0, 127);
+        // Convert the input to range (0–range)
+        value = map(value, 0, (1 << precision()) - 1, 0, _range);
 
         // Get MIDI channel and cable number
         MIDIChannelCable channelCN = address.getChannelCable();
@@ -41,8 +44,9 @@ public:
     {
         return INPUT_PRECISION_BITS;
     }
+
+private:
+    uint8_t _range;
 };
 
 END_CS_NAMESPACE
-
-

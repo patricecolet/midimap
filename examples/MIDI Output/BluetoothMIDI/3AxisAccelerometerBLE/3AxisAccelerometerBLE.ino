@@ -23,21 +23,21 @@
 //
 /*******************************************************************************/
 
-/** 
- * This example demonstrates how to use an accelerometer with an SPI connection to control three different 
- * MIDI Controllers based on the X, Y, and Z axes of movement. The accelerometer’s readings are mapped to MIDI 
+/**
+ * This example demonstrates how to use an accelerometer with an SPI connection to control three different
+ * MIDI Controllers based on the X, Y, and Z axes of movement. The accelerometer’s readings are mapped to MIDI
  * Controller values, allowing you to control various parameters in your DAW software with the device’s orientation.
  *
  * The accelerometer communicates with the ESP32 using **SPI (Serial Peripheral Interface)** protocol.
- * The obtained motion data is then sent as MIDI messages over **Bluetooth Low Energy (BLE)**, enabling 
+ * The obtained motion data is then sent as MIDI messages over **Bluetooth Low Energy (BLE)**, enabling
  * wireless MIDI control.
- * 
- * The ESP32 acts as a **Bluetooth MIDI device**, sending MIDI CC messages based on real-time accelerometer 
+ *
+ * The ESP32 acts as a **Bluetooth MIDI device**, sending MIDI CC messages based on real-time accelerometer
  * data, allowing for dynamic and expressive control of software instruments or effects in a DAW.
- * 
- * **Supported Board:**  
+ *
+ * **Supported Board:**
  * - **ESP32** (Required for Bluetooth MIDI support)
- * 
+ *
  * **Cabling Details**
  * -------------------
  * - 3.3V: Power supply for the accelerometer.
@@ -46,24 +46,24 @@
  * - SPI MISO: Accelerometer’s MISO (Master In Slave Out) pin connected to the SPI MISO pin on the ESP32.
  * - SPI SCK: Accelerometer’s SCK (Serial Clock) pin connected to the SPI clock pin on the ESP32.
  * - SPI CS (Chip Select): Accelerometer’s CS (Chip Select) pin connected to a digital pin on the ESP32 (e.g., Pin 10).
- * 
+ *
  * **MIDI Mapping**
  * ---------------
- * The values from the X, Y, and Z axes are read via SPI, scaled to an appropriate range for MIDI controllers, 
- * and then transmitted over Bluetooth MIDI.  
- *  
+ * The values from the X, Y, and Z axes are read via SPI, scaled to an appropriate range for MIDI controllers,
+ * and then transmitted over Bluetooth MIDI.
+ *
  * - **X-axis** → MIDI CC 1 (e.g., Modulation)
  * - **Y-axis** → MIDI CC 7 (e.g., Volume)
  * - **Z-axis** → MIDI CC 74 (e.g., Filter Cutoff)
- *  
- * In your DAW, pair the ESP32 via Bluetooth MIDI and use the **MIDI learn** feature to assign the 
+ *
+ * In your DAW, pair the ESP32 via Bluetooth MIDI and use the **MIDI learn** feature to assign the
  * controllers to desired functions.
- *  
+ *
  * **How to Connect via Bluetooth MIDI:**
  * - On **iOS/macOS**, use **GarageBand** or **MIDI BLE Connect** to pair the ESP32.
  * - On **Windows**, use **MIDI Berry** with a virtual loopback device.
  * - On **Android**, use **MIDI BLE Peripheral**.
- *  
+ *
  * This setup enables wireless MIDI control via Bluetooth, eliminating the need for USB cables.
  *
  * Code written by Hazri Haqimi, 2025-03-11
@@ -74,17 +74,22 @@
 // Instantiate a MIDI over USB interface.
 BluetoothMIDI_Interface midi;
 
-// Instantiate a CCPotentiometer object
-Accelerometer3AxisSensor accelerometer3axis {                                // Analog pin connected to potentiometer
-  {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
-  {MIDI_CC::Pan, CHANNEL_1}, // Channel Pan of channel 2
-  {MIDI_CC::Modulation_Wheel, CHANNEL_1}, // Channel Modulation Wheel of channel 3
+uint8_t range = 127; // range of the MIDI Outputs
+
+// Instantiate a Accelerometer3AxisSensor object
+Accelerometer3AxisSensor accelerometer3axis{
+    {MIDI_CC::Channel_Volume, CHANNEL_1},   // Channel volume of channel 1
+    {MIDI_CC::Pan, CHANNEL_1},              // Channel Pan of channel 1
+    {MIDI_CC::Modulation_Wheel, CHANNEL_1}, // Channel Modulation Wheel of channel 1
+    range,                                  // Range of MIDI Outputs
 };
 
-void setup() {
+void setup()
+{
   midimap.begin(); // Initialize midimap
 }
 
-void loop() {
+void loop()
+{
   midimap.loop(); // Update the midimap
 }

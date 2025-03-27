@@ -29,8 +29,8 @@ class ChannelPressureSensor : public MIDIFilteredAnalog<ChannelPressureSender<12
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
      *          [CABLE_1, CABLE_16].
      */
-    ChannelPressureSensor(pin_t analogPin, MIDIChannelCable address)
-        : MIDIFilteredAnalog(analogPin, address, {}) {}
+    ChannelPressureSensor(pin_t analogPin, MIDIChannelCable address, uint8_t range)
+        : MIDIFilteredAnalog(analogPin, address, {range}) {}
 };
 
 END_CS_NAMESPACE

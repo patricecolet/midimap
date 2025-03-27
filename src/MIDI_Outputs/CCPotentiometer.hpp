@@ -29,8 +29,8 @@ class CCPotentiometer : public MIDIFilteredAnalog<ContinuousCCSender> {
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
      *          [CABLE_1, CABLE_16].
      */
-    CCPotentiometer(pin_t analogPin, MIDIAddress address)
-        : MIDIFilteredAnalog(analogPin, address, {}) {}
+    CCPotentiometer(pin_t analogPin, MIDIAddress address, uint8_t range)
+        : MIDIFilteredAnalog(analogPin, address, {range}) {}
 };
 
 END_CS_NAMESPACE

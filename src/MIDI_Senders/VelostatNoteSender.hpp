@@ -34,8 +34,8 @@ class VelostatNoteSender {
          * @param   MinNoteThreshold
          *          The minimum threshold for triggering a note.
          */
-        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold , uint8_t velocity = 0x7F)
-        : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) ,_velocity(velocity) {}
+        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold ,uint8_t range , uint8_t velocity = 0x7F)
+        : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) , _range (range), _velocity(velocity) {}
 
         /**
          * @brief   Reads the analog input and sends appropriate MIDI Note On, Note Off, and Polyphonic Aftertouch (Channel Pressure) messages.
@@ -56,7 +56,8 @@ class VelostatNoteSender {
             static bool isNoteOn = false; // Tracks if the note is currently on
 
             //Serial.println(value);  // Print the value for debugging
-        
+            value = map (value, 0, 127, 0, _range);
+            
             if (value < _MinNoteThreshold) {
                 // If the value is below MinNoteThreshold, stop the note (send Note Off)
                 if (isNoteOn) {
@@ -91,7 +92,7 @@ class VelostatNoteSender {
         constexpr static uint8_t precision() { return 7; }
 
     private:
-        uint8_t _TriggerValue, _MinNoteThreshold, _velocity;  ///< Thresholds for triggering Note On and Aftertouch
+        uint8_t _TriggerValue, _MinNoteThreshold, _velocity, _range;  ///< Thresholds for triggering Note On and Aftertouch
 };
 
 END_CS_NAMESPACE

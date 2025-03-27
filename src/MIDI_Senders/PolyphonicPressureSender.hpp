@@ -18,20 +18,25 @@ template <uint8_t INPUT_PRECISION_BITS>
 class PolyphonicPressureSender
 {
 public:
-static void send(uint16_t value, MIDIAddress address) {
-    static_assert(INPUT_PRECISION_BITS <= 10,
-                  "Aftertouch resolution is 7 bits (max input: 10-bit)");
+    PolyphonicPressureSender(uint8_t range)
+        : _range(range) {}
+
+    void send(uint16_t value, MIDIAddress address)
+    {
+        static_assert(INPUT_PRECISION_BITS <= 10,
+                      "Aftertouch resolution is 7 bits (max input: 10-bit)");
         // Map value to 7-bit range (0-127)
-        value = map(value, 0, (1 << precision()) - 1, 0, 127);
-          
+        value = map(value, 0, (1 << precision()) - 1, 0, _range);
+
         // Send Polyphonic Aftertouch (Key Pressure) message
         midimap.sendKeyPressure(address, value);
-
     }
 
     /// Get the resolution (precision) of the sender in bits
     constexpr static uint8_t precision() { return INPUT_PRECISION_BITS; }
+
+private:
+    uint8_t _range;
 };
 
 END_CS_NAMESPACE
-
