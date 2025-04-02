@@ -57,7 +57,7 @@ class VelostatNoteSender {
 
             //Serial.println(value);  // Print the value for debugging
             value = map (value, 0, 127, 0, _range);
-            
+
             if (value < _MinNoteThreshold) {
                 // If the value is below MinNoteThreshold, stop the note (send Note Off)
                 if (isNoteOn) {

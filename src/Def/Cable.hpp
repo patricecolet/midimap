@@ -152,3 +152,4 @@ constexpr Cable CABLE_16 CS_DEPREC("Use Cable_16 instead") = Cable_16;
 Print &operator<<(Print &, Cable);
 
 END_CS_NAMESPACE
+
