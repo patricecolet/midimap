@@ -2,8 +2,7 @@
 
 #include <MIDI_Senders/QTouchSender.hpp>
 
-#ifdef ARDUINO_ARCH_SAMD
-
+#if defined(ARDUINO_ARCH_SAMD) || defined(ESP32)
 BEGIN_CS_NAMESPACE
 
 /**
@@ -29,8 +28,13 @@ public:
    * @param   MinNoteThreshold
    *          The minimum value required for the note to activate.
    */
+  #ifdef ARDUINO_ARCH_SAMD
   QTouchNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold, oversample_t OVERSAMPLE, series_resistor_t RESISTOR, freq_mode_t FREQ_MODE)
-    : QTouchSender(analogPin, address, TriggerValue, MinNoteThreshold, OVERSAMPLE, RESISTOR, FREQ_MODE) {}
+    : QTouchSender(address, analogPin, TriggerValue, MinNoteThreshold, OVERSAMPLE, RESISTOR, FREQ_MODE) {}
+  #elif defined(ESP32)
+    QTouchNote(pin_t analogPin, MIDIAddress address, uint8_t TriggerValue, uint8_t MinNoteThreshold)
+      : QTouchSender(address, analogPin, TriggerValue, MinNoteThreshold) {}
+  #endif
 
   void begin() { QTouchSender::begin();}
 
@@ -39,4 +43,5 @@ public:
 
 END_CS_NAMESPACE
 #endif
+
 
