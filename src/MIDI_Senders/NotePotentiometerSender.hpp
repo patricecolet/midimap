@@ -41,7 +41,7 @@ class NotePotentiometerSender {
          *          The maximum physical velocity value (default: 1.0).
          */
         NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t range, uint8_t thresholdOffset = 10, 
-                               uint8_t velocity = 0x7F, float minPhysicalVelocity = 0.01, float maxPhysicalVelocity = 1.0)
+                               uint8_t velocity, float minPhysicalVelocity, float maxPhysicalVelocity)
         : _MinNoteThreshold(MinNoteThreshold), _range(range), _thresholdOffset(thresholdOffset), _velocity(velocity),
           _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity) {
             _TriggerValue = _MinNoteThreshold + _thresholdOffset;

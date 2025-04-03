@@ -31,7 +31,7 @@ class NotePotentiometer : public MIDIFilteredAnalog<NotePotentiometerSender> {
      *          The maximum physical velocity value (default: 1.0).
      */
     NotePotentiometer(pin_t analogPin, MIDIAddress address, uint8_t MinNoteThreshold, uint8_t range, 
-                     uint8_t velocity = 0x7F, float minPhysicalVelocity = 0.01, float maxPhysicalVelocity = 1.0)
+                     uint8_t velocity, float minPhysicalVelocity, float maxPhysicalVelocity)
         : MIDIFilteredAnalog(analogPin, address, {MinNoteThreshold, range, 10, velocity, 
                                                  minPhysicalVelocity, maxPhysicalVelocity}) {}
 
