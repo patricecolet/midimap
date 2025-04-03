@@ -16,27 +16,35 @@
 #include <midimap/midimap_class.hpp>
 
 // ------------------------------ MIDI Outputs ------------------------------ //
+#include <MIDI_Outputs/NoteButton.hpp>
+#include <MIDI_Outputs/CCButton.hpp>
+#include <MIDI_Outputs/PCButton.hpp>
+
 #include <MIDI_Outputs/CCPotentiometer.hpp>
 #include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 
-#include <MIDI_Outputs/NoteButton.hpp>
+#include <MIDI_Outputs/NoteButtonInverse.hpp>
 
 #include <MIDI_Outputs/ChannelPressureSensor.hpp>
 #include <MIDI_Outputs/PolyAftertouchSensor.hpp>
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
+
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
+<<<<<<< HEAD
 #include <MIDI_Outputs/VelostatNote.hpp>
 #include <MIDI_Outputs/PiezoNoteSensor.hpp>
+=======
+>>>>>>> 64c18f86e28336f43ec1434c112db977cdb5fd32
 
-#include <MIDI_Outputs/NoteButtonInverse.hpp>
+#include <MIDI_Outputs/NotePotentiometer.hpp>
+#include <MIDI_Outputs/QTouchNote.hpp>
 
 #include <MIDI_Outputs/Bankable/CCSmartPotentiometer.hpp>
 
 // ------------------------------- Selectors -------------------------------- //
-
 #include <Selectors/IncrementDecrementSelector.hpp>
 
 // ---------------------------- MIDI Interfaces ----------------------------- //
@@ -48,9 +56,9 @@
 #include <AH/Hardware/ExtendedInputOutput/ExtendedInputOutput.hpp>
 
 // ----------------------------- MIDI Constants ----------------------------- //
-
 #include <MIDI_Constants/Control_Change.hpp>
 #include <MIDI_Constants/Notes.hpp>
+#include <MIDI_Constants/Program_Change.hpp>
 
 BEGIN_CS_NAMESPACE
 #ifndef NO_USING_NAMESPACE_AH

@@ -24,7 +24,7 @@ BEGIN_CS_NAMESPACE
  * 
  * @note This class is designed to provide smooth, continuous control of **Polyphonic Aftertouch**, making it suitable for use in expressive MIDI controllers, such as those with pressure-sensitive sensors.
  */
-class VelostatNoteSender {
+class NotePotentiometerSender {
     public:
         /**
          * @brief   Constructor for VelostatPolyNoteSender.
@@ -34,7 +34,7 @@ class VelostatNoteSender {
          * @param   MinNoteThreshold
          *          The minimum threshold for triggering a note.
          */
-        VelostatNoteSender(uint8_t TriggerValue, uint8_t MinNoteThreshold ,uint8_t range , uint8_t velocity = 0x7F)
+        NotePotentiometerSender(uint8_t TriggerValue, uint8_t MinNoteThreshold ,uint8_t range , uint8_t velocity = 0x7F)
         : _TriggerValue(TriggerValue), _MinNoteThreshold(MinNoteThreshold) , _range (range), _velocity(velocity) {}
 
         /**
@@ -54,33 +54,25 @@ class VelostatNoteSender {
          */
         void send(uint8_t value, MIDIAddress address) {
             static bool isNoteOn = false; // Tracks if the note is currently on
-
-            //Serial.println(value);  // Print the value for debugging
-            value = map (value, 0, 127, 0, _range);
             
-            if (value < _MinNoteThreshold) {
-                // If the value is below MinNoteThreshold, stop the note (send Note Off)
-                if (isNoteOn) {
-                    midimap.sendNoteOff(address, 0);  // 0 velocity for Note Off
-                    isNoteOn = false;
-                }
+            // Map the input value to the specified range
+            value = map(value, 0, 127, 0, _range);
+            
+            // When value exceeds trigger value and note is not on, send Note On
+            if (value >= _TriggerValue && !isNoteOn) {
+                midimap.sendNoteOn(address, 127);
+                isNoteOn = true;
             } 
-            else if (value >= _MinNoteThreshold && value < _TriggerValue) {
-                // If value is between MinNoteThreshold and TriggerValue, play a normal note (Note On)
-                if (!isNoteOn) {
-                    midimap.sendNoteOn(address, getVelocity());  // Note On with max velocity
-                    isNoteOn = true;
-                }
-            } 
-            else if (value >= _TriggerValue) {
-                // If value exceeds TriggerValue, send Aftertouch along with Note On
-                if (!isNoteOn) {
-                    midimap.sendNoteOn(address, getVelocity());  // Note On with max velocity
-                    isNoteOn = true;
-                }
-                midimap.sendKeyPressure(address, value);  // Send Polyphonic Aftertouch (Channel Pressure)
+            // When value falls below trigger value and note is on, send Note Off
+            else if (value < _TriggerValue && isNoteOn) {
+                midimap.sendNoteOff(address, 0);
+                isNoteOn = false;
             }
+
+            //midimap.sendKeyPressure(address, value);
+            
         }
+        
 
         void setVelocity(uint8_t velocity) { this->_velocity = velocity; }
         uint8_t getVelocity() const { return this->_velocity; }
