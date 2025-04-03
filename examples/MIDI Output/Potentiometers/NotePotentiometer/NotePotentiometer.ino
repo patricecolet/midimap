@@ -43,32 +43,37 @@
  * 2. Select the Arduino as a **MIDI input device** in your DAW.
  * 3. Use the **MIDI Learn** feature to map Polyphonic Aftertouch.
  *
- * Written by Hazri Haqimi, 2025-03-03
+ * Written by Nuryn Sophea, 2025-04-03
  */
 
 #include <midimap.h> // Include the midimap library
 
-USBMIDI_Interface midi; // Instantiate a MIDI over USB interface.
-
-const uint8_t TriggerValue = 60; // range = MinNoteThreshold until range
-const uint8_t MinNoteThreshold = 10;
-
-uint8_t range = 127; // range of MIDI Output
-// Instantiate a Velostat object
-NotePotentiometer Velostat{
-    A0,                            // Analog pin connected to Velostat
-    {MIDI_Notes::C[4], Channel_1}, // Note C4 on channel 1
-    TriggerValue,                  // Starting of the aftertouch
-    MinNoteThreshold,              // Minimum note threshold
-    range,                         // Range of MIDI Output
-};
-
-void setup()
-{
-  midimap.begin(); // Initialize midimap
-}
-
-void loop()
-{
-  midimap.loop(); // Update the midimap
-}
+ USBMIDI_Interface midi; // Instantiate a MIDI over USB interface.
+ 
+ const uint8_t MinNoteThreshold = 50;
+ uint8_t range = 127; // range of MIDI Output
+ 
+ // Velocity sensitivity parameters
+ float minPhysicalVelocity = 0.01; // Slow press - lower values make slow presses more sensitive
+ float maxPhysicalVelocity = 1.0;  // Fast press - higher values require faster presses for max velocity
+ 
+ // Instantiate a NotePotentiometer object
+ NotePotentiometer potentiometer{
+     A0,                            // Analog pin connected to potentiometer
+     {MIDI_Notes::C[4], Channel_1}, // Note C4 on channel 1
+     MinNoteThreshold,              // Minimum note threshold
+     range,                         // Range of MIDI Output
+     0x7F,                          // Default velocity (127)
+     minPhysicalVelocity,           // Minimum physical velocity
+     maxPhysicalVelocity            // Maximum physical velocity
+ };
+ 
+ void setup()
+ {
+   midimap.begin(); // Initialize midimap
+ }
+ 
+ void loop()
+ {
+   midimap.loop(); // Update the midimap
+ }
