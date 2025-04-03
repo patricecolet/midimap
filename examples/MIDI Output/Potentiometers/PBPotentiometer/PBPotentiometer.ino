@@ -8,6 +8,7 @@
  * -----------
  * 
  * - A0: wiper of a potentiometer
+ * - A1: wiper of a second potentiometer (imperfect component example)
  * 
  * Connect the left terminal of the potentiometer to ground, and the right one
  * to V<sub>CC</sub>.
@@ -20,6 +21,8 @@
  * - The analog input is filtered, so there shouldn't be any noise on the 
  *   position. If there is, check your wiring, and make sure that the resistance
  *   of the potentiometer isn't too high (10 kΩ is ideal).
+ * - For imperfect components, you can set minimum and maximum thresholds to
+ *   filter out noise at the extremes of the potentiometer's range.
  * 
  * Mapping
  * -------
@@ -33,21 +36,26 @@
  * Modified by Nuryn Sophea, 2025-03-10
  */
 
-#include <midimap.h> // Include the midimap library
+ #include <midimap.h> // Include the midimap library
 
-// Instantiate a MIDI over USB interface.
-USBMIDI_Interface midi;
+ // Instantiate a MIDI over USB interface.
+ USBMIDI_Interface midi;
+ 
+ // For perfect components (no thresholding needed)
+ PBPotentiometer perfectPotentiometer {
+   A0,        // Analog pin connected to potentiometer
+   Channel_1, // MIDI Channel 1
+    //100,        // Minimum threshold if the sensor is not perfect (0-1633)
+    //900,       // Maximum threshold if the sensor is not perfect (0-1633)
+ };
+ 
 
-// Instantiate a PBPotentiometer object
-PBPotentiometer potentiometer {
-  A0,        // Analog pin connected to potentiometer
-  Channel_1, // MIDI Channel 1
-};
-
-void setup() {
-  midimap.begin(); // Initialize midimap
-}
-
-void loop() {
-  midimap.loop(); // Update the midimap
-}
+ 
+ void setup() {
+   midimap.begin(); // Initialize midimap
+ }
+ 
+ void loop() {
+   midimap.loop(); // Update the midimap
+ }
+ 

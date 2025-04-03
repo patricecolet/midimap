@@ -32,13 +32,12 @@
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
 
-uint8_t range = 127; // output range of MIDI Output
-
 // Instantiate a PolyAftertouch object
-PolyAftertouchSensor photoresistor{
+PAPotentiometer photoresistor{
     A0,                            // Analog pin connected to photoresistor
     {MIDI_Notes::C[4], Channel_1}, // Channel volume of channel 1
-    range,                         // output range of MIDI Output
+    //48,        // Minimum threshold if the sensor is not perfect (0-127)
+    //100,       // Maximum threshold if the sensor is not perfect (0-127)
 };
 
 void setup()
