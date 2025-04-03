@@ -1,4 +1,4 @@
-/** 
+/**
  * This example demonstrates the use of MIDI Control Change potentiometers that
  * can be used for changing effect parameters, volumes, pan and balance
  * controls, etc. It can control almost any knob in your DAW software.
@@ -6,31 +6,31 @@
  * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  * Connections
  * -----------
- * 
+ *
  * - A0: wiper of a potentiometer
- * 
+ *
  * Connect the left terminal of the potentiometer to ground, and the right one
  * to V<sub>CC</sub>.
- * 
+ *
  * Behavior
  * --------
- * 
+ *
  * - When you turn the potentiometer, you should receive MIDI Control Change
  *   events, with a value between 0 and 127.
- * - The analog input is filtered, so there shouldn't be any noise on the 
+ * - The analog input is filtered, so there shouldn't be any noise on the
  *   position. If there is, check your wiring, and make sure that the resistance
  *   of the potentiometer isn't too high (10 kΩ is ideal).
- * 
+ *
  * Mapping
  * -------
- * 
- * Select the Arduino as a custom MIDI controller in your DAW, and use the 
- * MIDI learn option to assign the potentiometer to a function.  
+ *
+ * Select the Arduino as a custom MIDI controller in your DAW, and use the
+ * MIDI learn option to assign the potentiometer to a function.
  * It will send the MIDI Control Change Channel Volume parameter for channel 1.
- * 
- * Written by PieterP, 2019-08-13  
+ *
+ * Written by PieterP, 2019-08-13
  * https://github.com/tttapa/Control-Surface
- * 
+ *
  * Modified by Hazri Haqimi, 2025-03-03
  */
 
@@ -40,15 +40,19 @@
 USBMIDI_Interface midi;
 
 // Instantiate a CCPotentiometer object
-CCPotentiometer14 potentiometer {
-  A0,                                   // Analog pin connected to potentiometer
-  {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
+CCPotentiometer14 potentiometer{
+    A0,                                   // Analog pin connected to potentiometer
+    {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
+    48,                                   // Minimum threshold if the sensor is not perfect (0-127)
+    100,                                  // Maximum threshold if the sensor is not perfect (0-127)
 };
 
-void setup() {
+void setup()
+{
   midimap.begin(); // Initialize midimap
 }
 
-void loop() {
+void loop()
+{
   midimap.loop(); // Update the midimap
 }

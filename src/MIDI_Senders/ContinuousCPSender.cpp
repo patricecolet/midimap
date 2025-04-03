@@ -1,3 +1,3 @@
 #ifdef TEST_COMPILE_ALL_HEADERS_SEPARATELY
-#include "PolyphonicPressureSender.hpp"
+#include "ContinuousCPSender.hpp"
 #endif

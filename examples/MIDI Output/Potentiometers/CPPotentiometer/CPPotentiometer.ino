@@ -35,13 +35,12 @@
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
 
-uint8_t range = 127; // output range of MIDI Output
-
-// Instantiate a ChannelPressureSensor object
-ChannelPressureSensor photoresistor{
-    A0,        // Analog pin connected to photoresistor
+// Instantiate a CPPotentiometer object
+CPPotentiometer potentiometer{
+    A0,        // Analog pin connected to potentiometer
     CHANNEL_1, // Channel volume of channel 1
-    range,     // Range of the MIDI Output
+    //48,        // Minimum threshold if the sensor is not perfect (0-127)
+    //127,       // Maximum threshold if the sensor is not perfect(0-127)
 };
 
 void setup()
