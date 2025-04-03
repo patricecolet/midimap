@@ -3,43 +3,37 @@
 #include <midimap/midimap_class.hpp> // Include MIDI library
 #include <AH/Math/IncreaseBitDepth.hpp>
 
-
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   Constructor for NotePotentiometerSender.
- * 
- * @param   MinNoteThreshold
- *          The minimum threshold for triggering a note.
- * @param   range
- *          The range of MIDI output values.
- * @param   thresholdOffset
- *          The offset to add to MinNoteThreshold to calculate TriggerValue.
- * @param   minPhysicalVelocity
- *          The minimum physical velocity value.
- * @param   maxPhysicalVelocity
- *          The maximum physical velocity value.
+ * @brief   Class that sends MIDI Note messages based on potentiometer input
+ *          with velocity sensitivity.
+ *
+ * @ingroup MIDI_Senders
  */
 class NotePotentiometerSender {
     public:
-        /**
-         * @brief   Constructor for NotePotentiometerSender.
-         * 
-         * @param   MinNoteThreshold
-         *          The minimum threshold for triggering a note.
-         * @param   range
-         *          The range of MIDI output values.
-         * @param   thresholdOffset
-         *          The offset to add to MinNoteThreshold to calculate TriggerValue.
-         * @param   minPhysicalVelocity
-         *          The minimum physical velocity value.
-         * @param   maxPhysicalVelocity
-         *          The maximum physical velocity value.
-         */
-        NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t range, uint8_t thresholdOffset, 
+        // Default constructor with standard settings
+        NotePotentiometerSender() 
+            : _MinNoteThreshold(0), _MaxThreshold(127), _range(127), _thresholdOffset(10),
+              _minPhysicalVelocity(0.01), _maxPhysicalVelocity(1.0), _thresholdingEnabled(false) {
+            _TriggerValue = _MinNoteThreshold + _thresholdOffset;
+        }
+
+        // Constructor with velocity parameters but no thresholding
+        NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t thresholdOffset, 
                                float minPhysicalVelocity, float maxPhysicalVelocity)
-        : _MinNoteThreshold(MinNoteThreshold), _range(range), _thresholdOffset(thresholdOffset),
-          _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity) {
+            : _MinNoteThreshold(MinNoteThreshold), _MaxThreshold(127), _range(127), _thresholdOffset(thresholdOffset),
+              _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity), _thresholdingEnabled(false) {
+            _TriggerValue = _MinNoteThreshold + _thresholdOffset;
+        }
+
+        // Constructor with full parameters including thresholding
+        NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t thresholdOffset, 
+                               float minPhysicalVelocity, float maxPhysicalVelocity,
+                               uint8_t MinThreshold, uint8_t MaxThreshold)
+            : _MinNoteThreshold(MinNoteThreshold), _MaxThreshold(MaxThreshold), _range(127), _thresholdOffset(thresholdOffset),
+              _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity), _thresholdingEnabled(true) {
             _TriggerValue = _MinNoteThreshold + _thresholdOffset;
         }
 
@@ -48,18 +42,35 @@ class NotePotentiometerSender {
             static bool isPassing = false; // Tracks if we're in the threshold passing phase
             static unsigned long timerStart = 0; // To store when the timer started
             
+            // Apply thresholding if enabled
+            uint8_t mappedValue;
+            if (_thresholdingEnabled) {
+                // Apply the threshold filter
+                if (value < _MinThreshold) {
+                    value = _MinThreshold;
+                } else if (value > _MaxThreshold) {
+                    value = _MaxThreshold;
+                }
+                
+                // Map the filtered value to 0-127 range
+                mappedValue = map(value, _MinThreshold, _MaxThreshold, 0, 127);
+            } else {
+                // For perfect components, just ensure the value is in the 0-127 range
+                mappedValue = value > 127 ? 127 : value;
+            }
+            
             // Map the input value to the specified range
-            value = map(value, 0, 127, 0, _range);
+            mappedValue = map(mappedValue, 0, 127, 0, _range);
             
             // Note On logic - measure time between thresholds
             if (!isNoteOn) {
                 // Start timing when we cross the first threshold
-                if (value >= _MinNoteThreshold && !isPassing) {
+                if (mappedValue >= _MinNoteThreshold && !isPassing) {
                     timerStart = millis();
                     isPassing = true;
                 }
                 // When we reach the second threshold, calculate velocity and send Note On
-                else if (value >= _TriggerValue && isPassing) {
+                else if (mappedValue >= _TriggerValue && isPassing) {
                     unsigned long pressDuration = millis() - timerStart;
                     
                     // Prevent division by zero
@@ -83,12 +94,12 @@ class NotePotentiometerSender {
             // Note Off logic - similar but in reverse
             else {
                 // Start timing for note off when value drops below trigger threshold
-                if (value < _TriggerValue && !isPassing) {
+                if (mappedValue < _TriggerValue && !isPassing) {
                     timerStart = millis();
                     isPassing = true;
                 }
                 // Complete note off when value drops below minimum threshold
-                else if (value < _MinNoteThreshold && isPassing) {
+                else if (mappedValue < _MinNoteThreshold && isPassing) {
                     unsigned long releaseDuration = millis() - timerStart;
                     
                     // Prevent division by zero
@@ -132,8 +143,9 @@ class NotePotentiometerSender {
         constexpr static uint8_t precision() { return 7; }
 
     private:
-        uint8_t _TriggerValue, _MinNoteThreshold, _range, _thresholdOffset;
+        uint8_t _TriggerValue, _MinNoteThreshold, _MinThreshold, _MaxThreshold, _range, _thresholdOffset;
         float _minPhysicalVelocity, _maxPhysicalVelocity;
+        bool _thresholdingEnabled;
 };
 
 END_CS_NAMESPACE
