@@ -23,29 +23,15 @@ class NotePotentiometer : public MIDIFilteredAnalog<NotePotentiometerSender> {
      *          The minimum value required for the note to activate.
      * @param   range
      *          The range of MIDI output values.
-     * @param   velocity
-     *          The default velocity value (default: 0x7F).
      * @param   minPhysicalVelocity
-     *          The minimum physical velocity value (default: 0.01).
+     *          The minimum physical velocity value.
      * @param   maxPhysicalVelocity
-     *          The maximum physical velocity value (default: 1.0).
+     *          The maximum physical velocity value.
      */
     NotePotentiometer(pin_t analogPin, MIDIAddress address, uint8_t MinNoteThreshold, uint8_t range, 
-                     uint8_t velocity, float minPhysicalVelocity, float maxPhysicalVelocity)
-        : MIDIFilteredAnalog(analogPin, address, {MinNoteThreshold, range, 10, velocity, 
+                     float minPhysicalVelocity, float maxPhysicalVelocity)
+        : MIDIFilteredAnalog(analogPin, address, {MinNoteThreshold, range, 10, 
                                                  minPhysicalVelocity, maxPhysicalVelocity}) {}
-
-    void setVelocity(uint8_t velocity) { this->sender.setVelocity(velocity); }
-    uint8_t getVelocity() const { return this->sender.getVelocity(); }
-    
-    void setThresholdOffset(uint8_t offset) { this->sender.setThresholdOffset(offset); }
-    uint8_t getThresholdOffset() const { return this->sender.getThresholdOffset(); }
-    
-    void setMinPhysicalVelocity(float minVelocity) { this->sender.setMinPhysicalVelocity(minVelocity); }
-    float getMinPhysicalVelocity() const { return this->sender.getMinPhysicalVelocity(); }
-    
-    void setMaxPhysicalVelocity(float maxVelocity) { this->sender.setMaxPhysicalVelocity(maxVelocity); }
-    float getMaxPhysicalVelocity() const { return this->sender.getMaxPhysicalVelocity(); }
 };
 
 END_CS_NAMESPACE

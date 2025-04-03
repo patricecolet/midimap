@@ -14,13 +14,11 @@ BEGIN_CS_NAMESPACE
  * @param   range
  *          The range of MIDI output values.
  * @param   thresholdOffset
- *          The offset to add to MinNoteThreshold to calculate TriggerValue (default: 10).
- * @param   velocity
- *          The default velocity value (default: 0x7F).
+ *          The offset to add to MinNoteThreshold to calculate TriggerValue.
  * @param   minPhysicalVelocity
- *          The minimum physical velocity value (default: 0.01).
+ *          The minimum physical velocity value.
  * @param   maxPhysicalVelocity
- *          The maximum physical velocity value (default: 1.0).
+ *          The maximum physical velocity value.
  */
 class NotePotentiometerSender {
     public:
@@ -32,17 +30,15 @@ class NotePotentiometerSender {
          * @param   range
          *          The range of MIDI output values.
          * @param   thresholdOffset
-         *          The offset to add to MinNoteThreshold to calculate TriggerValue (default: 10).
-         * @param   velocity
-         *          The default velocity value (default: 0x7F).
+         *          The offset to add to MinNoteThreshold to calculate TriggerValue.
          * @param   minPhysicalVelocity
-         *          The minimum physical velocity value (default: 0.01).
+         *          The minimum physical velocity value.
          * @param   maxPhysicalVelocity
-         *          The maximum physical velocity value (default: 1.0).
+         *          The maximum physical velocity value.
          */
-        NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t range, uint8_t thresholdOffset = 10, 
-                               uint8_t velocity, float minPhysicalVelocity, float maxPhysicalVelocity)
-        : _MinNoteThreshold(MinNoteThreshold), _range(range), _thresholdOffset(thresholdOffset), _velocity(velocity),
+        NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t range, uint8_t thresholdOffset, 
+                               float minPhysicalVelocity, float maxPhysicalVelocity)
+        : _MinNoteThreshold(MinNoteThreshold), _range(range), _thresholdOffset(thresholdOffset),
           _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity) {
             _TriggerValue = _MinNoteThreshold + _thresholdOffset;
         }
@@ -129,21 +125,6 @@ class NotePotentiometerSender {
             }
         }
 
-        void setVelocity(uint8_t velocity) { this->_velocity = velocity; }
-        uint8_t getVelocity() const { return this->_velocity; }
-        
-        void setThresholdOffset(uint8_t offset) { 
-            this->_thresholdOffset = offset; 
-            _TriggerValue = _MinNoteThreshold + _thresholdOffset;
-        }
-        uint8_t getThresholdOffset() const { return this->_thresholdOffset; }
-        
-        void setMinPhysicalVelocity(float minVelocity) { this->_minPhysicalVelocity = minVelocity; }
-        float getMinPhysicalVelocity() const { return this->_minPhysicalVelocity; }
-        
-        void setMaxPhysicalVelocity(float maxVelocity) { this->_maxPhysicalVelocity = maxVelocity; }
-        float getMaxPhysicalVelocity() const { return this->_maxPhysicalVelocity; }
-
         /** 
          * @brief   Returns the precision of the sensor readings, which is fixed to 7 bits for MIDI compatibility.
          * @return  The precision of the sensor readings (7-bit resolution).
@@ -151,7 +132,7 @@ class NotePotentiometerSender {
         constexpr static uint8_t precision() { return 7; }
 
     private:
-        uint8_t _TriggerValue, _MinNoteThreshold, _velocity, _range, _thresholdOffset;
+        uint8_t _TriggerValue, _MinNoteThreshold, _range, _thresholdOffset;
         float _minPhysicalVelocity, _maxPhysicalVelocity;
 };
 
