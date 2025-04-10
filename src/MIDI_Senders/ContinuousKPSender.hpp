@@ -11,14 +11,14 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDI_Senders
  */
-class ContinuousPASender {
+class ContinuousKPSender {
 public:
     // Default constructor with full range (no thresholding)
-    ContinuousPASender() 
+    ContinuousKPSender() 
         : _MinThreshold(0), _MaxThreshold(127), _lastSentValue(255), _thresholdingEnabled(false) {}
         
     // Constructor with thresholds
-    ContinuousPASender(uint8_t MinThreshold, uint8_t MaxThreshold)
+    ContinuousKPSender(uint8_t MinThreshold, uint8_t MaxThreshold)
         : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _lastSentValue(255), 
           _thresholdingEnabled(true) {}
 
