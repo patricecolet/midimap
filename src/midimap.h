@@ -31,17 +31,6 @@
 #include <MIDI_Outputs/CCPotentiometer.hpp>
 #include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
-<<<<<<< HEAD
-=======
-#include <MIDI_Outputs/CPPotentiometer.hpp>
-#include <MIDI_Outputs/KPPotentiometer.hpp>
-
-#include <MIDI_Outputs/CCTouch.hpp>
-#include <MIDI_Outputs/CPTouch.hpp>
-
-#include <MIDI_Outputs/NoteButtonInverse.hpp>
-
->>>>>>> 7a74c1554e19f4efb7b40d1f0c36367fceca554b
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 

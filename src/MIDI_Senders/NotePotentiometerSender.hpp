@@ -13,16 +13,12 @@ BEGIN_CS_NAMESPACE
  * @ingroup MIDI_Senders
  */
 class NotePotentiometerSender {
-<<<<<<< HEAD
 public:
     NotePotentiometerSender(uint8_t triggerValue)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(0), _MaxThreshold(127), _thresholdingEnabled(false),
           _isNoteOn(false), _lastStateChangeTime(0), _debounceTime(2) {
         _NoteOnValue = triggerValue + _thresholdOffset > 127 ? 127 : triggerValue + _thresholdOffset;
     }
-=======
-    public:
->>>>>>> 7a74c1554e19f4efb7b40d1f0c36367fceca554b
 
     NotePotentiometerSender(uint8_t triggerValue, uint8_t MinThreshold, uint8_t MaxThreshold)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _thresholdingEnabled(true),

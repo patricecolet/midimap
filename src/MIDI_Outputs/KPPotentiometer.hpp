@@ -1,7 +1,7 @@
 #pragma once
 
 #include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
-#include <MIDI_Senders/ContinuousKPSender.hpp>
+#include <MIDI_Senders/ContinuousPASender.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -13,11 +13,7 @@ BEGIN_CS_NAMESPACE
  * Polyphonic Aftertouch (Poly Pressure) messages.
  * The analog input is filtered and hysteresis is applied for maximum stability.
  */
-<<<<<<< HEAD
 class KPPotentiometer : public MIDIFilteredAnalog<ContinuousPASender> {
-=======
-class KPPotentiometer : public MIDIFilteredAnalog<ContinuousKPSender> {
->>>>>>> 7a74c1554e19f4efb7b40d1f0c36367fceca554b
   public:
     /** 
      * @brief   Create a new KPPotentiometer object with the given analog pin, 
