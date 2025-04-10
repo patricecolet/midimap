@@ -23,7 +23,7 @@ class PBPotentiometer : public MIDIFilteredAnalog<PitchBendSender<10>> {
   public:
     /** 
      * @brief   Create a new PBPotentiometer object with the given analog pin
-     *          and channel.
+     *          and channel. For perfect components that don't need thresholding.
      * 
      * @param   analogPin
      *          The analog input pin to read from.
@@ -31,8 +31,25 @@ class PBPotentiometer : public MIDIFilteredAnalog<PitchBendSender<10>> {
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      */
-    PBPotentiometer(pin_t analogPin, MIDIChannelCable address = Channel_1)
+    PBPotentiometer(pin_t analogPin, MIDIChannelCable address)
         : MIDIFilteredAnalog(analogPin, address, {}) {}
+        
+    /** 
+     * @brief   Create a new PBPotentiometer object with the given analog pin, 
+     *          channel, and threshold values for imperfect components.
+     * 
+     * @param   analogPin
+     *          The analog input pin to read from.
+     * @param   address
+     *          The MIDI channel [Channel_1, Channel_16] and optional Cable
+     *          Number [Cable_1, Cable_16].
+     * @param   MinThreshold
+     *          The minimum threshold value [0, 1023].
+     * @param   MaxThreshold
+     *          The maximum threshold value [0, 1023].
+     */
+    PBPotentiometer(pin_t analogPin, MIDIChannelCable address, uint16_t MinThreshold, uint16_t MaxThreshold)
+        : MIDIFilteredAnalog(analogPin, address, {MinThreshold, MaxThreshold}) {}
 };
 
 END_CS_NAMESPACE

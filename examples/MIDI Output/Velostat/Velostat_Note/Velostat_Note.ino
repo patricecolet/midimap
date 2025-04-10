@@ -55,7 +55,7 @@ const uint8_t MinNoteThreshold = 10;
 
 uint8_t range = 127; // range of MIDI Output
 // Instantiate a Velostat object
-VelostatNote Velostat{
+NoteVelPotentiometer Velostat{
     A0,                            // Analog pin connected to Velostat
     {MIDI_Notes::C[4], Channel_1}, // Note C4 on channel 1
     TriggerValue,                  // Starting of the aftertouch
