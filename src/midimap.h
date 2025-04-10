@@ -32,6 +32,8 @@
 #include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 
+#include <MIDI_Outputs/CCTouch.hpp>
+
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 
 #include <MIDI_Outputs/NoteUltrasonicDistance.hpp>
