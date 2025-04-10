@@ -24,10 +24,12 @@
 #include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 #include <MIDI_Outputs/CPPotentiometer.hpp>
-#include <MIDI_Outputs/PAPotentiometer.hpp>
+#include <MIDI_Outputs/KPPotentiometer.hpp>
+
+#include <MIDI_Outputs/CCTouch.hpp>
+#include <MIDI_Outputs/CPTouch.hpp>
 
 #include <MIDI_Outputs/NoteButtonInverse.hpp>
-
 
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>

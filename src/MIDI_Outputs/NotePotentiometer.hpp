@@ -13,19 +13,7 @@ BEGIN_CS_NAMESPACE
  */
 class NotePotentiometer : public MIDIFilteredAnalog<NotePotentiometerSender> {
   public:
-    /** 
-     * @brief   Create a new NotePotentiometer object with the given analog pin,
-     *          note number, and MIDI channel. Uses default velocity settings.
-     * 
-     * @param   analogPin
-     *          The analog input pin connected to the potentiometer.
-     * @param   address
-     *          The MIDI address containing the note and channel.
-     */
-    NotePotentiometer(pin_t analogPin, MIDIAddress address)
-        : MIDIFilteredAnalog(analogPin, address, {}) {}
-
-    /** 
+  /** 
      * @brief   Create a new NotePotentiometer object with the given analog pin,
      *          note number, MIDI channel, and custom velocity settings.
      * 

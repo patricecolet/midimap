@@ -33,7 +33,7 @@
 USBMIDI_Interface midi;
 
 // Instantiate a PolyAftertouch object
-PAPotentiometer photoresistor{
+KPPotentiometer photoresistor{
     A0,                            // Analog pin connected to photoresistor
     {MIDI_Notes::C[4], Channel_1}, // Channel volume of channel 1
     //48,        // Minimum threshold if the sensor is not perfect (0-127)

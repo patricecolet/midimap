@@ -13,12 +13,6 @@ BEGIN_CS_NAMESPACE
  */
 class NotePotentiometerSender {
     public:
-        // Default constructor with standard settings
-        NotePotentiometerSender() 
-            : _MinNoteThreshold(0), _MaxThreshold(127), _range(127), _thresholdOffset(10),
-              _minPhysicalVelocity(0.01), _maxPhysicalVelocity(1.0), _thresholdingEnabled(false) {
-            _TriggerValue = _MinNoteThreshold + _thresholdOffset;
-        }
 
         // Constructor with velocity parameters but no thresholding
         NotePotentiometerSender(uint8_t MinNoteThreshold, uint8_t thresholdOffset, 

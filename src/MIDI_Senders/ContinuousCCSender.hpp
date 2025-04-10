@@ -27,6 +27,7 @@ public:
   void send(uint8_t value, MIDIAddress address)
   {
     uint8_t mappedValue;
+    //Serial.println(value);
     
     if (_thresholdingEnabled) {
       // Apply the threshold filter
@@ -37,7 +38,7 @@ public:
       }
       
       // Map the filtered value to 0-127 range
-      mappedValue = map(value, _MinThreshold, _MaxThreshold, 0, 127);
+      mappedValue = ::map(value, _MinThreshold, _MaxThreshold, 0, 127);
     } else {
       // For perfect components, just ensure the value is in the 0-127 range
       mappedValue = value > 127 ? 127 : value;
@@ -45,6 +46,7 @@ public:
 
     // Only send if the value has changed
     if (mappedValue != _lastSentValue) {
+      //Serial.println(mappedValue);
       // Send the mapped value
       midimap.sendControlChange(address, mappedValue);
 
