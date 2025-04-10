@@ -8,11 +8,10 @@
  * Connections
  * -----------
  * 
- * - A0: wiper of a potentiometer (perfect component)
- * - A1: wiper of a second potentiometer (imperfect component)
- * 
- * Connect the left terminal of the potentiometer to ground, and the right one
- * to V<sub>CC</sub>.
+ * - A0: wiper of a potentiometer 
+ * - Connect the left terminal of the potentiometer to ground, and the right one
+ *   to V<sub>CC</sub>.
+ * - 47nF capacitor between A0 and GND, to prevent noise.
  * 
  * Behavior
  * --------
@@ -45,22 +44,10 @@
  
  // For perfect components (no thresholding needed)
  CCPotentiometer Potentiometer {
-   A5,                                   // Analog pin connected to potentiometer
-   {1, CHANNEL_1}, // Channel volume of channel 1
-    //5,        // Minimum threshold if the sensor is not perfect (0-127)
-    //125,       // Maximum threshold if the sensor is not perfect (0-127)
- };
-  CCPotentiometer Potentiometer2 {
-   A7,                                   // Analog pin connected to potentiometer
-   {2, CHANNEL_1}, // Channel volume of channel 1
-    //5,        // Minimum threshold if the sensor is not perfect (0-127)
-    //125,       // Maximum threshold if the sensor is not perfect (0-127)
- };
-  CCPotentiometer Potentiometer3 {
-   A8,                                   // Analog pin connected to potentiometer
-   {3, CHANNEL_1}, // Channel volume of channel 1
-    //5,        // Minimum threshold if the sensor is not perfect (0-127)
-    //125,       // Maximum threshold if the sensor is not perfect (0-127)
+   A5,                              // Analog pin connected to potentiometer
+   { MIDI_Notes::D[3], Channel_1 }, // Channel volume of channel 1
+    //5,                            // Minimum threshold if the sensor is not perfect (0-127)
+    //125,                          // Maximum threshold if the sensor is not perfect (0-127)
  };
 
  void setup() {

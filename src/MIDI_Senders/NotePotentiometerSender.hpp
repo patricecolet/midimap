@@ -14,13 +14,12 @@ BEGIN_CS_NAMESPACE
  */
 class NotePotentiometerSender {
 public:
-    // Constructor with just trigger value (for backward compatibility)
     NotePotentiometerSender(uint8_t triggerValue)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(0), _MaxThreshold(127), _thresholdingEnabled(false),
           _isNoteOn(false), _lastStateChangeTime(0), _debounceTime(2) {
         _NoteOnValue = triggerValue + _thresholdOffset > 127 ? 127 : triggerValue + _thresholdOffset;
     }
-    // Constructor with trigger value, min threshold, and max threshold
+
     NotePotentiometerSender(uint8_t triggerValue, uint8_t MinThreshold, uint8_t MaxThreshold)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _thresholdingEnabled(true),
           _isNoteOn(false), _lastStateChangeTime(0), _debounceTime(2) {

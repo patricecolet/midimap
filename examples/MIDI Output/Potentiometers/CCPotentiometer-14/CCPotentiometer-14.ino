@@ -7,10 +7,10 @@
  * Connections
  * -----------
  *
- * - A0: wiper of a potentiometer
- *
- * Connect the left terminal of the potentiometer to ground, and the right one
- * to V<sub>CC</sub>.
+ * - A0: wiper of a potentiometer 
+ * - Connect the left terminal of the potentiometer to ground, and the right one
+ *   to V<sub>CC</sub>.
+ * - 47nF capacitor between A0 and GND, to prevent noise.
  *
  * Behavior
  * --------
