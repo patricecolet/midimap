@@ -13,10 +13,10 @@ BEGIN_CS_NAMESPACE
  * Polyphonic Aftertouch (Poly Pressure) messages.
  * The analog input is filtered and hysteresis is applied for maximum stability.
  */
-class PAPotentiometer : public MIDIFilteredAnalog<ContinuousPASender> {
+class KPPotentiometer : public MIDIFilteredAnalog<ContinuousPASender> {
   public:
     /** 
-     * @brief   Create a new PAPotentiometer object with the given analog pin, 
+     * @brief   Create a new KPPotentiometer object with the given analog pin, 
      *          note number, and MIDI channel.
      *          For perfect components that don't need thresholding.
      * 
@@ -27,11 +27,11 @@ class PAPotentiometer : public MIDIFilteredAnalog<ContinuousPASender> {
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
      *          [CABLE_1, CABLE_16].
      */
-    PAPotentiometer(pin_t analogPin, MIDIAddress address)
+    KPPotentiometer(pin_t analogPin, MIDIAddress address)
         : MIDIFilteredAnalog(analogPin, address, {}) {}
 
     /** 
-     * @brief   Create a new PAPotentiometer object with the given analog pin, 
+     * @brief   Create a new KPPotentiometer object with the given analog pin, 
      *          note number, MIDI channel, and threshold values for imperfect components.
      * 
      * @param   analogPin
@@ -45,7 +45,7 @@ class PAPotentiometer : public MIDIFilteredAnalog<ContinuousPASender> {
      * @param   MaxThreshold
      *          The maximum threshold value [0, 255].
      */
-    PAPotentiometer(pin_t analogPin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+    KPPotentiometer(pin_t analogPin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
         : MIDIFilteredAnalog(analogPin, address, {MinThreshold, MaxThreshold}) {}
 };
 

@@ -43,12 +43,10 @@ CPPotentiometer potentiometer{
     //127,       // Maximum threshold if the sensor is not perfect(0-127)
 };
 
-void setup()
-{
+void setup() {
   midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
+void loop() {
   midimap.loop(); // Update the midimap
 }

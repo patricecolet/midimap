@@ -17,27 +17,30 @@
 
 // ------------------------------ MIDI Outputs ------------------------------ //
 #include <MIDI_Outputs/NoteButton.hpp>
+#include <MIDI_Outputs/NoteButtonInverse.hpp>
 #include <MIDI_Outputs/CCButton.hpp>
 #include <MIDI_Outputs/PCButton.hpp>
+
+#include <MIDI_Outputs/NotePotentiometer.hpp>
+#include <MIDI_Outputs/NoteVelPotentiometer.hpp>
+#include <MIDI_Outputs/NoteRelVelPotentiometer.hpp>
+#include <MIDI_Outputs/PCPotentiometer.hpp>
+#include <MIDI_Outputs/CPPotentiometer.hpp>
+#include <MIDI_Outputs/KPPotentiometer.hpp>
 
 #include <MIDI_Outputs/CCPotentiometer.hpp>
 #include <MIDI_Outputs/CCPotentiometer14.hpp>
 #include <MIDI_Outputs/PBPotentiometer.hpp>
-#include <MIDI_Outputs/CPPotentiometer.hpp>
-#include <MIDI_Outputs/PAPotentiometer.hpp>
-
-#include <MIDI_Outputs/NoteButtonInverse.hpp>
-
-
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 
-#include <MIDI_Outputs/CCUltrasonic.hpp>
+#include <MIDI_Outputs/NoteUltrasonicDistance.hpp>
+#include <MIDI_Outputs/KPUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
+
 // #include <MIDI_Outputs/VelostatNote.hpp>
 #include <MIDI_Outputs/PiezoNoteSensor.hpp>
 
-#include <MIDI_Outputs/NotePotentiometer.hpp>
 #include <MIDI_Outputs/QTouchNote.hpp>
 
 #include <MIDI_Outputs/Bankable/CCSmartPotentiometer.hpp>

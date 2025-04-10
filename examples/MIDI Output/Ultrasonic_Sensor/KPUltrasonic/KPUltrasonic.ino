@@ -31,21 +31,18 @@
 // Instantiate a MIDI over USB interface
 USBMIDI_Interface midi;
 
-uint8_t range = 127; // range of MIDI Output
-
 // Ultrasonic sensor on pin 7, sending aftertouch for Note C4 (60) on Channel 1
-CCUltrasonic ultrasonic{
+KPUltrasonic ultrasonic{
     7,
     {MIDI_Notes::C[4], Channel_1},
-    range, // range of MIDI Output
+    0,        // Minimum threshold if the sensor is not perfect (0-127)
+    1000,       // Maximum threshold if the sensor is not perfect (0-127)
 };
 
-void setup()
-{
+void setup() {
   midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
+void loop() {
   midimap.loop(); // Update the midimap
 }

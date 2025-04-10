@@ -40,12 +40,10 @@ PBUltrasonic ultrasonicpitchbend{
     Channel_1, // MIDI Channel 1
 };
 
-void setup()
-{
+void setup() {
   midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
+void loop() {
   midimap.loop(); // Update the midimap
 }

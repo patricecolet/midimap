@@ -8,23 +8,28 @@
  *
  * @boards  AVR, AVR USB, ESP32, SAM, SAMD
  *
- * Cabling Details
- * ---------------
+ * Connections
+ * -----------
+ * 
  * - 5V: Power supply for the photoresistor
  * - A0: Photoresistor connected to this pin to simulate polyphonic aftertouch based on light intensity.
  * - Pull-up resistor: 500kΩ between the A0 pin and 5V to stabilize the signal.
  *
+ * Behavior
+ * --------
+ * 
  * The photoresistor's light exposure determines the polyphonic aftertouch pressure value,
  * allowing you to control aftertouch dynamically by adjusting the light levels.
  *
  * See @ref MIDI_Notes for a table of MIDI note numbers.
  *
- * MIDI Mapping
- * ------------
+ * Mapping
+ * -------
+ * 
  * In your DAW, select the Arduino as a custom MIDI controller and use the MIDI learn feature
  * to map polyphonic aftertouch to your desired functions.
  *
- * Code written by Hazri Haqimi, 2025-03-03
+ * Written by Hazri Haqimi, 2025-03-03
  */
 
 #include <midimap.h> // Include the midimap library
@@ -33,19 +38,17 @@
 USBMIDI_Interface midi;
 
 // Instantiate a PolyAftertouch object
-PAPotentiometer photoresistor{
-    A0,                            // Analog pin connected to photoresistor
+KPPotentiometer photoresistor{
+    A5,                            // Analog pin connected to photoresistor
     {MIDI_Notes::C[4], Channel_1}, // Channel volume of channel 1
-    //48,        // Minimum threshold if the sensor is not perfect (0-127)
-    //100,       // Maximum threshold if the sensor is not perfect (0-127)
+    //0,        // Minimum threshold if the sensor is not perfect (0-127)
+    //127,       // Maximum threshold if the sensor is not perfect (0-127)
 };
 
-void setup()
-{
+void setup() {
   midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
+void loop() {
   midimap.loop(); // Update the midimap
 }

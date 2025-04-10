@@ -4,6 +4,7 @@
  * controls, etc. It can control almost any knob in your DAW software.
  *
  * @boards  AVR, AVR USB, ESP32, SAM, SAMD
+ * 
  * Connections
  * -----------
  * 
@@ -44,10 +45,22 @@
  
  // For perfect components (no thresholding needed)
  CCPotentiometer Potentiometer {
-   A0,                                   // Analog pin connected to potentiometer
-   {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
-    //48,        // Minimum threshold if the sensor is not perfect (0-127)
-    //100,       // Maximum threshold if the sensor is not perfect (0-127)
+   A5,                                   // Analog pin connected to potentiometer
+   {1, CHANNEL_1}, // Channel volume of channel 1
+    //5,        // Minimum threshold if the sensor is not perfect (0-127)
+    //125,       // Maximum threshold if the sensor is not perfect (0-127)
+ };
+  CCPotentiometer Potentiometer2 {
+   A7,                                   // Analog pin connected to potentiometer
+   {2, CHANNEL_1}, // Channel volume of channel 1
+    //5,        // Minimum threshold if the sensor is not perfect (0-127)
+    //125,       // Maximum threshold if the sensor is not perfect (0-127)
+ };
+  CCPotentiometer Potentiometer3 {
+   A8,                                   // Analog pin connected to potentiometer
+   {3, CHANNEL_1}, // Channel volume of channel 1
+    //5,        // Minimum threshold if the sensor is not perfect (0-127)
+    //125,       // Maximum threshold if the sensor is not perfect (0-127)
  };
 
  void setup() {
