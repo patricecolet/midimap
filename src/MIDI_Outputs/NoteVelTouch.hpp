@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
+#include <MIDI_Outputs/Abstract/MIDIFilteredTouch.hpp>
 #include <MIDI_Senders/ContinuousNoteVelSender.hpp>
 
 BEGIN_CS_NAMESPACE
@@ -13,13 +13,13 @@ BEGIN_CS_NAMESPACE
  * 
  * @ingroup MIDIOutputElements
  */
-class NoteVelPotentiometer : public MIDIFilteredAnalog<ContinuousNoteVelSender> {
+class NoteVelTouch : public MIDIFilteredTouch<ContinuousNoteVelSender> {
   public:
     /** 
-     * @brief   Create a new NoteVelPotentiometer object with the given analog pin,
+     * @brief   Create a new NoteVelTouch object with the given analog pin,
      *          note number, MIDI channel, and velocity parameters.
      * 
-     * @param   analogPin
+     * @param   touchPin
      *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
@@ -30,18 +30,18 @@ class NoteVelPotentiometer : public MIDIFilteredAnalog<ContinuousNoteVelSender> 
      * @param   maxPhysicalVelocity
      *          The maximum physical velocity that maps to MIDI velocity 127.
      */
-    NoteVelPotentiometer(pin_t analogPin, MIDIAddress address, 
+    NoteVelTouch(int touchPin, MIDIAddress address, 
                       uint8_t MinNoteThreshold,
                       float minPhysicalVelocity, float maxPhysicalVelocity)
-        : MIDIFilteredAnalog(analogPin, address, 
+        : MIDIFilteredTouch(touchPin, address, 
                             ContinuousNoteVelSender(MinNoteThreshold,
                                                    minPhysicalVelocity, maxPhysicalVelocity)) {}
                                                  
     /** 
-     * @brief   Create a new NoteVelPotentiometer object with the given analog pin,
+     * @brief   Create a new NoteVelTouch object with the given analog pin,
      *          note number, MIDI channel, velocity parameters, and thresholds for imperfect components.
      * 
-     * @param   analogPin
+     * @param   touchPin
      *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
@@ -56,10 +56,10 @@ class NoteVelPotentiometer : public MIDIFilteredAnalog<ContinuousNoteVelSender> 
      * @param   MaxThreshold
      *          The maximum threshold value [0, 127] for the potentiometer.
      */
-    NoteVelPotentiometer(pin_t analogPin, MIDIAddress address, 
+    NoteVelTouch(int touchPin, MIDIAddress address, 
                       uint8_t MinNoteThreshold, float minPhysicalVelocity, float maxPhysicalVelocity,
                       uint8_t MinThreshold, uint8_t MaxThreshold)
-        : MIDIFilteredAnalog(analogPin, address, 
+        : MIDIFilteredTouch(touchPin, address, 
                             ContinuousNoteVelSender(MinNoteThreshold, minPhysicalVelocity, maxPhysicalVelocity,
                                                    MinThreshold, MaxThreshold)) {}
 };

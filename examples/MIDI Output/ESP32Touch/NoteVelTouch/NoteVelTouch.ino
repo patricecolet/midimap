@@ -37,28 +37,35 @@
 // For direct touch detection, try TOUCH_DELTA_MAX = 200000, TOUCH_BASELINE_THRESHOLD = 400;
 
 // Maximum expected delta value (default: 4000.0f)
-#define TOUCH_DELTA_MAX 200000.0f
+//#define TOUCH_DELTA_MAX 200000.0f
 
 // Threshold for freezing baseline updates (default: 100.0f)
-#define TOUCH_BASELINE_THRESHOLD 400.0f
+//#define TOUCH_BASELINE_THRESHOLD 400.0f
 
-#include <midimap.h> // Include the midimap library
 
-// Instantiate a MIDI over USB interface.
-USBMIDI_Interface midi;
+ #include <midimap.h>  // Include the midimap library
 
-// Create a touch sensor that sends MIDI CC messages
-CCTouch touchSensor {
-  T1,                                   // Touch pin connected to sensor
-  {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
-  //47
-  //127
-};
-
-void setup() {
-  midimap.begin(); // Initialize midimap
-}
-
-void loop() {
-  midimap.loop(); // Update the midimap
-}
+ USBMIDI_Interface midi;  // Instantiate a MIDI over USB interface.
+  
+ // Note velocity parameters
+ const uint8_t minNoteThreshold = 10;  // Threshold at which timing starts
+ const float minPhysicalVelocity = 0.5; // Minimum physical velocity (units/second)
+ const float maxPhysicalVelocity = 50.0; // Maximum physical velocity (units/second)
+ 
+ NoteVelTouch potentiometer{
+   A0,                               // Analog pin connected to potentiometer
+   { MIDI_Notes::C[4], Channel_1 },  // Note C4 on channel 1
+   minNoteThreshold,                 // Minimum note threshold
+   minPhysicalVelocity,              // Minimum physical velocity
+   maxPhysicalVelocity,              // Maximum physical velocity
+   //40,                               // Minimum threshold (0-127)
+   //127,                              // Maximum threshold (0-127)
+ };
+  
+ void setup() {
+   midimap.begin();  // Initialize midimap
+ }
+  
+ void loop() {
+   midimap.loop();  // Update the midimap
+ }

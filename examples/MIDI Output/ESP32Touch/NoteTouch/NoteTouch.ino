@@ -42,23 +42,25 @@
 // Threshold for freezing baseline updates (default: 100.0f)
 #define TOUCH_BASELINE_THRESHOLD 400.0f
 
-#include <midimap.h> // Include the midimap library
 
-// Instantiate a MIDI over USB interface.
-USBMIDI_Interface midi;
+ #include <midimap.h>  // Include the midimap library
 
-// Create a touch sensor that sends MIDI CC messages
-CCTouch touchSensor {
-  T1,                                   // Touch pin connected to sensor
-  {MIDI_CC::Channel_Volume, CHANNEL_1}, // Channel volume of channel 1
-  //47
-  //127
+ USBMIDI_Interface midi;  // Instantiate a MIDI over USB interface.
+ 
+ const uint8_t triggerValue = 10;  // Threshold at which note is triggered
+
+ NoteTouch potentiometer{
+  T1,                               // Analog pin connected to potentiometer
+  { MIDI_Notes::D[3], Channel_1 },  // Note C4 on channel 1
+  triggerValue,                     // Trigger threshold
+  //5,                               // Minimum threshold (0-127)
+  //125,                              // Maximum threshold (0-127)
 };
-
-void setup() {
-  midimap.begin(); // Initialize midimap
-}
-
-void loop() {
-  midimap.loop(); // Update the midimap
-}
+ 
+ void setup() {
+   midimap.begin();  // Initialize midimap
+ }
+ 
+ void loop() {
+   midimap.loop();  // Update the midimap
+ }

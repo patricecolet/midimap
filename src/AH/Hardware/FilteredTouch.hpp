@@ -76,7 +76,7 @@ public:
         if (delta < 0) delta = 0; // Clamp to 0
         
         // 3. Freeze baseline when hand is detected
-        if (delta < DELTA_MAX - baselineThreshold) { // Only update baseline when hand is far
+        if (delta < baselineThreshold) { // Only update baseline when hand is far
             baseline = baseline * (1.0f - BASELINE_COEF) + smooth * BASELINE_COEF;
         }
         
@@ -150,7 +150,7 @@ private:
     #endif
     
     #ifndef TOUCH_BASELINE_THRESHOLD
-    float baselineThreshold = 400.0f; // Threshold for freezing baseline updates
+    float baselineThreshold = 100.0f; // Threshold for freezing baseline updates
     #else
     float baselineThreshold = TOUCH_BASELINE_THRESHOLD;
     #endif

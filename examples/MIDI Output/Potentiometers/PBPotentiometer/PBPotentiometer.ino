@@ -36,7 +36,7 @@
  * Modified by Nuryn Sophea, 2025-03-10
  */
 
- #include <midimap.h> // Include the midimap library
+#include <midimap.h> // Include the midimap library
 
  // Instantiate a MIDI over USB interface.
  USBMIDI_Interface midi;

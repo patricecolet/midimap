@@ -12,10 +12,10 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDI_Senders
  */
-class NoteVelPotentiometerSender {
+class ContinuousNoteVelSender {
 public:
     // Constructor with velocity parameters but no thresholding
-    NoteVelPotentiometerSender(uint8_t MinNoteThreshold,
+    ContinuousNoteVelSender(uint8_t MinNoteThreshold,
                            float minPhysicalVelocity, float maxPhysicalVelocity)
         : _MinNoteThreshold(MinNoteThreshold), _MaxThreshold(127), _thresholdOffset(12),
           _minPhysicalVelocity(minPhysicalVelocity), _maxPhysicalVelocity(maxPhysicalVelocity), 
@@ -25,7 +25,7 @@ public:
     }
 
     // Constructor with full parameters including thresholding
-    NoteVelPotentiometerSender(uint8_t MinNoteThreshold,
+    ContinuousNoteVelSender(uint8_t MinNoteThreshold,
                            float minPhysicalVelocity, float maxPhysicalVelocity,
                            uint8_t MinThreshold, uint8_t MaxThreshold)
         : _MinNoteThreshold(MinNoteThreshold), _MaxThreshold(MaxThreshold), _thresholdOffset(12),

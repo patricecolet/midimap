@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
+#include <MIDI_Outputs/Abstract/MIDIFilteredTouch.hpp>
 #include <MIDI_Senders/ContinuousNoteRelVelSender.hpp>
 
 BEGIN_CS_NAMESPACE
@@ -13,13 +13,13 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDIOutputElements
  */
-class NoteRelVelPotentiometer : public MIDIFilteredAnalog<ContinuousNoteRelVelSender> {
+class NoteRelVelTouch : public MIDIFilteredTouch<ContinuousNoteRelVelSender> {
 public:
     /**
      * @brief Create a new NoteVelPotentiometer object with the given analog pin,
      * note number, MIDI channel, and velocity parameters.
      *
-     * @param analogPin
+     * @param touchPin
      * The analog input pin connected to the potentiometer.
      * @param address
      * The MIDI address containing the note and channel.
@@ -30,15 +30,15 @@ public:
      * @param maxPhysicalVelocity
      * The maximum physical velocity that maps to MIDI velocity 127.
      */
-    NoteRelVelPotentiometer(pin_t analogPin, MIDIAddress address,
+    NoteRelVelTouch(int touchPin, MIDIAddress address,
                          uint8_t MinNoteThreshold, float minPhysicalVelocity, float maxPhysicalVelocity)
-        : MIDIFilteredAnalog(analogPin, address,
+        : MIDIFilteredTouch(touchPin, address,
                              ContinuousNoteRelVelSender(MinNoteThreshold, minPhysicalVelocity, maxPhysicalVelocity)) {}
     /**
      * @brief Create a new NoteVelPotentiometer object with the given analog pin,
      * note number, MIDI channel, velocity parameters, and thresholds for imperfect components.
      *
-     * @param analogPin
+     * @param touchPin
      * The analog input pin connected to the potentiometer.
      * @param address
      * The MIDI address containing the note and channel.
@@ -53,10 +53,10 @@ public:
      * @param MaxThreshold
      * The maximum threshold value [0, 127] for the potentiometer.
      */
-    NoteRelVelPotentiometer(pin_t analogPin, MIDIAddress address,
+    NoteRelVelTouch(int touchPin, MIDIAddress address,
                          uint8_t MinNoteThreshold, float minPhysicalVelocity, float maxPhysicalVelocity,
                          uint8_t MinThreshold, uint8_t MaxThreshold)
-        : MIDIFilteredAnalog(analogPin, address,
+        : MIDIFilteredTouch(touchPin, address,
                              ContinuousNoteRelVelSender(MinNoteThreshold, minPhysicalVelocity, maxPhysicalVelocity,
                                                         MinThreshold, MaxThreshold)) {}
 };

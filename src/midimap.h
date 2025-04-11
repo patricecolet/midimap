@@ -33,6 +33,11 @@
 #include <MIDI_Outputs/PBPotentiometer.hpp>
 
 #include <MIDI_Outputs/CCTouch.hpp>
+#include <MIDI_Outputs/PBTouch.hpp>
+#include <MIDI_Outputs/KPTouch.hpp>
+#include <MIDI_Outputs/NoteTouch.hpp>
+#include <MIDI_Outputs/NoteRelVelTouch.hpp>
+#include <MIDI_Outputs/NoteVelTouch.hpp>
 
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 

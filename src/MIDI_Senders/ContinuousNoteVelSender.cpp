@@ -1,3 +1,3 @@
 #ifdef TEST_COMPILE_ALL_HEADERS_SEPARATELY
-#include "NotePotentiometerSender.hpp"
+#include "ContinuousNoteVelSender.hpp"
 #endif
