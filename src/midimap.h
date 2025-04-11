@@ -42,8 +42,10 @@
 #include <MIDI_Outputs/Accelerometer3AxisSensor.hpp>
 
 #include <MIDI_Outputs/NoteUltrasonicDistance.hpp>
+#include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/KPUltrasonic.hpp>
 #include <MIDI_Outputs/PBUltrasonic.hpp>
+#include <MIDI_Outputs/CPUltrasonic.hpp>
 
 // #include <MIDI_Outputs/VelostatNote.hpp>
 #include <MIDI_Outputs/PiezoNoteSensor.hpp>

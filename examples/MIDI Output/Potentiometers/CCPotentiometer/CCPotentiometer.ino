@@ -8,10 +8,24 @@
  * Connections
  * -----------
  * 
+<<<<<<< HEAD
+<<<<<<<< HEAD:examples/MIDI Output/Potentiometers/CCPotentiometer/CCPotentiometer.ino
+=======
+>>>>>>> 8ad4b19 (merging branch latest 11-04-2025)
  * - A0: wiper of a potentiometer 
  * - Connect the left terminal of the potentiometer to ground, and the right one
  *   to V<sub>CC</sub>.
  * - 47nF capacitor between A0 and GND, to prevent noise.
+<<<<<<< HEAD
+========
+ * - A0: wiper of a potentiometer (perfect component)
+ * - A1: wiper of a second potentiometer (imperfect component)
+ * 
+ * Connect the left terminal of the potentiometer to ground, and the right one
+ * to V<sub>CC</sub>.
+>>>>>>>> 8ad4b19 (merging branch latest 11-04-2025):examples/MIDI Output/ESP32Touch/CCESP32Touch/CCESP32Touch.ino
+=======
+>>>>>>> 8ad4b19 (merging branch latest 11-04-2025)
  * 
  * Behavior
  * --------

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MIDI_Senders/UltrasonicPBSender.hpp>
+#include <MIDI_Senders/UltrasonicCCSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -18,10 +18,10 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDIOutputElements
  */
-class PBUltrasonic : public UltrasonicPBSender<10>, public Updatable<> {
+class CCUltrasonic : public UltrasonicCCSender, public Updatable<> {
   public:
     /** 
-     * @brief   Create a new PBUltrasonic object with the given analog pin
+     * @brief   Create a new CCUltrasonic object with the given analog pin
      *          and channel.
      * 
      * @param   pin
@@ -30,13 +30,13 @@ class PBUltrasonic : public UltrasonicPBSender<10>, public Updatable<> {
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      */
-    PBUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicPBSender(address, pin) {}
+    CCUltrasonic(pin_t pin, MIDIAddress address)
+        : UltrasonicCCSender(address, pin) {}
 
     // Initialize pin for sensor
-    void begin() { UltrasonicPBSender::begin();}
+    void begin() { UltrasonicCCSender::begin();}
     // Update aftertouch value based on sensor
-    void update() { UltrasonicPBSender::update();}
+    void update() { UltrasonicCCSender::update();}
 };
 
 END_CS_NAMESPACE

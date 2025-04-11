@@ -37,10 +37,8 @@ USBMIDI_Interface midi;
 
 // Instantiate a CCButton object
 CCButton button {
-  // Push button on pin 5:
-  5,
-  // General Purpose Controller #1 on MIDI channel 1:
-  {MIDI_CC::General_Purpose_Controller_1, Channel_1},
+  5,                                                  // Push button on pin 5:
+  {MIDI_CC::General_Purpose_Controller_1, Channel_1}, // General Purpose Controller #1 on channel 1
 };
 
 void setup() {
@@ -50,3 +48,4 @@ void setup() {
 void loop() {
   midimap.loop(); // Update the midimap
 }
+

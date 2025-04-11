@@ -11,17 +11,16 @@
  * Connections
  * -----------
  * 
- * - 5V: Power supply for the photoresistor
- * - A0: Photoresistor connected to this pin to simulate polyphonic aftertouch based on light intensity.
- * - Pull-up resistor: 500kΩ between the A0 pin and 5V to stabilize the signal.
- *
+ * - A0: wiper of a potentiometer 
+ * - Connect the left terminal of the potentiometer to ground, and the right one
+ *   to V<sub>CC</sub>.
+ * - 47nF capacitor between A0 and GND, to prevent noise.
+ * 
  * Behavior
  * --------
  * 
  * The photoresistor's light exposure determines the polyphonic aftertouch pressure value,
  * allowing you to control aftertouch dynamically by adjusting the light levels.
- *
- * See @ref MIDI_Notes for a table of MIDI note numbers.
  *
  * Mapping
  * -------
