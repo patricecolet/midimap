@@ -7,7 +7,7 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief Class that sends MIDI Note messages with velocity based on potentiometer input
+ * @brief Class that sends MIDI Note messages with velocity based on potentiometer/touch input
  * with hysteresis filtering and debouncing. Supports velocity-sensitive Note Off.
  *
  * @ingroup MIDI_Senders

@@ -6,6 +6,8 @@ AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 
 BEGIN_AH_NAMESPACE
 
+#ifdef ESP32
+
 /**
  * @brief A class for filtering capacitive touch sensor readings using adaptive 
  * baseline tracking with multi-stage smoothing.
@@ -163,6 +165,21 @@ private:
     float mappedSmooth = 0;
     int mappedValue = 0;
 };
+
+#else
+// Empty class for non-ESP32 platforms to avoid compilation errors
+template <uint8_t Precision = 7>
+class FilteredTouch {
+public:
+    FilteredTouch(int) {}
+    void begin() {}
+    void resetToCurrentValue() {}
+    bool update() { return false; }
+    int getValue() { return 0; }
+    float getRawValue() const { return 0; }
+    void setUpdateInterval(unsigned long) {}
+};
+#endif // ESP32
 
 END_AH_NAMESPACE
 

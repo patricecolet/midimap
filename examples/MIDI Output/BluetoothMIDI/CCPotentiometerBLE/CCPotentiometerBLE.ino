@@ -41,10 +41,8 @@
  * Once connected, use the **MIDI Learn** feature in your DAW to assign
  * the potentiometer to control any parameter.
  *
- * Written by PieterP, 2019-08-13
- * https://github.com/tttapa/Control-Surface
  *
- * Modified by Hazri Haqimi, 2025-03-03 (Added Bluetooth MIDI Support for ESP32)
+ * Modified by Hazri Haqimi, 2025-03-11
  */
 
 #include <midimap.h>
@@ -52,13 +50,12 @@
 // Instantiate a MIDI over BLE interface.
 BluetoothMIDI_Interface midi;
 
-uint8_t range = 127; // range of the MIDI Outputs
-
 CCPotentiometer potentiometer{
     // Create a new instance of the class `CCPotentiometer`, called `potentiometer`,
     A0,                                   // on pin A0
     {MIDI_CC::Channel_Volume, CHANNEL_1}, // that sends MIDI messages with controller 7 (channel volume) on channel 1.
-    range,                                // range of the MIDI Outputs
+    // 0,        // Minimum threshold if the sensor is not perfect (0-127)
+    // 127,       // Maximum threshold if the sensor is not perfect (0-127)
 };
 
 void setup()

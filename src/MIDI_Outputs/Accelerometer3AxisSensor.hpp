@@ -39,8 +39,8 @@ public:
      * @param addressY MIDI address for the Y-axis data.
      * @param addressZ MIDI address for the Z-axis data.
      */
-    Accelerometer3AxisSensor(MIDIAddress addressX, MIDIAddress addressY, MIDIAddress addressZ, uint8_t range)
-        : CCAccelerometerSender(addressX, addressY, addressZ, range) {}
+    Accelerometer3AxisSensor(MIDIAddress addressX, MIDIAddress addressY, MIDIAddress addressZ)
+        : CCAccelerometerSender(addressX, addressY, addressZ) {}
 
     /// Initializes the accelerometer sensor and sets up the necessary communication.
     void begin() {
