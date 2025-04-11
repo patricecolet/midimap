@@ -5,19 +5,47 @@
 
 BEGIN_CS_NAMESPACE
 
+/**
+ * @brief Class for sending MIDI Channel Pressure messages with continuous values.
+ * 
+ * This class handles the sending of MIDI Channel Pressure messages with optional
+ * thresholding to filter input values. It only sends messages when the value has
+ * changed from the previous sent value to reduce MIDI traffic.
+ */
 class ContinuousCPSender
 {
   public:
-  // Default constructor with full range (no thresholding)
+  /**
+   * @brief Default constructor with full range (no thresholding).
+   * 
+   * Creates a sender that uses the full MIDI range (0-127) without any thresholding.
+   */
   ContinuousCPSender() 
       : _MinThreshold(0), _MaxThreshold(127), _lastSentValue(255), _thresholdingEnabled(false) {}
       
-  // Constructor with thresholds
+  /**
+   * @brief Constructor with thresholds.
+   * 
+   * Creates a sender with specified minimum and maximum thresholds.
+   * Input values will be constrained to this range before mapping to MIDI values.
+   * 
+   * @param MinThreshold The minimum threshold value (input values below this will be set to this value)
+   * @param MaxThreshold The maximum threshold value (input values above this will be set to this value)
+   */
   ContinuousCPSender(uint8_t MinThreshold, uint8_t MaxThreshold)
       : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _lastSentValue(255), 
         _thresholdingEnabled(true) {}
 
-  /// Send a 7-bit CC message to the given address.
+  /**
+   * @brief Send a 7-bit Channel Pressure message to the given address.
+   * 
+   * Sends a MIDI Channel Pressure message with the given value to the specified address.
+   * The value is thresholded if thresholding is enabled, and mapped to the 0-127 range.
+   * Messages are only sent if the value has changed from the last sent value.
+   * 
+   * @param value The input value to send (0-127)
+   * @param address The MIDI address to send to
+   */
   void send(uint8_t value, MIDIAddress address)
   {
     uint8_t mappedValue;
@@ -48,13 +76,18 @@ class ContinuousCPSender
     }
   }
 
-  /// Get the resolution of the sender in bits (always returns 7).
+  /**
+   * @brief Get the resolution of the sender in bits.
+   * 
+   * @return Always returns 7 (bits), as MIDI Channel Pressure messages use 7-bit values.
+   */
   constexpr static uint8_t precision() { return 7; }
 
 private:
-  uint8_t _MinThreshold, _MaxThreshold;
-  uint8_t _lastSentValue; // Store the last sent value
-  bool _thresholdingEnabled; // Flag to indicate if thresholding is enabled
+  uint8_t _MinThreshold;       ///< Minimum threshold for input values
+  uint8_t _MaxThreshold;       ///< Maximum threshold for input values
+  uint8_t _lastSentValue;      ///< Stores the last sent value to avoid sending duplicates
+  bool _thresholdingEnabled;   ///< Flag indicating if thresholding is enabled
 };
 
 END_CS_NAMESPACE

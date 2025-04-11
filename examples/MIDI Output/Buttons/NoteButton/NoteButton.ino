@@ -3,7 +3,7 @@
  * used for triggering samples, mute/solo/rec buttons, play/pause/stop buttons,
  * etc. It can control almost any push button control in your DAW software.
  *
- * @boards  AVR, AVR USB, ESP32, SAM, SAMD
+ * @boards  AVR, AVR USB, ESP32, SAM, SAMD, Teensy 3.x
  * 
  * Connections
  * -----------

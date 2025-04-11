@@ -45,10 +45,6 @@
 #include <MIDI_Outputs/PBUltrasonic.hpp>
 #include <MIDI_Outputs/CCUltrasonic.hpp>
 #include <MIDI_Outputs/CPUltrasonic.hpp>
-// #include <MIDI_Outputs/VelostatNote.hpp>
-#include <MIDI_Outputs/PiezoNoteSensor.hpp>
-
-#include <MIDI_Outputs/QTouchNote.hpp>
 
 #include <MIDI_Outputs/Bankable/CCSmartPotentiometer.hpp>
 
