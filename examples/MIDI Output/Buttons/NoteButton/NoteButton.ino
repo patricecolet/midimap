@@ -4,6 +4,7 @@
  * etc. It can control almost any push button control in your DAW software.
  *
  * @boards  AVR, AVR USB, ESP32, SAM, SAMD
+ * 
  * Connections
  * -----------
  *
@@ -44,12 +45,10 @@ NoteButton button{
     {MIDI_Notes::C[4], Channel_1}, // Note C4 on MIDI channel 1
 };
 
-void setup()
-{
+void setup() {
   midimap.begin(); // Initialize midimap
 }
 
-void loop()
-{
+void loop() {
   midimap.loop(); // Update the midimap
 }

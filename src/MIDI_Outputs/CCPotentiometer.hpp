@@ -20,7 +20,7 @@ class CCPotentiometer : public MIDIFilteredAnalog<ContinuousCCSender> {
   public:
     /** 
      * @brief   Create a new CCPotentiometer object with the given analog pin, 
-     *          controller number and channel.
+     *          controller number and channel. For perfect components that don't need thresholding.
      * 
      * @param   analogPin
      *          The analog input pin to read from.
@@ -29,8 +29,26 @@ class CCPotentiometer : public MIDIFilteredAnalog<ContinuousCCSender> {
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
      *          [CABLE_1, CABLE_16].
      */
-    CCPotentiometer(pin_t analogPin, MIDIAddress address, uint8_t range)
-        : MIDIFilteredAnalog(analogPin, address, {range}) {}
+    CCPotentiometer(pin_t analogPin, MIDIAddress address)
+        : MIDIFilteredAnalog(analogPin, address, {}) {}
+        
+    /** 
+     * @brief   Create a new CCPotentiometer object with the given analog pin, 
+     *          controller number, channel, and threshold values for imperfect components.
+     * 
+     * @param   analogPin
+     *          The analog input pin to read from.
+     * @param   address
+     *          The MIDI address containing the controller number [0, 119], 
+     *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
+     *          [CABLE_1, CABLE_16].
+     * @param   MinThreshold
+     *          The minimum threshold value [0, 127].
+     * @param   MaxThreshold
+     *          The maximum threshold value [0, 127].
+     */
+    CCPotentiometer(pin_t analogPin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : MIDIFilteredAnalog(analogPin, address, {MinThreshold, MaxThreshold}) {}
 };
 
 END_CS_NAMESPACE

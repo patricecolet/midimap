@@ -15,7 +15,6 @@ class DigitalNoteSender {
     /// Send a note on message to the given address with this object's velocity
     /// as velocity.
     void sendOn(MIDIAddress address) {
-      Serial.println(getVelocity());
         midimap.sendNoteOn(address, getVelocity());
     }
     /// Send a note off message to the given address with 0x7F as velocity.
