@@ -8,10 +8,10 @@
  * Connections
  * -----------
  *
- * - A0: wiper of a potentiometer (perfect component)
- *
- * Connect the left terminal of the potentiometer to ground, and the right one
- * to V<sub>CC</sub>.
+ * - A0: wiper of a potentiometer 
+ * - Connect the left terminal of the potentiometer to ground, and the right one
+ *   to V<sub>CC</sub>.
+ * - 47nF capacitor between A0 and GND, to prevent noise.
  *
  * Behavior
  * --------
@@ -36,8 +36,8 @@
 USBMIDI_Interface midi; // Instantiate a MIDI over USB interface.
 // Note velocity parameters
 const uint8_t minNoteThreshold = 10;    // Threshold at which timing starts
-const float minPhysicalVelocity = 0.5;  // Minimum physical velocity (units/second)
-const float maxPhysicalVelocity = 50.0; // Maximum physical velocity (units/second)
+const float minPhysicalVelocity = 0.5;  // Minimum physical velocity, if you find it too hard to play softly, raise the minPhysicalVelocity 
+const float maxPhysicalVelocity = 50.0; // Maximum physical velocity, If you find it too hard to reach high velocities, lower the maxPhysicalVelocity
 
 NoteRelVelPotentiometer potentiometer{
     A0,                            // Analog pin connected to potentiometer

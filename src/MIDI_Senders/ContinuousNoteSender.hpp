@@ -7,7 +7,7 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   Class that sends MIDI Note messages based on potentiometer/touch input
+ * @brief   Class that sends MIDI Note messages based on potentiometer input
  *          with hysteresis filtering, and debouncing.
  *
  * @ingroup MIDI_Senders

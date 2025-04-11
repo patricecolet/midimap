@@ -11,6 +11,21 @@
  * - Connect the left terminal of the potentiometer to ground, and the right one
  *   to V<sub>CC</sub>.
  * - 47nF capacitor between A0 and GND, to prevent noise.
+ * 
+ * If you are using a FSR sensor, 
+ * 
+ * ```
+ *        +5V
+ *         │
+ *         │
+ *         Velostat (Pressure-sensitive material)
+ *         │
+ *         ├───► A0 (Analog Input - Reads voltage)
+ *         │
+ *         R1 (Fixed Resistor, 10kΩ)  <-- Pull-down resistor
+ *         │
+ *        GND
+ * ```
  *
  * Behavior
  * --------

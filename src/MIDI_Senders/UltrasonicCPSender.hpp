@@ -13,13 +13,13 @@ using AH::Ultrasonic;
  *
  * @ingroup MIDI_Senders
  */
-class CPUltrasonicSender  {
+class UltrasonicCPSender  {
     public:
-        CPUltrasonicSender(MIDIAddress address, pin_t pin)
+        UltrasonicCPSender(MIDIAddress address, pin_t pin)
             : _address(address), _ultrasonic(pin), _MinThreshold(0), _MaxThreshold(127), 
               _lastSentValue(255), _thresholdingEnabled(false) {}
         
-        CPUltrasonicSender(MIDIAddress address, pin_t pin, uint8_t MinThreshold, uint8_t MaxThreshold)
+        UltrasonicCPSender(MIDIAddress address, pin_t pin, uint8_t MinThreshold, uint8_t MaxThreshold)
             : _address(address), _ultrasonic(pin), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), 
               _lastSentValue(255), _thresholdingEnabled(true) {}
 

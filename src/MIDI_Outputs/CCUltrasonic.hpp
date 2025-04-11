@@ -32,6 +32,22 @@ class CCUltrasonic : public UltrasonicCCSender, public Updatable<> {
      */
     CCUltrasonic(pin_t pin, MIDIAddress address)
         : UltrasonicCCSender(address, pin) {}
+    /** 
+     * @brief   Create a new CCUltrasonic object with the given analog pin
+     *          and channel.
+     * 
+     * @param   pin
+     *          The analog input pin to read from.
+     * @param   address
+     *          The MIDI channel [Channel_1, Channel_16] and optional Cable
+     *          Number [Cable_1, Cable_16].
+     * @param   MinThreshold
+     *          The minimum threshold value [0, 127].
+     * @param   MaxThreshold
+     *          The maximum threshold value [0, 127].
+     */
+    CCUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : UltrasonicCCSender(address, pin) {}    
 
     // Initialize pin for sensor
     void begin() { UltrasonicCCSender::begin();}

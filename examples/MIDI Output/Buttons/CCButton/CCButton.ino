@@ -1,7 +1,7 @@
 /** 
  * This is an example that demonstrates the use of MIDI Control Change Buttons.
  *
- * @boards  AVR, AVR USB, ESP32, SAM, SAMD, Teensy 3.x
+ * @boards  AVR, AVR USB, Nano Every, Due, Nano 33 IoT, Nano 33 BLE, UNO R4, Pi Pico, Teensy 3.x, ESP32, ESP8266
  * 
  * Connections
  * -----------
@@ -37,8 +37,10 @@ USBMIDI_Interface midi;
 
 // Instantiate a CCButton object
 CCButton button {
-  5,                                                  // Push button on pin 5:
-  {MIDI_CC::General_Purpose_Controller_1, Channel_1}, // General Purpose Controller #1 on channel 1
+  // Push button on pin 5:
+  5,
+  // General Purpose Controller #1 on MIDI channel 1:
+  {MIDI_CC::General_Purpose_Controller_1, Channel_1},
 };
 
 void setup() {
@@ -48,4 +50,3 @@ void setup() {
 void loop() {
   midimap.loop(); // Update the midimap
 }
-
