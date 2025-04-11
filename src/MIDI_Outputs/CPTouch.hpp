@@ -6,37 +6,36 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   A class of MIDIOutputElement%s that read the analog input from a
- *          **potentiometer or fader**, and send out 7-bit MIDI 
- *          **Control Change** events.
+ * @brief   A class of MIDIOutputElement that reads the touch input from an
+ *          ESP32 capacitive touch sensor, and sends out 7-bit MIDI 
+ *          Channel Pressure (Aftertouch) events.
  * 
- * The analog input is filtered and hysteresis is applied for maximum
- * stability.  
- * This version cannot be banked.
+ * The touch input is filtered and adaptive baseline tracking is applied for maximum
+ * stability. The class uses multi-stage smoothing to provide clean, responsive
+ * control signals suitable for expressive performance control.
  *
  * @ingroup MIDIOutputElements
  */
 class CPTouch : public MIDIFilteredTouch<ContinuousCPSender> {
   public:
     /** 
-     * @brief   Create a new CPTouch object with the given analog pin and channel.
-     *          For perfect components that don't need thresholding.
+     * @brief   Create a new CPTouch object with the given touch pin and channel.
      * 
-     * @param   analogPin
-     *          The analog input pin to read from.
+     * @param   touchPin
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the channel [CHANNEL_1, CHANNEL_16], 
      *          and optional cable number [CABLE_1, CABLE_16].
      */
-    CPTouch(pin_t analogPin, MIDIChannelCable address)
-        : MIDIFilteredTouch(analogPin, address, {}) {}
+    CPTouch(pin_t touchPin, MIDIChannelCable address)
+        : MIDIFilteredTouch(touchPin, address, {}) {}
         
     /** 
-     * @brief   Create a new CPTouch object with the given analog pin, 
-     *          channel, and threshold values for imperfect components.
+     * @brief   Create a new CPTouch object with the given touch pin, 
+     *          channel, and threshold values.
      * 
-     * @param   analogPin
-     *          The analog input pin to read from.
+     * @param   touchPin
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the channel [CHANNEL_1, CHANNEL_16], 
      *          and optional cable number [CABLE_1, CABLE_16].
@@ -45,8 +44,8 @@ class CPTouch : public MIDIFilteredTouch<ContinuousCPSender> {
      * @param   MaxThreshold
      *          The maximum threshold value [0, 127].
      */
-    CPTouch(pin_t analogPin, MIDIChannelCable address, uint8_t MinThreshold, uint8_t MaxThreshold)
-        : MIDIFilteredTouch(analogPin, address, {MinThreshold, MaxThreshold}) {}
+    CPTouch(pin_t touchPin, MIDIChannelCable address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : MIDIFilteredTouch(touchPin, address, {MinThreshold, MaxThreshold}) {}
 };
 
 END_CS_NAMESPACE

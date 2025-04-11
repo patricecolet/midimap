@@ -69,14 +69,11 @@
 // Instantiate a MIDI over USB interface.
 USBMIDI_Interface midi;
 
-uint8_t range = 127; // range of the MIDI Outputs
-
 // Instantiate a Accelerometer3AxisSensor object
 Accelerometer3AxisSensor accelerometer3axis{
     {MIDI_CC::Channel_Volume, CHANNEL_1},   // Channel volume of channel 1
     {MIDI_CC::Pan, CHANNEL_1},              // Channel Pan of channel 1
     {MIDI_CC::Modulation_Wheel, CHANNEL_1}, // Channel Modulation Wheel of channel 1
-    range,                                  // Range of the MIDI Outputs
 };
 
 void setup()

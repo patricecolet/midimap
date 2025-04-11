@@ -1,24 +1,28 @@
 #pragma once
 
-#include <MIDI_Outputs/Abstract/MIDIFilteredAnalog.hpp>
+#include <MIDI_Outputs/Abstract/MIDIFilteredTouch.hpp>
 #include <MIDI_Senders/ContinuousPCSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   A Program Change event is sent when the potentiometer value rises above
- *          the trigger threshold.
+ * @brief   A class for sending MIDI Program Change messages based on an
+ *          ESP32 capacitive touch sensor input with a threshold trigger.
+ * 
+ * A Program Change event is sent when the touch sensor value rises above
+ * the trigger threshold, allowing you to switch between different instrument
+ * sounds, patches, or presets in your synthesizer or DAW.
  * 
  * @ingroup MIDIOutputElements
  */
-class PCPotentiometer : public MIDIFilteredAnalog<ContinuousPCSender> {
+class PCTouch : public MIDIFilteredTouch<ContinuousPCSender> {
   public:
     /**
-     * @brief   Create a new PCPotentiometer object with the given analog pin, 
+     * @brief   Create a new PCTouch object with the given touch pin, 
      *          program number, channel, and trigger threshold.
      * 
      * @param   pin
-     *          The analog input pin to read from.
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the program number [0, 127], 
      *          channel [Channel_1, Channel_16], and optional cable number 
@@ -26,15 +30,15 @@ class PCPotentiometer : public MIDIFilteredAnalog<ContinuousPCSender> {
      * @param   triggerValue
      *          The threshold value [0, 127] at which to send the Program Change.
      */
-    PCPotentiometer(pin_t pin, MIDIAddress address, uint8_t triggerValue)
-        : MIDIFilteredAnalog(pin, address, ContinuousPCSender(triggerValue)) {}
+    PCTouch(pin_t pin, MIDIAddress address, uint8_t triggerValue)
+        : MIDIFilteredTouch(pin, address, ContinuousPCSender(triggerValue)) {}
 
     /**
-     * @brief   Create a new PCPotentiometer object with the given analog pin, 
+     * @brief   Create a new PCTouch object with the given touch pin, 
      *          program number, channel, trigger threshold, and input range.
      * 
      * @param   pin
-     *          The analog input pin to read from.
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the program number [0, 127], 
      *          channel [Channel_1, Channel_16], and optional cable number 
@@ -42,13 +46,13 @@ class PCPotentiometer : public MIDIFilteredAnalog<ContinuousPCSender> {
      * @param   triggerValue
      *          The threshold value [0, 127] at which to send the Program Change.
      * @param   minThreshold
-     *          The minimum value of the potentiometer [0, 127].
+     *          The minimum value of the touch sensor [0, 127].
      * @param   maxThreshold
-     *          The maximum value of the potentiometer [0, 127].
+     *          The maximum value of the touch sensor [0, 127].
      */
-    PCPotentiometer(pin_t pin, MIDIAddress address, uint8_t triggerValue, 
+    PCTouch(pin_t pin, MIDIAddress address, uint8_t triggerValue, 
                     uint8_t MinThreshold, uint8_t MaxThreshold)
-        : MIDIFilteredAnalog(pin, address, 
+        : MIDIFilteredTouch(pin, address, 
                     ContinuousPCSender(triggerValue, MinThreshold, MaxThreshold)) {}
 };
 

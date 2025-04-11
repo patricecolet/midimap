@@ -6,24 +6,24 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   A class of MIDIOutputElement%s that read the touch input from an
- *          **ESP32 touch sensor**, and send out 7-bit MIDI 
- *          **Control Change** events.
+ * @brief   A class of MIDIOutputElement that reads the touch input from an
+ *          ESP32 capacitive touch sensor, and sends out 7-bit MIDI 
+ *          Control Change events.
  * 
- * The touch input is filtered and hysteresis is applied for maximum
- * stability.  
- * This version cannot be banked.
+ * The touch input is filtered and adaptive baseline tracking is applied for maximum
+ * stability. The class uses multi-stage smoothing to provide clean, responsive
+ * control signals.
  *
- * @ingroup MIDIOutputElements
+ * @ingroup MIDIOutputElement
  */
 class CCTouch : public MIDIFilteredTouch<ContinuousCCSender> {
   public:
     /** 
-     * @brief   Create a new CCESP32Potentiometer object with the given touch pin, 
-     *          controller number and channel. For perfect components that don't need thresholding.
+     * @brief   Create a new CCTouch object with the given touch pin, 
+     *          controller number and channel.
      * 
      * @param   touchPin
-     *          The touch pin to read from.
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the controller number [0, 119], 
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
@@ -33,11 +33,11 @@ class CCTouch : public MIDIFilteredTouch<ContinuousCCSender> {
         : MIDIFilteredTouch(touchPin, address, {}) {}
         
     /** 
-     * @brief   Create a new CCESP32Potentiometer object with the given touch pin, 
-     *          controller number, channel, and threshold values for imperfect components.
+     * @brief   Create a new CCTouch object with the given touch pin, 
+     *          controller number, channel, and threshold values.
      * 
      * @param   touchPin
-     *          The touch pin to read from.
+     *          The ESP32 touch pin to read from.
      * @param   address
      *          The MIDI address containing the controller number [0, 119], 
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 

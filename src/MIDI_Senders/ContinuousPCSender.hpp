@@ -7,20 +7,20 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief Class that sends MIDI Program Change messages based on potentiometer input
+ * @brief Class that sends MIDI Program Change messages based on potentiometer/touch input
  * with hysteresis filtering and debouncing.
  *
  * @ingroup MIDI_Senders
  */
-class PCPotentiometerSender {
+class ContinuousPCSender {
 public:
-    PCPotentiometerSender(uint8_t triggerValue)
+    ContinuousPCSender(uint8_t triggerValue)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(0), _MaxThreshold(127), _thresholdingEnabled(false),
           _isNoteOn(false), _lastStateChangeTime(0), _debounceTime(2) {
         _PCTrigger = triggerValue + _thresholdOffset > 127 ? 127 : triggerValue + _thresholdOffset;
     }
 
-    PCPotentiometerSender(uint8_t triggerValue, uint8_t MinThreshold, uint8_t MaxThreshold)
+    ContinuousPCSender(uint8_t triggerValue, uint8_t MinThreshold, uint8_t MaxThreshold)
         : _TriggerValue(triggerValue), _thresholdOffset(12), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _thresholdingEnabled(true),
           _isNoteOn(false), _lastStateChangeTime(0), _debounceTime(2) {
         _PCTrigger = triggerValue + _thresholdOffset > 127 ? 127 : triggerValue + _thresholdOffset;
