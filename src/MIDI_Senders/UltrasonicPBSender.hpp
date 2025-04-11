@@ -19,10 +19,10 @@ using AH::Ultrasonic;
  * @ingroup MIDI_Senders
  */
 template <uint8_t INPUT_PRECISION_BITS>
-class PitchBendUltrasonicSender {
+class UltrasonicPBSender {
     static const uint16_t THRESHOLD = 5; // Define threshold for value changes
 public:
-    PitchBendUltrasonicSender (MIDIAddress address, pin_t pin)
+    UltrasonicPBSender (MIDIAddress address, pin_t pin)
             : _address(address), _ultrasonic(pin) {}
     /// Value should be @p INPUT_PRECISION_BITS wide.
 

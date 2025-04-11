@@ -6,24 +6,21 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   A class for sending MIDI Note messages with Velocity based on an 
- *          ESP32 capacitive touch sensor input.
- *          
- * The velocity is calculated based on how quickly the touch sensor
- * is activated between the trigger threshold and note-on threshold.
- * This provides expressive control over note dynamics, similar to how
- * hard you press a piano key affects the sound.
+ * @brief   A class for sending MIDI Note messages with velocity based on an 
+ *          analog input from a potentiometer with a simple threshold trigger.
+ *          The velocity is calculated based on how quickly the potentiometer
+ *          is turned between the trigger threshold and note-on threshold.
  * 
  * @ingroup MIDIOutputElements
  */
 class NoteVelTouch : public MIDIFilteredTouch<ContinuousNoteVelSender> {
   public:
     /** 
-     * @brief   Create a new NoteVelTouch object with the given touch pin,
+     * @brief   Create a new NoteVelTouch object with the given analog pin,
      *          note number, MIDI channel, and velocity parameters.
      * 
      * @param   touchPin
-     *          The ESP32 touch pin to read from.
+     *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
      * @param   MinNoteThreshold
@@ -41,11 +38,11 @@ class NoteVelTouch : public MIDIFilteredTouch<ContinuousNoteVelSender> {
                                                    minPhysicalVelocity, maxPhysicalVelocity)) {}
                                                  
     /** 
-     * @brief   Create a new NoteVelTouch object with the given touch pin,
-     *          note number, MIDI channel, velocity parameters, and thresholds.
+     * @brief   Create a new NoteVelTouch object with the given analog pin,
+     *          note number, MIDI channel, velocity parameters, and thresholds for imperfect components.
      * 
      * @param   touchPin
-     *          The ESP32 touch pin to read from.
+     *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
      * @param   MinNoteThreshold
@@ -55,9 +52,9 @@ class NoteVelTouch : public MIDIFilteredTouch<ContinuousNoteVelSender> {
      * @param   maxPhysicalVelocity
      *          The maximum physical velocity that maps to MIDI velocity 127.
      * @param   MinThreshold
-     *          The minimum threshold value [0, 127] for the touch sensor.
+     *          The minimum threshold value [0, 127] for the potentiometer.
      * @param   MaxThreshold
-     *          The maximum threshold value [0, 127] for the touch sensor.
+     *          The maximum threshold value [0, 127] for the potentiometer.
      */
     NoteVelTouch(int touchPin, MIDIAddress address, 
                       uint8_t MinNoteThreshold, float minPhysicalVelocity, float maxPhysicalVelocity,

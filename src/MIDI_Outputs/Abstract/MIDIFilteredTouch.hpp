@@ -50,6 +50,17 @@ public:
     }
   }
 
+  /// Send the value of the touch input over MIDI, even if the value didn't
+  /// change.
+ /* void forcedUpdate()
+  {
+    // Get the filtered value
+    int value = FilteredTouch.getValue();
+    
+    // Send the value to the MIDI sender
+    sender.send(value, address);
+  }*/
+
   /// Get the MIDI address.
   MIDIAddress getAddress() const { return this->address; }
   /// Set the MIDI address.

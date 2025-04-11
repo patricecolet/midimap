@@ -30,17 +30,17 @@
  */
 
 // Uncomment this line to enable debug output for touch sensor readings
-//#define DEBUG_TOUCH
+#define DEBUG_TOUCH
 
 // For long-range detection, try TOUCH_DELTA_MAX = 150, TOUCH_BASELINE_THRESHOLD = 50;
 // For short-range detetction, try TOUCH_DELTA_MAX = 4000, TOUCH_BASELINE_THRESHOLD = 3500;
 // For direct touch detection, try TOUCH_DELTA_MAX = 200000, TOUCH_BASELINE_THRESHOLD = 400;
 
 // Maximum expected delta value (default: 4000.0f)
-//#define TOUCH_DELTA_MAX 200000.0f
+#define TOUCH_DELTA_MAX 200000.0f
 
 // Threshold for freezing baseline updates (default: 100.0f)
-//#define TOUCH_BASELINE_THRESHOLD 400.0f
+#define TOUCH_BASELINE_THRESHOLD 400.0f
 
 #include <midimap.h> // Include the midimap library
 

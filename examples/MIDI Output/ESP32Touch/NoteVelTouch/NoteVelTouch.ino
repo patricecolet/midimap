@@ -1,7 +1,7 @@
 /** 
- * This example demonstrates the use of ESP32 touch sensors to send MIDI Note messages
- * with Velocity. This allows for expressive control over how notes begin,
- * creating dynamics similar to how hard you press a piano key.
+ * This example demonstrates the use of ESP32 touch sensors with MIDI Control Change
+ * output. The touch sensor can be used for controlling effect parameters, volumes,
+ * pan controls, etc. in your DAW software.
  *
  * @boards ESP32
  * 
@@ -13,29 +13,24 @@
  * Behavior
  * --------
  * 
- * - When you touch the sensor, a Note On message with Velocity is sent
- * - The velocity is calculated based on how quickly you touch the sensor
- * - When you release the sensor, a Note Off message is sent
+ * - When you touch or approach the sensor, you should receive MIDI Control Change
+ *   events, with a value between 0 and 127.
  * - The touch input is filtered using adaptive baseline tracking with
- *   multi-stage smoothing to provide stable values
+ *   multi-stage smoothing to provide stable values.
  * 
  * Mapping
  * -------
  * 
  * Select the ESP32 as a custom MIDI controller in your DAW, and use the 
- * MIDI learn option to assign the touch sensor to trigger notes.
- * It will send MIDI Note messages for note C4 on channel 1, with the
- * velocity determined by how quickly you touch the sensor.
+ * MIDI learn option to assign the touch sensor to a function.  
+ * It will send the MIDI Control Change Channel Volume parameter for channel 1.
  * 
- * This creates a more expressive instrument where the dynamics of your
- * touch directly affect the volume and timbre of the sound.
  * 
  * Modified by Hazri Haqimi, 2023-04-10
  */
 
-
 // Uncomment this line to enable debug output for touch sensor readings
-//#define DEBUG_TOUCH
+#define DEBUG_TOUCH
 
 // For long-range detection, try TOUCH_DELTA_MAX = 150, TOUCH_BASELINE_THRESHOLD = 50;
 // For short-range detetction, try TOUCH_DELTA_MAX = 4000, TOUCH_BASELINE_THRESHOLD = 3500;

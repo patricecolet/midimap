@@ -6,24 +6,19 @@
 BEGIN_CS_NAMESPACE
 
 /**
- * @brief   A class for sending MIDI Note On/Off messages based on an 
- *          ESP32 capacitive touch sensor input with a simple threshold trigger.
- * 
- * When the touch sensor value exceeds the threshold, a Note On message is sent.
- * When the value falls below the threshold, a Note Off message is sent.
- * The touch input is filtered using adaptive baseline tracking with multi-stage
- * smoothing to provide stable triggering.
+ * @brief   A class for sending MIDI Note messages based on an 
+ *          analog input from a potentiometer with a simple threshold trigger.
  * 
  * @ingroup MIDIOutputElements
  */
 class NoteTouch : public MIDIFilteredTouch<ContinuousNoteSender> {
   public:
     /** 
-     * @brief   Create a new NoteTouch object with the given touch pin,
+     * @brief   Create a new NoteTouch object with the given analog pin,
      *          note number, MIDI channel, and trigger value.
      * 
      * @param   touchPin
-     *          The ESP32 touch pin to read from.
+     *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
      * @param   triggerValue
@@ -33,11 +28,11 @@ class NoteTouch : public MIDIFilteredTouch<ContinuousNoteSender> {
         : MIDIFilteredTouch(touchPin, address, ContinuousNoteSender(triggerValue)) {}
                                                  
     /** 
-     * @brief   Create a new NoteTouch object with the given touch pin,
-     *          note number, MIDI channel, trigger value, and thresholds.
+     * @brief   Create a new NoteTouch object with the given analog pin,
+     *          note number, MIDI channel, trigger value, and thresholds for imperfect components.
      * 
      * @param   touchPin
-     *          The ESP32 touch pin to read from.
+     *          The analog input pin connected to the potentiometer.
      * @param   address
      *          The MIDI address containing the note and channel.
      * @param   triggerValue

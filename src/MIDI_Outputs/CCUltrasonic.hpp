@@ -1,7 +1,6 @@
 #pragma once
 
-#include <MIDI_Outputs/Abstract/MIDIFilteredTouch.hpp>
-#include <MIDI_Senders/PitchBendSender.hpp>
+#include <MIDI_Senders/UltrasonicCCSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -19,37 +18,41 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDIOutputElements
  */
-class PBTouch : public MIDIFilteredTouch<PitchBendSender<10>> {
+class CCUltrasonic : public UltrasonicCCSender, public Updatable<> {
   public:
     /** 
-     * @brief   Create a new PBTouch object with the given analog pin
-     *          and channel. For perfect components that don't need thresholding.
+     * @brief   Create a new CCUltrasonic object with the given analog pin
+     *          and channel.
      * 
-     * @param   analogPin
+     * @param   pin
      *          The analog input pin to read from.
      * @param   address
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      */
-    PBTouch(pin_t analogPin, MIDIChannelCable address)
-        : MIDIFilteredTouch(analogPin, address, {}) {}
-        
+    CCUltrasonic(pin_t pin, MIDIAddress address)
+        : UltrasonicCCSender(address, pin) {}
     /** 
-     * @brief   Create a new PBTouch object with the given analog pin, 
-     *          channel, and threshold values for imperfect components.
+     * @brief   Create a new CCUltrasonic object with the given analog pin
+     *          and channel.
      * 
-     * @param   analogPin
+     * @param   pin
      *          The analog input pin to read from.
      * @param   address
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      * @param   MinThreshold
-     *          The minimum threshold value [0, 1023].
+     *          The minimum threshold value [0, 127].
      * @param   MaxThreshold
-     *          The maximum threshold value [0, 1023].
+     *          The maximum threshold value [0, 127].
      */
-    PBTouch(pin_t analogPin, MIDIChannelCable address, uint16_t MinThreshold, uint16_t MaxThreshold)
-        : MIDIFilteredTouch(analogPin, address, {MinThreshold, MaxThreshold}) {}
+    CCUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : UltrasonicCCSender(address, pin) {}    
+
+    // Initialize pin for sensor
+    void begin() { UltrasonicCCSender::begin();}
+    // Update aftertouch value based on sensor
+    void update() { UltrasonicCCSender::update();}
 };
 
 END_CS_NAMESPACE

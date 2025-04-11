@@ -1,6 +1,6 @@
 #pragma once
 
-#include <MIDI_Senders/PitchBendUltrasonicSender.hpp>
+#include <MIDI_Senders/UltrasonicPBSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
@@ -18,7 +18,7 @@ BEGIN_CS_NAMESPACE
  *
  * @ingroup MIDIOutputElements
  */
-class PBUltrasonic : public PitchBendUltrasonicSender<10>, public Updatable<> {
+class PBUltrasonic : public UltrasonicPBSender<10>, public Updatable<> {
   public:
     /** 
      * @brief   Create a new PBUltrasonic object with the given analog pin
@@ -31,12 +31,12 @@ class PBUltrasonic : public PitchBendUltrasonicSender<10>, public Updatable<> {
      *          Number [Cable_1, Cable_16].
      */
     PBUltrasonic(pin_t pin, MIDIAddress address)
-        : PitchBendUltrasonicSender(address, pin) {}
+        : UltrasonicPBSender(address, pin) {}
 
     // Initialize pin for sensor
-    void begin() { PitchBendUltrasonicSender::begin();}
+    void begin() { UltrasonicPBSender::begin();}
     // Update aftertouch value based on sensor
-    void update() { PitchBendUltrasonicSender::update();}
+    void update() { UltrasonicPBSender::update();}
 };
 
 END_CS_NAMESPACE

@@ -1,18 +1,18 @@
 #pragma once
 
-#include <MIDI_Senders/UltrasonicKPSender.hpp>
+#include <MIDI_Senders/UltrasonicCPSender.hpp>
 
 BEGIN_CS_NAMESPACE
 
 /**
  * @brief   Sends MIDI aftertouch based on ultrasonic sensor readings.
  *
- * This class extends UltrasonicKPSender and uses an ultrasonic sensor to send MIDI aftertouch messages.
+ * This class extends UltrasonicCPSender and uses an ultrasonic sensor to send MIDI aftertouch messages.
  *
  * @ingroup MIDIOutputElements
  */
 
-class KPUltrasonic : public UltrasonicKPSender, public Updatable<> {
+class CPUltrasonic : public UltrasonicCPSender, public Updatable<> {
   public:
     /**
      * @brief   Create a new KPUltrasonic object with the given pin, note number
@@ -25,8 +25,8 @@ class KPUltrasonic : public UltrasonicKPSender, public Updatable<> {
      *          channel [Channel_1, Channel_16], and optional cable number 
      *          [Cable_1, Cable_16].
      */
-    KPUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicKPSender(address, pin) {}
+    CPUltrasonic(pin_t pin, MIDIAddress address)
+        : UltrasonicCPSender(address, pin) {}
 
     /** 
      * @brief   Create a new KPUltrasonic object with the given analog pin, 
@@ -44,13 +44,13 @@ class KPUltrasonic : public UltrasonicKPSender, public Updatable<> {
      *          The maximum threshold value [0, 255].
      */
 
-     KPUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
-        : UltrasonicKPSender(address, pin, MinThreshold, MaxThreshold) {}
+     CPUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : UltrasonicCPSender(address, pin, MinThreshold, MaxThreshold) {}
 
     // Initialize pin for sensor
-    void begin() { UltrasonicKPSender::begin();}
+    void begin() { UltrasonicCPSender::begin();}
     // Update aftertouch value based on sensor
-    void update() { UltrasonicKPSender::update();}
+    void update() { UltrasonicCPSender::update();}
 };
 
 END_CS_NAMESPACE
