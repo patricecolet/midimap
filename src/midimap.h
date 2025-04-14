@@ -51,6 +51,32 @@
 #include <MIDI_Constants/Control_Change.hpp>
 #include <MIDI_Constants/Notes.hpp>
 
+
+// ----------------------------- OSC interface ----------------------------- //
+#if defined(ESP32) || defined(ESP8266)
+#include <OSC_Interfaces/OSCWifi_Interface.hpp>
+
+// ------------------------------ OSC Interfaces ------------------------------ //
+#include <OSC_Interfaces/OSCInterface.hpp>
+#include <OSC_Interfaces/OSCWifi_Interface.hpp>
+
+// ------------------------------ OSC Senders -------------------------------- //
+#include <OSC_Senders/OSCValueSender.hpp>
+#include <OSC_Senders/OSCMultiValueSender.hpp>
+#include <OSC_Senders/OSCMIDIChannelSender.hpp>
+#include <OSC_Senders/OSCSysExSender.hpp>
+
+// ------------------------------ OSC Outputs -------------------------------- //
+#include <OSC_Outputs/OSCButton.hpp>
+#include <OSC_Outputs/OSCEncoder.hpp>
+#include <OSC_Outputs/MIDItoOSC_Converter.hpp>
+#include <OSC_Outputs/OSCPotentiometer.hpp>
+// ------------------------------ OSC Inputs -------------------------------- //
+
+// ------------------------------ Network ------------------------------------ //
+#include <Network/WiFiConnection.hpp>
+#endif
+
 BEGIN_CS_NAMESPACE
 #ifndef NO_USING_NAMESPACE_AH
 USING_AH_NAMESPACE;
