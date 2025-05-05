@@ -38,7 +38,7 @@ class MIDIFilteredAnalog : public MIDIOutputElement {
       if (filteredAnalog.update())
             forcedUpdate();
   }
-  
+
     /// Send the value of the analog input over MIDI, even if the value didn't
     /// change.
     void forcedUpdate() { sender.send(filteredAnalog.getValue(), address); }
