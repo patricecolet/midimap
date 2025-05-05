@@ -1,8 +1,12 @@
 #pragma once
 
+#ifdef __AVR__
+#include <AH/STL/cstddef>
+#include <AH/STL/tuple>
+#else
 #include <cstddef>
 #include <tuple>
-
+#endif
 #include <AH/Settings/Warnings.hpp>
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 

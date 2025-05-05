@@ -4,10 +4,8 @@
 #include "USBMIDI/USBMIDI.hpp"
 #include "USBMIDI_Sender.hpp"
 #include <AH/Error/Error.hpp>
-//#include <AH/Teensy/TeensyUSBTypes.hpp>
+#include <AH/Teensy/TeensyUSBTypes.hpp>
 #include <MIDI_Parsers/USBMIDI_Parser.hpp>
-
-AH_DIAGNOSTIC_WERROR()
 
 BEGIN_CS_NAMESPACE
 
@@ -23,8 +21,14 @@ class GenericUSBMIDI_Interface : public MIDI_Interface {
      */
     template <class... Args>
     GenericUSBMIDI_Interface(Args &&...args)
-        : backend(std::forward<Args>(args)...),
+        : backend {std::forward<Args>(args)...},
           alwaysSendImmediately_(backend.preferImmediateSend()) {}
+
+    GenericUSBMIDI_Interface(const GenericUSBMIDI_Interface &) = delete;
+    GenericUSBMIDI_Interface(GenericUSBMIDI_Interface &&) = delete;
+    GenericUSBMIDI_Interface &
+    operator=(const GenericUSBMIDI_Interface &) = delete;
+    GenericUSBMIDI_Interface &operator=(GenericUSBMIDI_Interface &&) = delete;
 
   private:
     // MIDI send implementations
@@ -35,18 +39,32 @@ class GenericUSBMIDI_Interface : public MIDI_Interface {
     void sendNowImpl() override { backend.sendNow(); }
 
   private:
-    void handleStall() override;
+#if !DISABLE_PIPES
+    void handleStall() override { MIDI_Interface::handleStall(this); }
+#ifdef DEBUG_OUT
+    const char *getName() const override { return "usb"; }
+#endif
+#endif
 
   public:
+    /// @name   Initialization and polling
+    /// @{
+
+    /// Initialize.
     void begin() override;
+    /// Poll the backend (if necessary) and invoke the callbacks for any
+    /// received MIDI messages, as well as sending them over the pipes connected
+    /// to this interface.
     void update() override;
+
+    /// @}
 
   public:
     /// @name   Reading incoming MIDI messages
     /// @{
 
     /// Try reading and parsing a single incoming MIDI message.
-    /// @return Returns the type of the read message, or
+    /// @return Returns the type of the message read, or
     ///         `MIDIReadEvent::NO_MESSAGE` if no MIDI message was available.
     MIDIReadEvent read();
 
@@ -116,8 +134,8 @@ END_CS_NAMESPACE
 #include "USBMIDI_Interface.ipp"
 
 #if defined(TEENSYDUINO) && !defined(TEENSY_MIDIUSB_ENABLED)
-#warning                                                                       \
-    "Teensy: USB MIDI not enabled. Enable it from the Tools > USB Type menu."
+#pragma message(                                                               \
+    "Teensy: USB MIDI not enabled. Enable it from the Tools > USB Type menu.")
 #define CS_USB_MIDI_DISABLED
 #endif
 
@@ -146,8 +164,9 @@ BEGIN_CS_NAMESPACE
 class USBMIDI_Interface
     : public GenericUSBMIDI_Interface<USBDeviceMIDIBackend> {
   public:
-    USBMIDI_Interface() = default;
-    using MIDIUSBPacket_t = USBDeviceMIDIBackend::MIDIUSBPacket_t;
+    using backend_t = USBDeviceMIDIBackend;
+    using GenericUSBMIDI_Interface<backend_t>::GenericUSBMIDI_Interface;
+    using MIDIUSBPacket_t = backend_t::MIDIUSBPacket_t;
 };
 
 END_CS_NAMESPACE
@@ -180,5 +199,3 @@ class USBMIDI_Interface : public USBSerialMIDI_Interface {
 END_CS_NAMESPACE
 
 #endif
-
-AH_DIAGNOSTIC_POP()

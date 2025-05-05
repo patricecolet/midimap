@@ -9,8 +9,13 @@ AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
 #include <AH/Containers/CRTP.hpp>
 #include <AH/Containers/LinkedList.hpp>
 #include <AH/Error/Error.hpp>
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#include <AH/STL/utility>
+#else
 #include <type_traits> // STL
 #include <utility> // STL std::forward
+#endif
 #include <AH/Settings/SettingsWrapper.hpp>
 #include <stddef.h>
 

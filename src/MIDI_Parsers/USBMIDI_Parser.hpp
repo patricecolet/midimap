@@ -10,6 +10,8 @@
     defined(USB_MIDI16)
 // TODO: || defined(USB_EVERYTHING)
 #define USB_MIDI_NUMBER_OF_CABLES 16
+#elif defined(ARDUINO_ARCH_RP2040)
+#define USB_MIDI_NUMBER_OF_CABLES 16
 #elif !defined(ARDUINO) || defined(DOXYGEN)
 #define USB_MIDI_NUMBER_OF_CABLES 16
 #else
@@ -93,7 +95,7 @@ class USBMIDI_Parser : public MIDI_Parser {
         return t;
     }
 
-    Cable activeCable = CABLE_1;
+    Cable activeCable = Cable_1;
 
   private:
     SysExBuffer sysexbuffers[USB_MIDI_NUMBER_OF_CABLES] = {};

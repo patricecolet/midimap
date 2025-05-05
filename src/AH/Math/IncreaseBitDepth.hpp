@@ -2,9 +2,13 @@
 
 #include <AH/Settings/Warnings.hpp>
 AH_DIAGNOSTIC_WERROR() // Enable errors on warnings
-
+#ifdef __AVR__
+#include <AH/STL/type_traits>
+#include <AH/STL/climits>
+#else
 #include <type_traits> // STL enable_if
-#include <limits.h>           // CHAR_BIT
+#include <limits.h> 
+#endif          // CHAR_BIT
 #include <stddef.h>           // size_t
 
 BEGIN_AH_NAMESPACE

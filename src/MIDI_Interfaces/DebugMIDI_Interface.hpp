@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MIDI_Interface.hpp"
-//#include <AH/Teensy/TeensyUSBTypes.hpp>
+#include <AH/Teensy/TeensyUSBTypes.hpp>
 #include <MIDI_Parsers/HexPuller.hpp>
 #include <MIDI_Parsers/SerialMIDI_Parser.hpp>
 #include <MIDI_Parsers/StreamPuller.hpp>
@@ -12,16 +12,16 @@ BEGIN_CS_NAMESPACE
 /**
  * @brief A class that implements MIDI debug send functions.
  */
-class StreamDebugMIDI_Base {
+class PrintDebugMIDI_Base {
   protected:
-    void sendChannelMessageImpl(Stream &, ChannelMessage);
-    void sendSysCommonImpl(Stream &, SysCommonMessage);
-    void sendSysExImpl(Stream &, SysExMessage);
-    void sendRealTimeImpl(Stream &, RealTimeMessage);
-    void sendNowImpl(Stream &) {}
+    void sendChannelMessageImpl(Print &, ChannelMessage);
+    void sendSysCommonImpl(Print &, SysCommonMessage);
+    void sendSysExImpl(Print &, SysExMessage);
+    void sendRealTimeImpl(Print &, RealTimeMessage);
+    void sendNowImpl(Print &) {}
 
   public:
-    StreamDebugMIDI_Base(const char *prefix) : prefix(prefix) {}
+    PrintDebugMIDI_Base(const char *prefix) : prefix(prefix) {}
 
     /// Set the prefix to be printed before each message.
     void setPrefix(const char *prefix) { this->prefix = prefix; }
@@ -37,14 +37,14 @@ class StreamDebugMIDI_Base {
  * 
  * @ingroup MIDIInterfaces
  */
-class StreamDebugMIDI_Output : public StreamDebugMIDI_Base,
+class StreamDebugMIDI_Output : public PrintDebugMIDI_Base,
                                public MIDI_Sender<StreamDebugMIDI_Output>,
                                public TrueMIDI_Sink {
   public:
-    StreamDebugMIDI_Output(Stream &stream, const char *prefix = nullptr)
-        : StreamDebugMIDI_Base(prefix), stream(stream) {}
+    StreamDebugMIDI_Output(Print &stream, const char *prefix = nullptr)
+        : PrintDebugMIDI_Base(prefix), stream(stream) {}
 
-    Stream &getStream() const { return stream; }
+    Print &getStream() const { return stream; }
 
   protected:
     void sendChannelMessageImpl(ChannelMessage);
@@ -53,12 +53,14 @@ class StreamDebugMIDI_Output : public StreamDebugMIDI_Base,
     void sendRealTimeImpl(RealTimeMessage);
     void sendNowImpl();
 
+#if !DISABLE_PIPES
     void sinkMIDIfromPipe(ChannelMessage m) override { send(m); }
     void sinkMIDIfromPipe(SysExMessage m) override { send(m); }
     void sinkMIDIfromPipe(SysCommonMessage m) override { send(m); }
     void sinkMIDIfromPipe(RealTimeMessage m) override { send(m); }
+#endif
 
-    Stream &stream;
+    Print &stream;
 
     friend MIDI_Sender<StreamDebugMIDI_Output>;
 };
@@ -173,7 +175,7 @@ class USBDebugMIDI_Output : public SerialDebugMIDI_Output<decltype(Serial)> {
  * 
  * @ingroup MIDIInterfaces
  */
-class StreamDebugMIDI_Interface : public StreamDebugMIDI_Base,
+class StreamDebugMIDI_Interface : public PrintDebugMIDI_Base,
                                   public MIDI_Interface {
   public:
     /**
@@ -185,7 +187,7 @@ class StreamDebugMIDI_Interface : public StreamDebugMIDI_Base,
      *          An optional string to print before each message.
      */
     StreamDebugMIDI_Interface(Stream &stream, const char *prefix = nullptr)
-        : StreamDebugMIDI_Base(prefix), hexstream(stream) {}
+        : PrintDebugMIDI_Base(prefix), hexstream(stream) {}
 
     Stream &getStream() const { return hexstream.puller.stream; }
 
@@ -220,7 +222,12 @@ class StreamDebugMIDI_Interface : public StreamDebugMIDI_Base,
     void sendNowImpl() override;
 
   private:
-    void handleStall() override;
+#if !DISABLE_PIPES
+    void handleStall() override { MIDI_Interface::handleStall(this); }
+#ifdef DEBUG_OUT
+    const char *getName() const override { return "dbg"; }
+#endif
+#endif
 
   private:
     HexPuller<StreamPuller> hexstream;

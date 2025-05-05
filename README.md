@@ -36,4 +36,7 @@ The following sections give a brief overview of the features of the library.
 ## Supported boards
 
 - seeeduino XIAO
+- ESP32
+- AVR
+- Teensy 3x
 
