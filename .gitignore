@@ -31,5 +31,6 @@
 *.out
 *.app
 
-
+# IDE files
+*code-workspace
 *.idea
