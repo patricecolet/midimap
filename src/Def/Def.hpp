@@ -70,4 +70,9 @@ struct PixelLocation {
     int16_t y;
 };
 
+struct UltrasonicPinList {
+    pin_t trigger;
+    pin_t echo;
+};
+
 END_CS_NAMESPACE

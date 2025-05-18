@@ -30,24 +30,24 @@ class CCUltrasonic : public UltrasonicCCSender, public Updatable<> {
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      */
-    CCUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicCCSender(address, pin) {}
+    CCUltrasonic(UltrasonicPinList PinList, MIDIAddress address)
+        : UltrasonicCCSender(address, PinList) {}
     /** 
      * @brief   Create a new CCUltrasonic object with the given analog pin
      *          and channel.
      * 
-     * @param   pin
-     *          The analog input pin to read from.
+     * @param   PinList
+     *          The Trigger and Echo pin from HC-SR04.
      * @param   address
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      * @param   MinThreshold
-     *          The minimum threshold value [0, 127].
+     *          The minimum threshold value [0, 2000].
      * @param   MaxThreshold
-     *          The maximum threshold value [0, 127].
+     *          The maximum threshold value [MinThreshold, 4000].
      */
-    CCUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
-        : UltrasonicCCSender(address, pin) {}    
+    CCUltrasonic(UltrasonicPinList PinList, MIDIAddress address, uint16_t MinThreshold, uint16_t MaxThreshold,const uint16_t sendInterval)
+        : UltrasonicCCSender(address, PinList, MinThreshold, MaxThreshold, sendInterval) {}    
 
     // Initialize pin for sensor
     void begin() { UltrasonicCCSender::begin();}

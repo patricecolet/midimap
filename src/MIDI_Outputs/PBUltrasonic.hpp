@@ -24,14 +24,14 @@ class PBUltrasonic : public UltrasonicPBSender<10>, public Updatable<> {
      * @brief   Create a new PBUltrasonic object with the given analog pin
      *          and channel.
      * 
-     * @param   pin
-     *          The analog input pin to read from.
+     * @param   PinList
+     *          The Trigger and Echo pin from HC-SR04.
      * @param   address
      *          The MIDI channel [Channel_1, Channel_16] and optional Cable
      *          Number [Cable_1, Cable_16].
      */
-    PBUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicPBSender(address, pin) {}
+    PBUltrasonic(UltrasonicPinList PinList, MIDIAddress address)
+        : UltrasonicPBSender(address, PinList) {}
 
     // Initialize pin for sensor
     void begin() { UltrasonicPBSender::begin();}

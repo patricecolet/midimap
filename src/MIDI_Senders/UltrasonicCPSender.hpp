@@ -15,12 +15,12 @@ using AH::Ultrasonic;
  */
 class UltrasonicCPSender  {
     public:
-        UltrasonicCPSender(MIDIAddress address, pin_t pin)
-            : _address(address), _ultrasonic(pin), _MinThreshold(0), _MaxThreshold(127), 
+        UltrasonicCPSender(MIDIAddress address, UltrasonicPinList PinList)
+            : _address(address), _ultrasonic(PinList.echo, PinList.trigger), _MinThreshold(0), _MaxThreshold(127), 
               _lastSentValue(255), _thresholdingEnabled(false) {}
         
-        UltrasonicCPSender(MIDIAddress address, pin_t pin, uint8_t MinThreshold, uint8_t MaxThreshold)
-            : _address(address), _ultrasonic(pin), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), 
+        UltrasonicCPSender(MIDIAddress address, UltrasonicPinList PinList, uint8_t MinThreshold, uint8_t MaxThreshold)
+            : _address(address), _ultrasonic(PinList.echo, PinList.trigger), _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), 
               _lastSentValue(255), _thresholdingEnabled(true) {}
 
         /// Initializes the sensor.

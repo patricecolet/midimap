@@ -22,8 +22,8 @@ template <uint8_t INPUT_PRECISION_BITS>
 class UltrasonicPBSender {
     static const uint16_t THRESHOLD = 5; // Define threshold for value changes
 public:
-    UltrasonicPBSender (MIDIAddress address, pin_t pin)
-            : _address(address), _ultrasonic(pin) {}
+    UltrasonicPBSender (MIDIAddress address,UltrasonicPinList PinList)
+            : _address(address), _ultrasonic(PinList.echo, PinList.trigger) {}
     /// Value should be @p INPUT_PRECISION_BITS wide.
 
     void begin() {

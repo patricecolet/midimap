@@ -1,9 +1,8 @@
 #pragma once
 
-#include "AH/Settings/NamespaceSettings.hpp"
+#include <AH/Settings/NamespaceSettings.hpp>
 
 BEGIN_AH_NAMESPACE
-
 /**
  * @brief Reads distance values from an ultrasonic sensor.
  *
@@ -14,15 +13,17 @@ class Ultrasonic {
 public:
     /**
      * @brief Constructor to initialize the ultrasonic sensor.
-     * @param pin The digital pin connected to the sensor.
+     * @param PinList The digital pin list connected to the sensor.
      */
-    Ultrasonic(pin_t pin) : _pin(pin), _lastValidDistance(0) {}
+    Ultrasonic(pin_t echo_pin, pin_t trigger_pin) : 
+        _echo_pin(echo_pin), _trigger_pin(trigger_pin), _lastValidDistance(0) {}
 
     /**
-     * @brief Initializes the sensor pin.
+     * @brief Initializes the sensor pin list.
      */
     void begin() {
-        pinMode(_pin, OUTPUT);
+        pinMode(_echo_pin, INPUT);
+        pinMode(_trigger_pin, OUTPUT);
     }
 
     /**
@@ -30,13 +31,13 @@ public:
      * @return Distance in millimeters (mm).
      */
     uint16_t readDistanceMM() {
-        digitalWrite(_pin, LOW);
+        digitalWrite(_trigger_pin, LOW);
         delayMicroseconds(2);
-        digitalWrite(_pin, HIGH);
+        digitalWrite(_trigger_pin, HIGH);
         delayMicroseconds(10);
-        digitalWrite(_pin, LOW);
+        digitalWrite(_trigger_pin, LOW);
 
-        long duration = pulseIn(_pin, HIGH, 30000); // Get pulse duration
+        long duration = pulseIn(_echo_pin, HIGH, 30000); // Get pulse duration
 
         if (duration == 0) {
             return _lastValidDistance; // Return last good reading instead of 0
@@ -51,7 +52,8 @@ public:
     }
 
 private:
-    pin_t _pin;                  ///< Digital pin connected to the sensor.
+    pin_t _echo_pin;                  ///< Digital pin connected to the sensor.
+    pin_t _trigger_pin;                  ///< Digital pin connected to the sensor.
     uint16_t _lastValidDistance; ///< Stores the last valid distance to avoid zero readings.
 };
 

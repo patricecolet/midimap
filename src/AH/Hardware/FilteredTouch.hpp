@@ -94,7 +94,8 @@ public:
         mappedValue = round(mappedSmooth);
         
         #ifdef DEBUG_TOUCH
-        Serial.print("Raw: "); Serial.print(raw);
+        Serial.print("Pin: "); Serial.print(touchPin);
+        Serial.print("\Raw: "); Serial.print(raw);
         Serial.print("\tSmooth: "); Serial.print(smooth);
         Serial.print("\tBaseline: "); Serial.print(baseline);
         Serial.print("\tDelta: "); Serial.print(delta);

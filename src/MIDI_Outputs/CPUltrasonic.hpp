@@ -18,22 +18,22 @@ class CPUltrasonic : public UltrasonicCPSender, public Updatable<> {
      * @brief   Create a new KPUltrasonic object with the given pin, note number
      *          and channel.
      * 
-     * @param   pin
-     *          The SIG pin to read from.  
+     * @param   PinList
+     *          The Trigger and Echo pin from HC-SR04. 
      * @param   address
      *          The MIDI address containing the note number [0, 127], 
      *          channel [Channel_1, Channel_16], and optional cable number 
      *          [Cable_1, Cable_16].
      */
-    CPUltrasonic(pin_t pin, MIDIAddress address)
-        : UltrasonicCPSender(address, pin) {}
+    CPUltrasonic(UltrasonicPinList PinList, MIDIAddress address)
+        : UltrasonicCPSender(address, PinList) {}
 
     /** 
      * @brief   Create a new KPUltrasonic object with the given analog pin, 
      *          note number, MIDI channel, and threshold values for imperfect components.
      * 
-     * @param   pin
-     *          The analog input pin to read from.
+     * @param   PinList
+     *          The Trigger and Echo pin from HC-SR04.
      * @param   address
      *          The MIDI address containing the note number [0, 127],
      *          channel [CHANNEL_1, CHANNEL_16], and optional cable number 
@@ -44,8 +44,8 @@ class CPUltrasonic : public UltrasonicCPSender, public Updatable<> {
      *          The maximum threshold value [0, 255].
      */
 
-     CPUltrasonic(pin_t pin, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
-        : UltrasonicCPSender(address, pin, MinThreshold, MaxThreshold) {}
+     CPUltrasonic(UltrasonicPinList PinList, MIDIAddress address, uint8_t MinThreshold, uint8_t MaxThreshold)
+        : UltrasonicCPSender(address, PinList, MinThreshold, MaxThreshold) {}
 
     // Initialize pin for sensor
     void begin() { UltrasonicCPSender::begin();}

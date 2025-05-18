@@ -16,16 +16,36 @@ class ContinuousCCSender
 public:
   // Default constructor with full range (no thresholding)
   ContinuousCCSender() 
-      : _MinThreshold(0), _MaxThreshold(127), _lastSentValue(255), _thresholdingEnabled(false) {}
+      : _MinThreshold(0), _MaxThreshold(127), _lastSentValue(255), 
+        _thresholdingEnabled(false), _sendInterval(0), _lastSendTime(0) {}
       
   // Constructor with thresholds
   ContinuousCCSender(uint8_t MinThreshold, uint8_t MaxThreshold)
       : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _lastSentValue(255), 
-        _thresholdingEnabled(true) {}
+        _thresholdingEnabled(true), _sendInterval(0), _lastSendTime(0) {}
+
+  /**
+   * @brief Constructor with thresholds and send interval.
+   * @param MinThreshold Minimum threshold value (0-127).
+   * @param MaxThreshold Maximum threshold value (0-127).
+   * @param sendInterval Fixed time between MIDI messages in milliseconds.
+   */
+  ContinuousCCSender(uint8_t MinThreshold, uint8_t MaxThreshold, uint16_t sendInterval)
+      : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), _lastSentValue(255), 
+        _thresholdingEnabled(true), _sendInterval(sendInterval), _lastSendTime(0) {}
 
   /// Send a 7-bit CC message to the given address.
   void send(uint8_t value, MIDIAddress address)
   {
+    // Check if enough time has passed (skip if interval is 0)
+    if (_sendInterval > 0) {
+      unsigned long currentTime = millis();
+      if (currentTime - _lastSendTime < _sendInterval) {
+        return;
+      }
+      _lastSendTime = currentTime;
+    }
+
     uint8_t mappedValue;
     
     if (_thresholdingEnabled) {
@@ -60,6 +80,8 @@ private:
   uint8_t _MinThreshold, _MaxThreshold;
   uint8_t _lastSentValue; // Store the last sent value
   bool _thresholdingEnabled; // Flag to indicate if thresholding is enabled
+  uint16_t _sendInterval; // Fixed time between MIDI messages in ms
+  unsigned long _lastSendTime; // Timestamp of the last sent message
 };
 
 /**
@@ -80,18 +102,40 @@ public:
   // Default constructor with full range (no thresholding)
   ContinuousCCSender14() 
       : _MinThreshold(0), _MaxThreshold((1 << INPUT_PRECISION_BITS) - 1), 
-        _lastSentValue(0xFFFF), _thresholdingEnabled(false) {}
+        _lastSentValue(0xFFFF), _thresholdingEnabled(false),
+        _sendInterval(0), _lastSendTime(0) {}
       
   // Constructor with thresholds
   ContinuousCCSender14(uint16_t MinThreshold, uint16_t MaxThreshold)
       : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), 
-        _lastSentValue(0xFFFF), _thresholdingEnabled(true) {}
+        _lastSentValue(0xFFFF), _thresholdingEnabled(true),
+        _sendInterval(0), _lastSendTime(0) {}
+
+  /**
+   * @brief Constructor with thresholds and send interval.
+   * @param MinThreshold Minimum threshold value.
+   * @param MaxThreshold Maximum threshold value.
+   * @param sendInterval Fixed time between MIDI messages in milliseconds.
+   */
+  ContinuousCCSender14(uint16_t MinThreshold, uint16_t MaxThreshold, uint16_t sendInterval)
+      : _MinThreshold(MinThreshold), _MaxThreshold(MaxThreshold), 
+        _lastSentValue(0xFFFF), _thresholdingEnabled(true),
+        _sendInterval(sendInterval), _lastSendTime(0) {}
 
   /// Send a 14-bit CC message to the given address.
   /// Sends two 7-bit CC packets, one for @p address (MSB), and one for
   /// @p address + 0x20 (LSB).
   void send(uint16_t value, MIDIAddress address)
   {
+    // Check if enough time has passed (skip if interval is 0)
+    if (_sendInterval > 0) {
+      unsigned long currentTime = millis();
+      if (currentTime - _lastSendTime < _sendInterval) {
+        return;
+      }
+      _lastSendTime = currentTime;
+    }
+    
     uint16_t mappedValue;
     
     if (_thresholdingEnabled) {
@@ -131,6 +175,8 @@ private:
   uint16_t _MinThreshold, _MaxThreshold;
   uint16_t _lastSentValue; // Store the last sent value
   bool _thresholdingEnabled; // Flag to indicate if thresholding is enabled
+  uint16_t _sendInterval; // Fixed time between MIDI messages in ms
+  unsigned long _lastSendTime; // Timestamp of the last sent message
 };
 
 END_CS_NAMESPACE
